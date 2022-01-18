@@ -10,6 +10,7 @@ II. Tools and Frameworks:
     1. React JS and ASP.NET Core Web Application is two Frameworks for Frontend Development
     2. Asp.Net Core Web API
     3. Microsoft SQL Server for Database
+    Writen by Hieu
 III. How to release
 
     Build
