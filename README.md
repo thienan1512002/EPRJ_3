@@ -1,7 +1,8 @@
                                            CLINIC MANAGEMENT SYSTEM
 
 I. Introduce:
-    1. This is an project which creates an clinic management system 
+
+    1. This is an project which creates a clinic management system 
     2. This project is created by International Training Institute FPT Aptech with India
     
 II. Tools and Frameworks:
