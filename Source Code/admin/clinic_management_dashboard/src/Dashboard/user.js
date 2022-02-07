@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-function Dashboards() {
+function User() {
   return (
     <div className="hold-transition sidebar-mini layout-fixed">
       <div className="wrapper">
@@ -155,7 +155,7 @@ function Dashboards() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  <h1 className="m-0">Dashboard</h1>
+                  <h1 className="m-0">Account Management</h1>
                 </div>
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
@@ -171,69 +171,17 @@ function Dashboards() {
           <section className="content">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-3 col-6">
-                  <div className="small-box bg-info">
-                    <div className="inner">
-                      <h3>150</h3>
-
-                      <p>New Orders</p>
-                    </div>
-                    <div className="icon">
-                      <i className="ion ion-bag"></i>
-                    </div>
-                    <span href="#" className="small-box-footer">
-                      More info <i className="fas fa-arrow-circle-right"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-6">
-                  <div className="small-box bg-success">
-                    <div className="inner">
-                      <h3>53%</h3>
-
-                      <p>Bounce Rate</p>
-                    </div>
-                    <div className="icon">
-                      <i className="ion ion-stats-bars"></i>
-                    </div>
-                    <span href="#" className="small-box-footer">
-                      More info <i className="fas fa-arrow-circle-right"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-6">
-                  <div className="small-box bg-warning">
-                    <div className="inner">
-                      <h3>44</h3>
-
-                      <p>User Registrations</p>
-                    </div>
-                    <div className="icon">
-                      <i className="ion ion-person-add"></i>
-                    </div>
-                    <span href="#" className="small-box-footer">
-                      More info <i className="fas fa-arrow-circle-right"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-6">
-                  <div className="small-box bg-danger">
-                    <div className="inner">
-                      <h3>65</h3>
-
-                      <p>Unique Visitors</p>
-                    </div>
-                    <div className="icon">
-                      <i className="ion ion-pie-graph"></i>
-                    </div>
-                    <span href="#" className="small-box-footer">
-                      More info <i className="fas fa-arrow-circle-right"></i>
-                    </span>
-                  </div>
-                </div>
+                <table className="table table-hover">
+                  <thead className="thead-dark">
+                    <tr>
+                      <td>Account Id</td>
+                      <td>Username</td>
+                      <td>Email</td>
+                      <td>Role</td>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
               </div>
             </div>
           </section>
@@ -256,5 +204,4 @@ function Dashboards() {
     </div>
   );
 }
-
-export default Dashboards;
+export default User;
