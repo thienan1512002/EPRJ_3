@@ -79,30 +79,33 @@ namespace clinic_management_API.Controllers
         // POST: api/StaffAccounts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<StaffAccount>> PostStaffAccount(StaffAccount staffAccount)
+        public async Task<ActionResult> PostStaffAccount([FromForm] StaffViewModel staffVM)
         {
-            var files = HttpContext.Request.Form.Files;
-            if (files != null && files.Count > 0)
+            if (staffVM.Image != null)
             {
-                foreach (var file in files)
+                var a = _environment.WebRootPath;
+                var fileName = Path.GetFileName(staffVM.Image.FileName);
+                var filePath = Path.Combine(_environment.WebRootPath, "Images\\Staffs", fileName);
+
+                using (var fileSteam = new FileStream(filePath, FileMode.Create))
                 {
-                    FileInfo fi = new FileInfo(file.FileName);
-                    var newfilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + fi.Extension;
-                    var path = Path.Combine("", _environment.ContentRootPath + "/Images/" + newfilename);
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
-                    StaffAccount staffAccount1 = new StaffAccount();
-                    staffAccount1.Image = path;
-                    staffAccount.Image = staffAccount1.Image;
-                    _context.StaffAccounts.Add(staffAccount);
-                    await _context.SaveChangesAsync();
+                    await staffVM.Image.CopyToAsync(fileSteam);
                 }
-                return Ok(staffAccount);
-            } else
+
+                StaffAccount staff = new StaffAccount();
+                staff.AccountId = staffVM.AccountId;
+                staff.Username = staffVM.Username;
+                staff.Email = staffVM.Email;
+                staff.Password = staffVM.Password;
+                staff.Role = staffVM.Role;
+                staff.Image = filePath;  //save the filePath to database ImagePath field.
+                _context.Add(staff);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
 
