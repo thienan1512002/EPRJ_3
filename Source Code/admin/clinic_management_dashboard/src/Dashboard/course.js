@@ -1,5 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link , Redirect } from "react-router-dom";
 function Course() {
+   if (localStorage.getItem("myData") === null) {
+     localStorage.setItem("warning", "You have to be login first !");
+     return <Redirect to="/" />;
+   }
   return (
     <div className="hold-transition sidebar-mini layout-fixed">
       <div className="wrapper">

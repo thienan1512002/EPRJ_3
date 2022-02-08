@@ -1,5 +1,11 @@
+import { React, useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 function Dashboards() {
+   if (localStorage.getItem("myData") === null) {
+     localStorage.setItem("warning","You have to be login first !");
+     return <Redirect to="/" />;
+   }
   return (
     <div className="hold-transition sidebar-mini layout-fixed">
       <div className="wrapper">
@@ -71,7 +77,7 @@ function Dashboards() {
               alt="AdminLTE Logo"
               className="brand-image img-circle elevation-3"
             />
-            <span className="brand-text font-weight-light">AdminLTE 3</span>
+            <span className="brand-text font-weight-light">Hello {localStorage.getItem("myData")}</span>
           </a>
 
           <div className="sidebar">

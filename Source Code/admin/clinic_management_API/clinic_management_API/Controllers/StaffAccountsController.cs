@@ -125,6 +125,17 @@ namespace clinic_management_API.Controllers
             return NoContent();
         }
 
+        [HttpGet("process-login")]
+        public async Task<StaffAccount> ProcessLogin(string username , string password)
+        {
+            var account = await _context.StaffAccounts.SingleOrDefaultAsync(account=>account.Username.Equals(username)&& account.Password.Equals(password));
+            if (account == null)
+            {
+                return null;
+            }
+            return account;
+
+        }
         private bool StaffAccountExists(string id)
         {
             return _context.StaffAccounts.Any(e => e.AccountId == id);
