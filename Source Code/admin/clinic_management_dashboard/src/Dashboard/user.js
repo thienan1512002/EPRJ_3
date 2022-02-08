@@ -1,5 +1,15 @@
+import {React , useState , useEffect} from 'react';
 import { Link , Redirect } from "react-router-dom";
+import axios from "axios";
 function User() {
+  const [data, setData] = useState(null);
+  useEffect(()=>{
+    const url = "http://localhost:58017/api/StaffAccounts/";
+    axios.get(url).then(data => {
+      //console.log(data.data);
+      setData(data.data);
+    })
+  })
    if (localStorage.getItem("myData") === null) {
      localStorage.setItem("warning", "You have to be login first !");
      return <Redirect to="/" />;
@@ -180,11 +190,26 @@ function User() {
                     <tr>
                       <td>Account Id</td>
                       <td>Username</td>
+                      <td>Avatar</td>
                       <td>Email</td>
                       <td>Role</td>
                     </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                    {data &&
+                      data
+                        .map((item) => {
+                          return (
+                            <tr>
+                              <td key={item.accountId}>{item.accountId}</td>
+                              <td>{item.username}</td>
+                              <td><img src={item.image} alt={item.image}/></td>
+                              <td>{item.email}</td> 
+                              <td>{item.role}</td>                            
+                            </tr>
+                          );
+                        })}
+                  </tbody>
                 </table>
               </div>
             </div>
