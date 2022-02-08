@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thien\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\clinic_management_API.csproj": {}
+    "D:\\T1.2009.A0\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\clinic_management_API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thien\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\clinic_management_API.csproj": {
+    "D:\\T1.2009.A0\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\clinic_management_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thien\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\clinic_management_API.csproj",
+        "projectUniqueName": "D:\\T1.2009.A0\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\clinic_management_API.csproj",
         "projectName": "clinic_management_API",
-        "projectPath": "C:\\Users\\thien\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\clinic_management_API.csproj",
-        "packagesPath": "C:\\Users\\thien\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thien\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\obj\\",
+        "projectPath": "D:\\T1.2009.A0\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\clinic_management_API.csproj",
+        "packagesPath": "C:\\Users\\Jack\\.nuget\\packages\\",
+        "outputPath": "D:\\T1.2009.A0\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\clinic_management_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\thien\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jack\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
