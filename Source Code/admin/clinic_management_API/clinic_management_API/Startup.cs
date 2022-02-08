@@ -1,4 +1,4 @@
-using clinic_management_API.Models;
+﻿using clinic_management_API.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +29,11 @@ namespace clinic_management_API
         {
 
             services.AddControllers();
+            // đăng kí third-party cho React
+            services.AddCors(options => options.AddPolicy(name: "clinic_db", builder =>
+            {
+                builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+            }));
             services.AddDbContext<ClinicDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cliniccon")));
             services.AddSwaggerGen(c =>
             {
@@ -47,7 +52,7 @@ namespace clinic_management_API
             }
 
             app.UseRouting();
-
+            app.UseCors("clinic_db");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
