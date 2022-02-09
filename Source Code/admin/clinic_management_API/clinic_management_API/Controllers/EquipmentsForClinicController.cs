@@ -13,12 +13,12 @@ namespace clinic_management_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EquipmentForClinicsController : ControllerBase
+    public class EquipmentsForClinicController : ControllerBase
     {
         private readonly ClinicDBContext _context;
         private readonly IHostingEnvironment _environment;
 
-        public EquipmentForClinicsController(ClinicDBContext context, IHostingEnvironment environment)
+        public EquipmentsForClinicController(ClinicDBContext context, IHostingEnvironment environment)
         {
             _context = context;
             _environment = environment;
