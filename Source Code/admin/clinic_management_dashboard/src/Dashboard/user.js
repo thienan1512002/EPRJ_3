@@ -8,7 +8,8 @@ const initialUserValue = {
   username: "",
   email: "",
   role: "",
-  //image:'',
+  imgSrc:'logo192.png',
+  imageFile: null,
 };
 
 function User() {
@@ -16,8 +17,11 @@ function User() {
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(false);
+  const [createShow, setCreateShow] = useState(false);
   const handleClose = () => setShow(false);
+  const handleCreateClose = () => setCreateShow(false);
   const handleShow = () => setShow(true);
+  const handleCreateShow = () => setCreateShow(true);
   useEffect(() => {
     const url = "http://localhost:58017/api/StaffAccounts/";
     axios.get(url).then((data) => {
@@ -43,6 +47,38 @@ function User() {
     setShow(true);
     console.log(user);
   };
+  const showPreview = (event) => {
+    if (event.target.files && event.target.files[0]){
+      const imageFile = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (x) =>{
+        setUser({
+          ...user,
+          imageFile:imageFile,
+          imgSrc : x.target.result
+        })
+      }
+      reader.readAsDataURL(imageFile);
+    }
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const requestParams = {
+      method: "POST",
+      body: JSON.stringify({
+        accountId : event.target.accountId.value ,
+        username : event.target.username.value,
+        email : event.target.email.value,
+        role : event.target.role.value,
+      }),
+      headers: { "Content-Type": "application/json" },
+    };
+    return fetch(
+      "http://localhost:58017/api/StaffAccounts/",
+      requestParams
+    ).then();
+
+  }
   return (
     <div className="hold-transition sidebar-mini layout-fixed">
       <div className="wrapper">
@@ -200,6 +236,12 @@ function User() {
               <div className="row mb-2">
                 <div className="col-sm-6">
                   <h1 className="m-0">Account Management</h1>
+                  <button
+                    className="btn btn-primary m-0"
+                    onClick={handleCreateShow}
+                  >
+                    Add New Account
+                  </button>
                 </div>
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
@@ -289,7 +331,7 @@ function User() {
               <input
                 type="text"
                 className="form-control"
-                readonly
+                readOnly
                 value={user.accountId}
               />
             </div>
@@ -298,7 +340,6 @@ function User() {
               <input
                 type="text"
                 className="form-control"
-                readonly
                 value={user.username}
               />
             </div>
@@ -306,26 +347,65 @@ function User() {
           <div class="row">
             <div class="col-8">
               <label>Emaih</label>
-              <input
-                type="text"
-                className="form-control"
-                readonly
-                value={user.email}
-              />
+              <input type="text" className="form-control" value={user.email} />
             </div>
             <div class="col-4">
               <label>Role</label>
-              <input
-                type="text"
-                className="form-control"
-                readonly
-                value={user.role}
-              />
+              <input type="text" className="form-control" value={user.role} />
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={createShow}
+        onHide={handleCreateClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header>
+          <Modal.Title>User Information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <img src={user.imgSrc} width="200" height="150" />
+              <input type="file" className="form-control-file"  onChange={showPreview}/>
+            </div>
+            <div className="row">
+              <div className="col-4">
+                <label>Account Id</label>
+                <input type="text" className="form-control" name="accountId" />
+              </div>
+              <div className="col-8">
+                <label>Account Name</label>
+                <input type="text" className="form-control" name="username" />
+              </div>
+            </div>
+            <div class="row">
+              <div className="col-8">
+                <label>Email</label>
+                <input type="text" className="form-control" name="email"/>
+              </div>
+              <div className="col-4">
+                <label>Role</label>
+                <input type="text" className="form-control" name="role" />
+              </div>
+            </div>
+            <br></br>
+            <div className="row">
+              <div className="col-4">
+                <input type="submit" className="btn btn-primary" value="Add"/>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCreateClose}>
             Close
           </Button>
         </Modal.Footer>

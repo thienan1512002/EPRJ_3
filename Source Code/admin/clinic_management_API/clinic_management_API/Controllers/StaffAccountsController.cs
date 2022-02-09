@@ -79,7 +79,7 @@ namespace clinic_management_API.Controllers
         // POST: api/StaffAccounts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult> PostStaffAccount([FromForm] StaffViewModel staffVM)
+        public async Task<ActionResult> PostStaffAccount(StaffViewModel staffVM)
         {
             if (staffVM.Image != null)
             {
