@@ -39,7 +39,7 @@ namespace clinic_management_API.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server =.;Database=ClinicDB;uid=sa;pwd=1;");
+                optionsBuilder.UseSqlServer("Server =.;Database=ClinicDB;uid=sa;pwd=hien_vip12;");
             }
         }
 

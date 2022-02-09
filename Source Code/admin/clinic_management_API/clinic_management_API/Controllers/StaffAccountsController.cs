@@ -136,6 +136,7 @@ namespace clinic_management_API.Controllers
             return account;
 
         }
+
         private bool StaffAccountExists(string id)
         {
             return _context.StaffAccounts.Any(e => e.AccountId == id);

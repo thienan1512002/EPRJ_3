@@ -1,14 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Clinic_web_app.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Clinic_web_app.Controllers
 {
     public class CustomersController : Controller
     {
+        private readonly string uri = "http://localhost:58017/api/CustomerAccounts/";
+
         // GET: CustomersController
         public ActionResult Index()
         {
@@ -30,18 +35,20 @@ namespace Clinic_web_app.Controllers
         // POST: CustomersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Customer customer)
         {
+            HttpClient client = new HttpClient();
             try
             {
-                return RedirectToAction(nameof(Index));
+                
+                return View();
             }
             catch
             {
                 return View();
             }
         }
-
+        
         // GET: CustomersController/Edit/5
         public ActionResult Edit(int id)
         {
@@ -52,27 +59,6 @@ namespace Clinic_web_app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        //Login
-        //get
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        // POST: CustomersController/Login
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(string txtEmail, string txtPass)
         {
             try
             {
@@ -104,5 +90,26 @@ namespace Clinic_web_app.Controllers
                 return View();
             }
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: CustomersController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string txtEmail, string txtPass)
+        {
+            HttpClient client = new HttpClient();
+            var data = JsonConvert.DeserializeObject<IEnumerable<Customer>>(client.GetStringAsync(uri).Result);
+            var cus = data.SingleOrDefault(c => c.Email == txtEmail && c.Password == txtPass);
+            if (cus != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
     }
 }

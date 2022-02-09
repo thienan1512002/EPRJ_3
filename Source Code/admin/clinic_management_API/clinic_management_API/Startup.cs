@@ -49,6 +49,7 @@ namespace clinic_management_API
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "clinic_management_API v1"));
+
             }
 
             app.UseRouting();
