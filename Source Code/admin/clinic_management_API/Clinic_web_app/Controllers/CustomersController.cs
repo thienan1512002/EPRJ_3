@@ -12,7 +12,6 @@ namespace Clinic_web_app.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly string uri = "http://localhost:58017/api/CustomerAccounts/";
 
         // GET: CustomersController
         public ActionResult Index()
@@ -101,13 +100,7 @@ namespace Clinic_web_app.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string txtEmail, string txtPass)
         {
-            HttpClient client = new HttpClient();
-            var data = JsonConvert.DeserializeObject<IEnumerable<Customer>>(client.GetStringAsync(uri).Result);
-            var cus = data.SingleOrDefault(c => c.Email == txtEmail && c.Password == txtPass);
-            if (cus != null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            
             return View();
         }
 
