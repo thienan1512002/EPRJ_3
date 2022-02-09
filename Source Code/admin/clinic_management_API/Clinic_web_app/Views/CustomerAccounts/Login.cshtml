@@ -24,6 +24,12 @@
                     <h2>Login</h2>
                 </div>
                 <div id="form_status"></div>
+                @if (@ViewBag.mess != null)
+                {
+                    <div style="border: 1px solid red">
+                        @ViewBag.mess
+                    </div>
+                }
                 <div class="contact-form">
                     <form asp-action="Login" asp-controller="CustomerAccounts" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>

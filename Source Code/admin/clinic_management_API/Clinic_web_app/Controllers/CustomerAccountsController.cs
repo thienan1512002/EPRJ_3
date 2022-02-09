@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Clinic_web_app.Controllers
 {
@@ -128,15 +129,27 @@ namespace Clinic_web_app.Controllers
         {
             if (txtEmail == null || txtPass == null)
             {
-                return NotFound();
+                return View();
             }
 
             var customerAccount = await _context.CustomerAccounts
                 .FirstOrDefaultAsync(m => m.Email == txtEmail && m.Password == txtPass);
             if (customerAccount == null)
             {
-                return NotFound();
+                return View();
+                ViewBag.mess = "Invalid email or password!";
             }
+            HttpContext.Session.SetString("CustomerName", customerAccount.CustomerName);
+            HttpContext.Session.SetString("CustomerId", customerAccount.CustomerId);
+            
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Remove("CustomerName");
+            HttpContext.Session.Remove("CustomerId");
             return RedirectToAction("Index", "Home");
         }
 

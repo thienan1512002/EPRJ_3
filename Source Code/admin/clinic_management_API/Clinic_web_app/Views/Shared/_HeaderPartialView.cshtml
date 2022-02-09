@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -17,7 +17,7 @@
                     <!-- menu start -->
                     <nav class="main-menu">
                         <ul>
-                            <li >
+                            <li>
                                 <a href="/">Home</a>
                             </li>
                             <li><a asp-controller="Home" asp-action="About">About</a></li>
@@ -33,6 +33,7 @@
                             <li>
                                 <a href="equipment.html">Equipment</a>
                             </li>
+
                             <li>
                                 <a href="shop.html">Shop</a>
                                 <ul class="sub-menu">
@@ -44,12 +45,21 @@
                             <li>
                                 <i class="fas fa-user" style="font-size:26px; padding-left: 10px; color: white;"></i>
                             </li>
-                            <li>
-                                <a asp-action="Login" asp-controller="CustomerAccounts">Sign in</a>
-                            </li>
-                            <li>
-                                <a href=""> Register</a>
-                            </li>
+                            @if (Context.Session.GetString("CustomerName") == null)
+                            {
+                                <li>
+                                    <a asp-action="Login" asp-controller="CustomerAccounts">Sign in</a>
+                                </li>
+                                <li>
+                                    <a href=""> Register</a>
+                                </li>
+                            } else {
+                        <li style="color:white">@Context.Session.GetString("CustomerName")</li>
+                        <li>
+                            <a asp-action="Logout" asp-controller="CustomerAccounts"> Logout</a>
+                        </li>
+                            } 
+
                             <li>
                                 <div class="header-icons">
                                     <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>

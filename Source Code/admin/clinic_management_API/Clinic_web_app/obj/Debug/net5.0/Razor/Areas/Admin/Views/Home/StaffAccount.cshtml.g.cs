@@ -13,14 +13,14 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 #nullable restore
-#line 1 "C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\Areas\Admin\Views\_ViewImports.cshtml"
+#line 1 "D:\T1.2009.A0\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\Areas\Admin\Views\_ViewImports.cshtml"
 using Clinic_web_app;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\Areas\Admin\Views\_ViewImports.cshtml"
+#line 2 "D:\T1.2009.A0\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\Areas\Admin\Views\_ViewImports.cshtml"
 using Clinic_web_app.Models;
 
 #line default
@@ -35,7 +35,7 @@ using Clinic_web_app.Models;
         {
             WriteLiteral("\r\n");
 #nullable restore
-#line 2 "C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\Areas\Admin\Views\Home\StaffAccount.cshtml"
+#line 2 "D:\T1.2009.A0\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\Areas\Admin\Views\Home\StaffAccount.cshtml"
   
     ViewData["Title"] = "StaffAccount";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
