@@ -13,5 +13,25 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult StaffAccount()
+        {
+            return View();
+        }
+        public IActionResult EquipmentForClinic()
+        {
+            return View();
+        }
+        public IActionResult EquipmentForMedicine()
+        {
+            return View();
+        }
+        public IActionResult Course()
+        {
+            return View();
+        }
+        public IActionResult CustomerAccount()
+        {
+            return View();
+        }
     }
 }
