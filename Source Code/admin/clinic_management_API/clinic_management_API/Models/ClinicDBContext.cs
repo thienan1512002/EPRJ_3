@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -22,6 +23,8 @@ namespace clinic_management_API.Models
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<CustomerAccount> CustomerAccounts { get; set; }
+
+
         public virtual DbSet<EcomerceEquipDetail> EcomerceEquipDetails { get; set; }
         public virtual DbSet<EcomerceMedOrderDetail> EcomerceMedOrderDetails { get; set; }
         public virtual DbSet<EcomerceOrder> EcomerceOrders { get; set; }
