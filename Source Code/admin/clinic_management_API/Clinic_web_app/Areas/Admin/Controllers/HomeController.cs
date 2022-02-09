@@ -25,6 +25,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult Medicine()
+        {
+            return View();
+        }
+
         public IActionResult Course()
         {
             return View();
