@@ -19,7 +19,7 @@ namespace clinic_management_API.Controllers
         {
             _context = context;
         }
-
+        [HttpGet]
         public ActionResult Index()
         {
             var data = from b in db.Brands
