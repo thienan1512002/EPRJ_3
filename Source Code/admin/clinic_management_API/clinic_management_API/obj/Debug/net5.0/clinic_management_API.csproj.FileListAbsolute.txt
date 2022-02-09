@@ -402,3 +402,4 @@ C:\Users\thien\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_managem
 C:\Users\thien\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\clinic_management_API\obj\Debug\net5.0\ref\clinic_management_API.dll
 C:\Users\thien\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\clinic_management_API\obj\Debug\net5.0\clinic_management_API.pdb
 C:\Users\thien\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\clinic_management_API\obj\Debug\net5.0\clinic_management_API.genruntimeconfig.cache
+D:\T1.2009.A0\EPRJ_3\Source Code\admin\clinic_management_API\clinic_management_API\obj\Debug\net5.0\clinic_management_API.csproj.CopyComplete
