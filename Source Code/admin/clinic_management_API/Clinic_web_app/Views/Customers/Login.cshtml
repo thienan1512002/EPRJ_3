@@ -1,28 +1,40 @@
 ﻿@model Clinic_web_app.Models.Customer
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Login</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login" method="post">
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" name="txtEmail" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" name="txtPass" class="form-control" />
-            </div>
-            <h4 style="color:red">@TempData["ErrorMessage"]</h4>
 
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
+<div class="mt-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="section-title">
+                    <h3>Login</h3>
+                </div>
             </div>
-        </form>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Login" asp-controller="Customers" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" type="text" name="txtEmail" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Password</label>
+                        <input asp-for="Password" type="password" name="txtPass" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" value="Login" />
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
     </div>
 </div>
+
