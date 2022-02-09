@@ -1,19 +1,31 @@
-import {React , useState , useEffect} from 'react';
-import { Link , Redirect } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
+const initialUserValue = {
+  accountId:'',
+  username:'',
+  email:'',
+  role:'',
+};
 function User() {
+  const [user, setUser] = useState(initialUserValue);
   const [data, setData] = useState(null);
-  useEffect(()=>{
+  const [filter, setFilter] = useState("");
+  useEffect(() => {
     const url = "http://localhost:58017/api/StaffAccounts/";
-    axios.get(url).then(data => {
+    axios.get(url).then((data) => {
       //console.log(data.data);
       setData(data.data);
-    })
-  })
-   if (localStorage.getItem("myData") === null) {
-     localStorage.setItem("warning", "You have to be login first !");
-     return <Redirect to="/" />;
-   }
+    });
+  });
+  if (localStorage.getItem("myData") === null) {
+    localStorage.setItem("warning", "You have to be login first !");
+    return <Redirect to="/" />;
+  }
+  const handleFilter = (event) => {
+    setFilter(event.target.value);
+  };
   return (
     <div className="hold-transition sidebar-mini layout-fixed">
       <div className="wrapper">
@@ -59,6 +71,7 @@ function User() {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
+                      onChange={handleFilter}
                     />
                     <div className="input-group-append">
                       <button className="btn btn-navbar" type="submit">
@@ -197,18 +210,20 @@ function User() {
                   </thead>
                   <tbody>
                     {data &&
-                      data
-                        .map((item) => {
-                          return (
-                            <tr>
-                              <td key={item.accountId}>{item.accountId}</td>
-                              <td>{item.username}</td>
-                              <td><img src={item.image} alt={item.image}/></td>
-                              <td>{item.email}</td> 
-                              <td>{item.role}</td>                            
-                            </tr>
-                          );
-                        })}
+                      data.filter((item) => item.username.includes(filter))
+                      .map((item) => {
+                        return (
+                          <tr>
+                            <td key={item.accountId}>{item.accountId}</td>
+                            <td>{item.username}</td>
+                            <td>
+                              <img src={item.image} alt={item.image} />
+                            </td>
+                            <td>{item.email}</td>
+                            <td>{item.role}</td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>
