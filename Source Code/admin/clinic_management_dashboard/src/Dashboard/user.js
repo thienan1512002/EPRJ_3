@@ -2,16 +2,22 @@ import { React, useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
+
 const initialUserValue = {
-  accountId:'',
-  username:'',
-  email:'',
-  role:'',
+  accountId: "",
+  username: "",
+  email: "",
+  role: "",
+  //image:'',
 };
+
 function User() {
   const [user, setUser] = useState(initialUserValue);
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState("");
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   useEffect(() => {
     const url = "http://localhost:58017/api/StaffAccounts/";
     axios.get(url).then((data) => {
@@ -25,6 +31,17 @@ function User() {
   }
   const handleFilter = (event) => {
     setFilter(event.target.value);
+  };
+  const userValue = (id, username, email, role) => {
+    setUser({
+      ...user,
+      accountId: id,
+      username: username,
+      email: email,
+      role: role,
+    });
+    setShow(true);
+    console.log(user);
   };
   return (
     <div className="hold-transition sidebar-mini layout-fixed">
@@ -201,29 +218,40 @@ function User() {
                 <table className="table table-hover">
                   <thead className="thead-dark">
                     <tr>
-                      <td>Account Id</td>
-                      <td>Username</td>
-                      <td>Avatar</td>
-                      <td>Email</td>
-                      <td>Role</td>
+                      <th align="center">Account Id</th>
+                      <th align="center">Username</th>
+                      <th align="center">Avatar</th>
+                      <th align="center">Email</th>
+                      <th align="center">Role</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data &&
-                      data.filter((item) => item.username.includes(filter))
-                      .map((item) => {
-                        return (
-                          <tr>
-                            <td key={item.accountId}>{item.accountId}</td>
-                            <td>{item.username}</td>
-                            <td>
-                              <img src={item.image} alt={item.image} />
-                            </td>
-                            <td>{item.email}</td>
-                            <td>{item.role}</td>
-                          </tr>
-                        );
-                      })}
+                      data
+                        .filter((item) => item.username.includes(filter))
+                        .map((item) => {
+                          return (
+                            <tr
+                              onClick={() =>
+                                userValue(
+                                  item.accountId,
+                                  item.username,
+                                  item.email,
+                                  item.role
+                                )
+                              }
+                              style={{ cursor: "pointer" }}
+                            >
+                              <td key={item.accountId}>{item.accountId}</td>
+                              <td>{item.username}</td>
+                              <td>
+                                <img src={item.image} alt={item.image} />
+                              </td>
+                              <td>{item.email}</td>
+                              <td>{item.role}</td>
+                            </tr>
+                          );
+                        })}
                   </tbody>
                 </table>
               </div>
@@ -245,6 +273,63 @@ function User() {
           Control sidebar content goes here
         </aside>
       </div>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header>
+          <Modal.Title>User Information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div class="row">
+            <div class="col-4">
+              <label>Account Id</label>
+              <input
+                type="text"
+                className="form-control"
+                readonly
+                value={user.accountId}
+              />
+            </div>
+            <div class="col-8">
+              <label>Account Name</label>
+              <input
+                type="text"
+                className="form-control"
+                readonly
+                value={user.username}
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <label>Emaih</label>
+              <input
+                type="text"
+                className="form-control"
+                readonly
+                value={user.email}
+              />
+            </div>
+            <div class="col-4">
+              <label>Role</label>
+              <input
+                type="text"
+                className="form-control"
+                readonly
+                value={user.role}
+              />
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
