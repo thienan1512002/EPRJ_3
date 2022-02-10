@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -48,7 +50,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForClinics/Create
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View();
         }
 
@@ -57,15 +59,25 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EquipmentId,EquipmentName,BrandId,Price,Quantity,Image")] EquipmentForClinic equipmentForClinic)
+        public async Task<IActionResult> Create(EquipmentForClinic equipmentForClinic, IFormFile file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null)
+                {
+                    string fileName = Path.GetFileName(file.FileName);
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images/", fileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    equipmentForClinic.Image = "images/" + fileName;
+                }
                 _context.Add(equipmentForClinic);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId", equipmentForClinic.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", equipmentForClinic.BrandId);
             return View(equipmentForClinic);
         }
 
@@ -82,7 +94,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId", equipmentForClinic.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", equipmentForClinic.BrandId);
             return View(equipmentForClinic);
         }
 
@@ -91,7 +103,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("EquipmentId,EquipmentName,BrandId,Price,Quantity,Image")] EquipmentForClinic equipmentForClinic)
+        public async Task<IActionResult> Edit(string id, EquipmentForClinic equipmentForClinic, IFormFile file)
         {
             if (id != equipmentForClinic.EquipmentId)
             {
@@ -102,6 +114,16 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (file != null)
+                    {
+                        string fileName = Path.GetFileName(file.FileName);
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/images/", fileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        equipmentForClinic.Image = "images/" + fileName;
+                    }
                     _context.Update(equipmentForClinic);
                     await _context.SaveChangesAsync();
                 }
@@ -138,19 +160,13 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(equipmentForClinic);
-        }
-
-        // POST: Admin/EquipmentForClinics/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var equipmentForClinic = await _context.EquipmentForClinics.FindAsync(id);
             _context.EquipmentForClinics.Remove(equipmentForClinic);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+
 
         private bool EquipmentForClinicExists(string id)
         {
