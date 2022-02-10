@@ -51,12 +51,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/StaffAccounts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(StaffAccount staffAccount ,IFormFile file)
+        public async Task<IActionResult> Create(StaffAccount staffAccount , IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +96,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, StaffAccount staffAccount , IFormFile file)
+        public async Task<IActionResult> Edit(string id,StaffAccount staffAccount , IFormFile file)
         {
             if (id != staffAccount.AccountId)
             {
@@ -148,24 +146,18 @@ namespace Clinic_web_app.Areas.Admin.Controllers
 
             var staffAccount = await _context.StaffAccounts
                 .FirstOrDefaultAsync(m => m.AccountId == id);
+            _context.StaffAccounts.Remove(staffAccount);
+            await _context.SaveChangesAsync();
             if (staffAccount == null)
             {
                 return NotFound();
             }
 
-            return View(staffAccount);
+            return RedirectToAction("Index");
         }
 
         // POST: Admin/StaffAccounts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var staffAccount = await _context.StaffAccounts.FindAsync(id);
-            _context.StaffAccounts.Remove(staffAccount);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+       
 
         private bool StaffAccountExists(string id)
         {
