@@ -140,7 +140,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId", medicine.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", medicine.BrandId);
             return View(medicine);
         }
 
@@ -159,8 +159,9 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            return View(medicine);
+            _context.Medicines.Remove(medicine);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Admin/MedicinesAdmin/Delete/5
