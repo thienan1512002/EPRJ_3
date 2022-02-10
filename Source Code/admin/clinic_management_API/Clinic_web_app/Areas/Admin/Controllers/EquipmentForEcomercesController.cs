@@ -160,19 +160,12 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(equipmentForEcomerce);
-        }
-
-        // POST: Admin/EquipmentForEcomerces/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var equipmentForEcomerce = await _context.EquipmentForEcomerces.FindAsync(id);
             _context.EquipmentForEcomerces.Remove(equipmentForEcomerce);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+      
 
         private bool EquipmentForEcomerceExists(string id)
         {
