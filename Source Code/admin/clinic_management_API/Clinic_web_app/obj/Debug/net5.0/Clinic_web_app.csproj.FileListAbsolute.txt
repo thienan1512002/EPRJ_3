@@ -372,7 +372,6 @@ C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_managem
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Home\Medicine.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Home\StaffAccount.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\MedicinesAdmin\Create.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\MedicinesAdmin\Delete.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\MedicinesAdmin\Details.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\MedicinesAdmin\Edit.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\MedicinesAdmin\Index.cshtml.g.cs
@@ -406,3 +405,18 @@ C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_managem
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\StaffAccounts\Create.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\StaffAccounts\Edit.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\StaffAccounts\Details.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Courses\Create.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Courses\Delete.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Courses\Details.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Courses\Edit.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Courses\Index.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Create.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Delete.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Details.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Edit.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Index.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Create.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Delete.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Details.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Edit.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Index.cshtml.g.cs
