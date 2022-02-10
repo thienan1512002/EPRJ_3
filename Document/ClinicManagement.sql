@@ -122,7 +122,7 @@ go
 Create table Feedback
 (
 	FeedbackID int primary key identity , 
-	CustomerID varchar(10) foreign key references CustomerAccount,
+	CustomerID varchar(50) foreign key references CustomerAccount,
 	Content varchar(300),
 	DateCreate datetime,
 	Reply varchar(300)
