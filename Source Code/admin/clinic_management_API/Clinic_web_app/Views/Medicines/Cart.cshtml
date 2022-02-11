@@ -1,0 +1,92 @@
+﻿@model List<Clinic_web_app.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>KiviCare is an easier way to save, shop and stay well.</p>
+                    <h1>Cart</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+@if (Model.Count > 0)
+{
+    decimal total = 0;
+    int stt = 1;
+
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th></th>
+        </tr>
+        @foreach (var cartitem in Model)
+        {
+            var thanhtien = cartitem.quantity * cartitem.medicine.Price;
+            total += thanhtien;
+
+            <tr>
+                <td>@(stt++)</td>
+                <td>@cartitem.medicine.MedName</td>
+                <td>@(cartitem.medicine.Price.ToString("n0"))</td>
+                <td><input asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.medicine.MedId}")" /></td>
+                <td>@(thanhtien.ToString("n0"))</td>
+                <td>
+                    <button class="btn btn-success updatecartitem"
+                            data-medicineid="@cartitem.medicine.MedId">
+                        Cập nhật
+                    </button>
+                    <a asp-route="removecart" asp-route-medicineid="@cartitem.medicine.MedId"
+                       class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4" class="text-right">Tổng tiền</td>
+            <td>@(total.ToString("n0"))</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <a asp-controller="medicine" asp-action="Checkout" class="btn btn-success">Gửi đơn hàng</a>
+
+    @section Scripts {
+        <script>
+          $(document).ready(function () {
+              $(".updatecartitem").click(function (event) {
+                  event.preventDefault();
+                  var medid = $(this).attr("data-medicineid");
+                  var quantity = $("#quantity-" + medicineid).val();
+                  $.ajax({
+                      type: "POST",
+                      url:"@Url.RouteUrl("updatecart")",
+                      data: {
+                          medicineid: medid,
+                          quantity:quantity
+                      },
+                      success: function (result) {
+                          window.location.href = "@Url.RouteUrl("cart")";
+                      }
+                  });
+              });
+          });
+        </script>
+    }
+
+}
+else
+{
+    <p class="alert alert-danger">Giỏ hàng trống</p>
+}

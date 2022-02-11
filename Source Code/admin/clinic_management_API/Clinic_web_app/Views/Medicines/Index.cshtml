@@ -1,13 +1,88 @@
-﻿@model IEnumerable<Clinic_web_app.Models.Medicine>
+﻿@model List<Clinic_web_app.Models.Medicine>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Medicine";
 }
 
-<h1>Index</h1>
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>We Deliver The Lowest Medicine For You</p>
+                    <h1>Medicine</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+<!-- products -->
+<div class="product-section mt-150 mb-150">
+    <div class="container">
 
-<p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-filters">
+                    <ul>
+                        <li class="active" data-filter="*">All</li>
+                        <li data-filter=".lemon">Medicines</li>
+                        <li data-filter=".strawberry">Beauty</li>
+                        <li data-filter=".berry">Personal Care</li>
+                        <li data-filter=".lemon">Baby and Kids</li>
+                        <li data-filter=".lemon">Fitness & Nutrition</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row">
+            <div class="text-muted m-2" id="res">Showing 44 results</div>
+            <div class="ml-auto mr-lg-4">
+                <div id="sorting" class="border rounded p-1 m-1">
+                    <span class="text-muted">Sort by</span> <select name="sort" id="sort">
+                        <option value="popularity">Popularity</option>
+                        <option value="prcie">Price</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row product-lists">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="single-product-item">
+                        <div class="product-image">
+                            <a asp-action="Details" asp-route-id="@item.MedId"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
+                        </div>
+                        <h3>@(item.MedName)</h3>
+                        <p style="color:gray">@(item.Brand.BrandName)</p>
+                        <p class="product-price"> @(item.Price)$ </p>
+                        <a asp-route="addcart" asp-route-productid="@item.MedId" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    </div>
+                </div>
+            }
+         </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="pagination-wrap">
+                    <ul>
+                        <li><a href="#">Prev</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a class="active" href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end products -->
+@*<p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
@@ -35,32 +110,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MedName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.BrandId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MedId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MedId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MedId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MedName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Image)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MedId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.MedId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MedId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
-</table>
+</table>*@

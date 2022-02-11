@@ -40,7 +40,70 @@
     </div>
     <!--PreLoader Ends-->
     <!-- header -->
-    @await Html.PartialAsync("_HeaderPartialView.cshtml")
+    @*@await Html.PartialAsync("_HeaderPartialView.cshtml")*@
+    <div class="top-header-area" id="sticker">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 text-center">
+                    <div class="main-menu-wrap">
+                        <!-- logo -->
+                        <div class="site-logo">
+                            <a href="index.html">
+                                <img src="~/assets/img/logo.png" alt="">
+                            </a>
+                        </div>
+                        <!-- logo -->
+                        <!-- menu start -->
+                        <nav class="main-menu">
+                            <ul>
+                                <li>
+                                    <a href="/">Home</a>
+                                </li>
+                                <li><a asp-controller="Home" asp-action="About">About</a></li>
+                                <li>
+                                    <a href="#">Pages</a>
+                                    <ul class="sub-menu">
+                                        <li><a asp-controller="Medicines" asp-action="Cart">Cart</a></li>
+                                        <li><a href="checkout.html">Check Out</a></li>
+                                    </ul>
+                                </li>
+                                <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                                <li>
+                                    <a href="equipment.html">Equipment</a>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="Medicines" asp-action="Index">Shop</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="shop.html">Shop</a></li>
+                                        <li><a asp-controller="Medicines" asp-action="Index">Check Out</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <i class="fas fa-user" style=" padding-left: 10px; color: white;"></i>
+                                </li>
+
+                                @await Html.PartialAsync("_LoginPartialView.cshtml")
+                                <li>
+                                    <div class="header-icons">
+                                        <a class="shopping-cart" asp-controller="Medicines" asp-action="Cart">
+                                            <i class="fas fa-shopping-cart"></i>
+                                            @await Html.PartialAsync("_CartPartialView.cshtml")
+                                        </a>
+                                        <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                        <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                        <div class="mobile-menu"></div>
+                        <!-- menu end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- end header -->
     <!-- search area -->
     @await Html.PartialAsync("_SearchPartialView.cshtml")

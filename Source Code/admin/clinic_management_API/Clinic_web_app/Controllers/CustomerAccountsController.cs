@@ -149,13 +149,17 @@ namespace Clinic_web_app.Controllers
             {
                 return View();
             }
-
             var customerAccount = await _context.CustomerAccounts
                 .FirstOrDefaultAsync(m => m.Email == txtEmail && m.Password == txtPass);
             if (customerAccount == null)
             {
                 return View();
                 ViewBag.mess = "Invalid email or password!";
+            }
+            if(customerAccount.Status == "BLOCK")
+            {
+                return View();
+                ViewBag.mess = "Your account is suspended and is not permitted to perform this action";
             }
             HttpContext.Session.SetString("CustomerName", customerAccount.CustomerName);
             HttpContext.Session.SetString("CustomerId", customerAccount.CustomerId);
