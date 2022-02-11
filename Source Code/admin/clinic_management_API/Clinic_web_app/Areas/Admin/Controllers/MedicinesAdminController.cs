@@ -50,7 +50,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/MedicinesAdmin/Create
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId");
             return View();
         }
 

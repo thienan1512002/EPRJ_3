@@ -656,6 +656,3 @@ D:\T1.2009.A0\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\
 D:\T1.2009.A0\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Edit.cshtml.g.cs
 D:\T1.2009.A0\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Index.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Home\Login.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Shared\_LoginLayout.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\bin\Debug\net5.0\bundleconfig.json
