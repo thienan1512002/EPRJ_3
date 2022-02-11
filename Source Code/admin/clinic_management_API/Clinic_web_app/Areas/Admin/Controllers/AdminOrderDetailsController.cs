@@ -62,8 +62,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/AdminOrderDetails/Create
         public IActionResult Create()
         {
-            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentId");
-            ViewData["OrderDetailId"] = new SelectList(_context.AdminOrders, "OrderId", "OrderId");
+            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentName");           
             return View();
         }
 
@@ -72,17 +71,33 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,OrderDetailId,EquipmentId,Quantity,Purpose")] AdminOrderDetail adminOrderDetail)
+        public async Task<IActionResult> Create(AdminOrderDetail adminOrderDetail , string equimentId , int quantity , string purpose)
         {
             if (ModelState.IsValid)
             {
+                AdminOrder order = GetOrderInfomation();
+               
+                _context.AdminOrders.Add(order);
+                await _context.SaveChangesAsync();
+                adminOrderDetail.OrderDetailId = order.OrderId;
+                adminOrderDetail.EquipmentId = equimentId;
+                adminOrderDetail.Quantity = quantity;
+                adminOrderDetail.Purpose = purpose;
                 _context.Add(adminOrderDetail);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentId", adminOrderDetail.EquipmentId);
-            ViewData["OrderDetailId"] = new SelectList(_context.AdminOrders, "OrderId", "OrderId", adminOrderDetail.OrderDetailId);
+            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentName", adminOrderDetail.EquipmentId);
+            
             return View(adminOrderDetail);
+        }
+
+        private AdminOrder GetOrderInfomation()
+        {
+            AdminOrder order = new AdminOrder();
+            order.AccountId = HttpContext.Session.GetString("accountId");
+            order.OrderDate = DateTime.Now;
+            return order;
         }
 
         // GET: Admin/AdminOrderDetails/Edit/5
