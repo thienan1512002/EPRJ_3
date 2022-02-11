@@ -16,6 +16,8 @@ Create table Medicine
 	BrandID varchar(10) foreign key references Brands,
 	Price int,
 	Quantity int,
+	Description text,
+	DateCreate datetime,
 	Image varchar(200)
 )
 go
@@ -26,6 +28,8 @@ Create table EquipmentForClinic
 	BrandID varchar(10) foreign key references Brands,
 	Price int , 
 	Quantity int ,
+	Description text,
+	DateCreate datetime,
 	Image varchar(200)
 )
 go
@@ -36,6 +40,8 @@ Create table EquipmentForEcomerce
 	BrandID varchar(10) foreign key references Brands,
 	Price int , 
 	Quantity int ,
+	Description text,
+	DateCreate datetime,
 	Image varchar(200)
 )
 go
