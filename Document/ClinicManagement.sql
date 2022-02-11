@@ -84,7 +84,7 @@ Create table AdminOrderDetails
 go
 Create table CustomerAccount
 (
-	CustomerID varchar(10) primary key , 
+	CustomerID varchar(50) primary key , 
 	CustomerName varchar(50),
 	Email varchar(50),
 	Password varchar(50),
@@ -96,7 +96,7 @@ go
 Create table EcomerceOrder
 (
 	OrderID int identity primary key , 
-	CustomerID varchar(10) foreign key references CustomerAccount,
+	CustomerID varchar(50) foreign key references CustomerAccount,
 	OrderDate datetime,
 	Address varchar(50)
 )
@@ -122,7 +122,7 @@ go
 Create table Feedback
 (
 	FeedbackID int primary key identity , 
-	CustomerID varchar(10) foreign key references CustomerAccount,
+	CustomerID varchar(50) foreign key references CustomerAccount,
 	Content varchar(300),
 	DateCreate datetime,
 	Reply varchar(300)

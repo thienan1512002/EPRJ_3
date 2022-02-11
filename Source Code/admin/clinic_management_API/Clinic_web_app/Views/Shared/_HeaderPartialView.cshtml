@@ -51,7 +51,7 @@
                                     <a asp-action="Login" asp-controller="CustomerAccounts">Sign in</a>
                                 </li>
                                 <li>
-                                    <a href=""> Register</a>
+                                    <a asp-action="Create" asp-controller="CustomerAccounts"> Register</a>
                                 </li>
                             } else {
                         <li style="color:white">@Context.Session.GetString("CustomerName")</li>

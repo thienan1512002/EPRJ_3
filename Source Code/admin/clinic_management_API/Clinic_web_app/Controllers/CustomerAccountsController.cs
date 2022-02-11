@@ -58,9 +58,20 @@ namespace Clinic_web_app.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customerAccount);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var check = await _context.CustomerAccounts
+                .FirstOrDefaultAsync(c=>c.Email == customerAccount.Email);
+                if (check == null)
+                {
+                    customerAccount.CustomerId = customerAccount.Email;
+                    _context.Add(customerAccount);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.mess = "Email already exists";
+                    return View();
+                }
             }
             return View(customerAccount);
         }
