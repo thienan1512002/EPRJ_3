@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -22,12 +23,20 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Brands
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View(await _context.Brands.ToListAsync());
         }
 
         // GET: Admin/Brands/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +55,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Brands/Create
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
 
@@ -54,8 +67,12 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BrandId,BrandName")] Brand brand)
+        public async Task<IActionResult> Create( Brand brand)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(brand);
@@ -68,6 +85,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Brands/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();

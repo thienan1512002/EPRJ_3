@@ -35,6 +35,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForClinics/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -54,6 +58,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForClinics/Create
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View();
         }
@@ -88,6 +96,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForClinics/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -109,6 +121,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, EquipmentForClinic equipmentForClinic, IFormFile file)
         {
+
             if (id != equipmentForClinic.EquipmentId)
             {
                 return NotFound();

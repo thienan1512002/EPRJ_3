@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -22,6 +23,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Enrollments
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             var clinicDBContext = _context.Enrollments.Include(e => e.Account).Include(e => e.Course);
             return View(await clinicDBContext.ToListAsync());
         }
@@ -29,6 +34,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Enrollments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -49,8 +58,12 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Enrollments/Create
         public IActionResult Create()
         {
-            ViewData["AccountId"] = new SelectList(_context.StaffAccounts, "AccountId", "AccountId");
-            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "CourseId");
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            ViewData["AccountId"] = new SelectList(_context.StaffAccounts, "AccountId", "Username");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "CourseName");
             return View();
         }
 
@@ -59,7 +72,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnrollmentId,CourseId,AccountId")] Enrollment enrollment)
+        public async Task<IActionResult> Create(Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +80,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountId"] = new SelectList(_context.StaffAccounts, "AccountId", "AccountId", enrollment.AccountId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "CourseId", enrollment.CourseId);
+            ViewData["AccountId"] = new SelectList(_context.StaffAccounts, "AccountId", "Username", enrollment.AccountId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "CourseName", enrollment.CourseId);
             return View(enrollment);
         }
 
@@ -85,8 +98,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountId"] = new SelectList(_context.StaffAccounts, "AccountId", "AccountId", enrollment.AccountId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "CourseId", enrollment.CourseId);
+            ViewData["AccountId"] = new SelectList(_context.StaffAccounts, "AccountId", "Username", enrollment.AccountId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "CourseName", enrollment.CourseId);
             return View(enrollment);
         }
 
@@ -95,7 +108,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnrollmentId,CourseId,AccountId")] Enrollment enrollment)
+        public async Task<IActionResult> Edit(int id, Enrollment enrollment)
         {
             if (id != enrollment.EnrollmentId)
             {
@@ -122,8 +135,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountId"] = new SelectList(_context.StaffAccounts, "AccountId", "AccountId", enrollment.AccountId);
-            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "CourseId", enrollment.CourseId);
+            ViewData["AccountId"] = new SelectList(_context.StaffAccounts, "AccountId", "Username", enrollment.AccountId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "CourseId", "CourseName", enrollment.CourseId);
             return View(enrollment);
         }
 
@@ -144,20 +157,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(enrollment);
-        }
-
-        // POST: Admin/Enrollments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var enrollment = await _context.Enrollments.FindAsync(id);
             _context.Enrollments.Remove(enrollment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+     
         private bool EnrollmentExists(int id)
         {
             return _context.Enrollments.Any(e => e.EnrollmentId == id);
