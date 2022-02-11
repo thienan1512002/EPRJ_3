@@ -70,6 +70,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             HttpContext.Session.SetString("accountId", staffAccount.AccountId);
             HttpContext.Session.SetString("accountName", staffAccount.Username);
             HttpContext.Session.SetString("avatar", staffAccount.Image);
+            HttpContext.Session.SetString("userRole", staffAccount.Role);
             return RedirectToAction("Index");
         }
     }

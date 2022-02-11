@@ -7147,25 +7147,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jack\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\nhta1\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\T1.2009.A0\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\Clinic_web_app\\Clinic_web_app.csproj",
+      "projectUniqueName": "C:\\Users\\nhta1\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\Clinic_web_app\\Clinic_web_app.csproj",
       "projectName": "Clinic_web_app",
-      "projectPath": "D:\\T1.2009.A0\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\Clinic_web_app\\Clinic_web_app.csproj",
-      "packagesPath": "C:\\Users\\Jack\\.nuget\\packages\\",
-      "outputPath": "D:\\T1.2009.A0\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\Clinic_web_app\\obj\\",
+      "projectPath": "C:\\Users\\nhta1\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\Clinic_web_app\\Clinic_web_app.csproj",
+      "packagesPath": "C:\\Users\\nhta1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\nhta1\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\Clinic_web_app\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Jack\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nhta1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -7231,7 +7234,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   }
