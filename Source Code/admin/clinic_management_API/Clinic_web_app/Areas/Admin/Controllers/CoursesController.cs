@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -22,12 +23,20 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Courses
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View(await _context.Courses.ToListAsync());
         }
 
         // GET: Admin/Courses/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +55,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Courses/Create
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
 
@@ -54,7 +67,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseId,CourseName,Lectures,StartDate,Location,EndDate")] Course course)
+        public async Task<IActionResult> Create( Course course)
         {
             if (ModelState.IsValid)
             {
@@ -86,8 +99,9 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CourseId,CourseName,Lectures,StartDate,Location,EndDate")] Course course)
+        public async Task<IActionResult> Edit(string id, Course course)
         {
+
             if (id != course.CourseId)
             {
                 return NotFound();
@@ -131,19 +145,13 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(course);
-        }
-
-        // POST: Admin/Courses/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var course = await _context.Courses.FindAsync(id);
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        // POST: Admin/Courses/Delete/5
+        
 
         private bool CourseExists(string id)
         {

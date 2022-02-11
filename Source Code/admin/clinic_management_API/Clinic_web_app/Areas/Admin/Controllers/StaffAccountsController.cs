@@ -24,12 +24,20 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/StaffAccounts
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View(await _context.StaffAccounts.ToListAsync());
         }
 
         // GET: Admin/StaffAccounts/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -48,6 +56,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/StaffAccounts/Create
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
 
@@ -78,6 +90,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/StaffAccounts/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();

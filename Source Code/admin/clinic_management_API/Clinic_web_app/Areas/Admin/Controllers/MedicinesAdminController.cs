@@ -24,6 +24,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/MedicinesAdmin
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             var clinicDBContext = _context.Medicines.Include(m => m.Brand);
             return View(await clinicDBContext.ToListAsync());
         }
@@ -31,6 +35,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/MedicinesAdmin/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -50,6 +58,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/MedicinesAdmin/Create
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View();
         }
@@ -61,6 +73,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( Medicine medicine , IFormFile file)
         {
+
             if (ModelState.IsValid)
             {
                 if (file != null)
@@ -84,6 +97,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/MedicinesAdmin/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -147,6 +164,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/MedicinesAdmin/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -164,16 +185,6 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: Admin/MedicinesAdmin/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var medicine = await _context.Medicines.FindAsync(id);
-            _context.Medicines.Remove(medicine);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool MedicineExists(string id)
         {

@@ -18,6 +18,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
         public IActionResult StaffAccount()

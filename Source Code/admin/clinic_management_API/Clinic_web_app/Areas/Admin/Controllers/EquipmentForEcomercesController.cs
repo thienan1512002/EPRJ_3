@@ -24,6 +24,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForEcomerces
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             var clinicDBContext = _context.EquipmentForEcomerces.Include(e => e.Brand);
             return View(await clinicDBContext.ToListAsync());
         }
@@ -31,6 +35,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForEcomerces/Details/5
         public async Task<IActionResult> Details(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -50,6 +58,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForEcomerces/Create
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View();
         }
@@ -84,6 +96,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForEcomerces/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -147,6 +163,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForEcomerces/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return NotFound();
