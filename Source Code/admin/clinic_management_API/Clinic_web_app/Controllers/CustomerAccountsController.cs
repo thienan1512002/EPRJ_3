@@ -56,6 +56,7 @@ namespace Clinic_web_app.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustomerId,CustomerName,Email,Password,Phone,Address,Status")] CustomerAccount customerAccount)
         {
+            
             if (ModelState.IsValid)
             {
                 var check = await _context.CustomerAccounts
@@ -65,7 +66,7 @@ namespace Clinic_web_app.Controllers
                     customerAccount.CustomerId = customerAccount.Email;
                     _context.Add(customerAccount);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Login));
                 }
                 else
                 {
@@ -108,6 +109,12 @@ namespace Clinic_web_app.Controllers
             {
                 try
                 {
+                    var customer = await _context.CustomerAccounts.FindAsync(id);
+                    if (customerAccount.Password == null || customerAccount.Password == "")
+                    {
+                        customerAccount.Password = customer.Password;
+                    }
+                    customerAccount.Status = "Available";
                     _context.Update(customerAccount);
                     await _context.SaveChangesAsync();
                 }
