@@ -85,6 +85,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                     }
                     equipmentForEcomerce.Image = "images/" + fileName;
                 }
+                equipmentForEcomerce.DateCreate = DateTime.Now;
                 _context.Add(equipmentForEcomerce);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

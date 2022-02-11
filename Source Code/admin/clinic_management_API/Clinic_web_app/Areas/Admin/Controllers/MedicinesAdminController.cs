@@ -71,7 +71,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Medicine medicine , IFormFile file)
+        public async Task<IActionResult> Create( Medicine medicine , IFormFile file , string checkbox)
         {
 
             if (ModelState.IsValid)
@@ -85,6 +85,14 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                         await file.CopyToAsync(stream);
                     }
                     medicine.Image = "images/" + fileName;
+                }
+                medicine.DateCreate = DateTime.Now;
+                if(checkbox != null)
+                {
+                    medicine.Featured = true;
+                }else
+                {
+                    medicine.Featured = false;
                 }
                 _context.Add(medicine);
                 await _context.SaveChangesAsync();
@@ -120,7 +128,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id,  Medicine medicine , IFormFile file)
+        public async Task<IActionResult> Edit(string id,  Medicine medicine , IFormFile file ,string checkbox)
         {
             if (id != medicine.MedId)
             {
@@ -141,6 +149,15 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                         }
                         medicine.Image = "images/" + fileName;
                     }
+                    if (checkbox != null)
+                    {
+                        medicine.Featured = true;
+                    }
+                    else
+                    {
+                        medicine.Featured = false;
+                    }
+                   
                     _context.Update(medicine);
                     await _context.SaveChangesAsync();
                 }

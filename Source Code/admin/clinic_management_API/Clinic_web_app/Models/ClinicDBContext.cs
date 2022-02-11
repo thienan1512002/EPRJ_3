@@ -306,7 +306,8 @@ namespace Clinic_web_app.Models
                 entity.Property(e => e.Image)
                     .HasMaxLength(200)
                     .IsUnicode(false);
-
+                entity.Property(e => e.DateCreate).HasColumnType("datetime").HasColumnName("DateCreate");
+                entity.Property(e => e.Description).HasMaxLength(65535).IsUnicode(false);
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.EquipmentForClinics)
                     .HasForeignKey(d => d.BrandId)
@@ -337,7 +338,8 @@ namespace Clinic_web_app.Models
                 entity.Property(e => e.Image)
                     .HasMaxLength(200)
                     .IsUnicode(false);
-
+                entity.Property(e => e.DateCreate).HasColumnType("datetime").HasColumnName("DateCreate");
+                entity.Property(e => e.Description).HasMaxLength(65535).IsUnicode(false);
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.EquipmentForEcomerces)
                     .HasForeignKey(d => d.BrandId)
@@ -391,11 +393,12 @@ namespace Clinic_web_app.Models
                 entity.Property(e => e.Image)
                     .HasMaxLength(200)
                     .IsUnicode(false);
-
+                entity.Property(e => e.DateCreate).HasColumnType("datetime").HasColumnName("DateCreate");
+                entity.Property(e => e.Description).HasMaxLength(65535).IsUnicode(false);
                 entity.Property(e => e.MedName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
+                entity.Property(e => e.Featured).HasColumnType("bit").HasColumnName("Featured");
                 entity.Property(e => e.Type)
                     .HasMaxLength(50)
                     .IsUnicode(false);

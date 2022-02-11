@@ -25,7 +25,7 @@ namespace Clinic_web_app.Controllers
         // GET: Medicines
         public IActionResult Index()
         {
-            var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Featured==true).OrderByDescending(x=>x.CreatedAt);
+            var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Featured==true).OrderByDescending(x=>x.DateCreate);
             return View(clinicDBContext.ToList());
         }
         //public async Task<IActionResult> SortType(string medType, int page=1)
@@ -81,7 +81,7 @@ namespace Clinic_web_app.Controllers
                 .Include(x => x.Brand)
                 .Where(x => x.Type == medicine.Type && x.MedId != id)
                 .Take(3)
-                .OrderByDescending(x => x.CreatedAt)
+                .OrderByDescending(x => x.DateCreate)
                 .ToList();
             ViewBag.RelatedMed = relatedMed;
             if (medicine == null)

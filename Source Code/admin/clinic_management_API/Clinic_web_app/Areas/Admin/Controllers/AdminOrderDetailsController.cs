@@ -50,6 +50,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             var adminOrderDetail = await _context.AdminOrderDetails
                 .Include(a => a.Equipment)
                 .Include(a => a.OrderDetail)
+                .ThenInclude(a => a.Account)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (adminOrderDetail == null)
             {
