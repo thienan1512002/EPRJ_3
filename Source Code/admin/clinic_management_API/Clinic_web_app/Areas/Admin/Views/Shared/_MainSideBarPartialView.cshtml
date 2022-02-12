@@ -40,7 +40,33 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
+                <li class="nav-header">Home</li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="nav-link">
+                         <i class="nav-icon fas fa-dashboard"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="StaffAccounts" asp-action="Details" asp-area="Admin" class="nav-link" asp-route-id=@Context.Session.GetString("accountId")>
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            User
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="LogOut" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Sign Out
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Main Menu</li>
                 <li class="nav-item">
                     <a asp-controller="CustomerAccounts" asp-action="Index" asp-area="Admin" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart"></i>
@@ -97,6 +123,7 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-header">Support</li>
                 <li class="nav-item">
                     <a asp-controller="Home" asp-action="Feedback" asp-area="Admin" class="nav-link">
                         <i class="nav-icon fas fa-comment"></i>
@@ -104,15 +131,8 @@
                             Feedback
                         </p>
                     </a>
-                </li> 
-                <li class="nav-item">
-                    <a asp-controller="Home" asp-action="LogOut" asp-area="Admin" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            Sign Out
-                        </p>
-                    </a>
                 </li>
+
 
             </ul>
         </nav>
