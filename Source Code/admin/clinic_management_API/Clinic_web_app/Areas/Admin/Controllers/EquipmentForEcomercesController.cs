@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -15,10 +16,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     public class EquipmentForEcomercesController : Controller
     {
         private readonly ClinicDBContext _context;
-
-        public EquipmentForEcomercesController(ClinicDBContext context)
+        private readonly INotyfService _notyf;
+        public EquipmentForEcomercesController(ClinicDBContext context , INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Admin/EquipmentForEcomerces
@@ -88,9 +90,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 equipmentForEcomerce.DateCreate = DateTime.Now;
                 _context.Add(equipmentForEcomerce);
                 await _context.SaveChangesAsync();
+                _notyf.Custom("Add " + equipmentForEcomerce.EquipmentName + " successfully", 10, "green", "fa fa-check-circle");
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId", equipmentForEcomerce.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", equipmentForEcomerce.BrandId);
             return View(equipmentForEcomerce);
         }
 
@@ -143,6 +146,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                     }
                     _context.Update(equipmentForEcomerce);
                     await _context.SaveChangesAsync();
+                    _notyf.Custom("Update " + equipmentForEcomerce.EquipmentName + " successfully", 10, "green", "fa fa-check-circle");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -180,13 +184,21 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            if (EquipmentHasOrderEcomerce(equipmentForEcomerce.EquipmentId))
+            {
+                _notyf.Custom(" Cannot delete " + equipmentForEcomerce.EquipmentName + " because someone has rented this equipment", 10, "orange", "fa fa-exclamation");
+                return RedirectToAction("Index");
+            }
             _context.EquipmentForEcomerces.Remove(equipmentForEcomerce);
             await _context.SaveChangesAsync();
+            _notyf.Custom("Delete " + equipmentForEcomerce.EquipmentName + " successfully", 10, "green", "fa fa-check-circle");
             return RedirectToAction(nameof(Index));
         }
 
-      
+        private bool EquipmentHasOrderEcomerce(string id)
+        {
+            return _context.EcomerceEquipDetails.Any(e => e.EquipmentId == id);
+        }
 
         private bool EquipmentForEcomerceExists(string id)
         {

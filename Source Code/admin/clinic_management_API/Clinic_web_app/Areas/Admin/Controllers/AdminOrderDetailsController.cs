@@ -156,36 +156,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             return View(adminOrderDetail);
         }
 
-        // GET: Admin/AdminOrderDetails/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var adminOrderDetail = await _context.AdminOrderDetails
-                .Include(a => a.Equipment)
-                .Include(a => a.OrderDetail)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
-            if (adminOrderDetail == null)
-            {
-                return NotFound();
-            }
-
-            return View(adminOrderDetail);
-        }
-
-        // POST: Admin/AdminOrderDetails/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var adminOrderDetail = await _context.AdminOrderDetails.FindAsync(id);
-            _context.AdminOrderDetails.Remove(adminOrderDetail);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        
+       
 
         private bool AdminOrderDetailExists(int id)
         {

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -15,10 +16,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     public class StaffAccountsController : Controller
     {
         private readonly ClinicDBContext _context;
-
-        public StaffAccountsController(ClinicDBContext context)
+        private readonly INotyfService _notyf;
+        public StaffAccountsController(ClinicDBContext context , INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Admin/StaffAccounts
@@ -88,6 +90,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 }
                 _context.Add(staffAccount);
                 await _context.SaveChangesAsync();
+                _notyf.Custom("Add new account successfully",10,"green","fa fa-check-circle");
                 return RedirectToAction(nameof(Index));
             }
             return View(staffAccount);
@@ -141,6 +144,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                     }
                     _context.Update(staffAccount);
                     await _context.SaveChangesAsync();
+                    _notyf.Custom("Add new account successfully", 10, "green", "fa fa-check-circle");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -168,22 +172,38 @@ namespace Clinic_web_app.Areas.Admin.Controllers
 
             var staffAccount = await _context.StaffAccounts
                 .FirstOrDefaultAsync(m => m.AccountId == id);
-            _context.StaffAccounts.Remove(staffAccount);
-            await _context.SaveChangesAsync();
+           
             if (staffAccount == null)
             {
                 return NotFound();
             }
-
+            if (StaffRegisterCourse(staffAccount.AccountId))
+            {
+                _notyf.Custom("Cannot delete this Account because this Account has registered some courses",10,"Orange","fa fa-exclamation");
+                return RedirectToAction("Index");
+            }
+            if (StaffRentEquipment(staffAccount.AccountId))
+            {
+                _notyf.Custom("Cannot delete this account because this account has rented some equipments",10, "Orange", "fa fa-exclamation");
+                return RedirectToAction("Index");
+            }
+            _context.StaffAccounts.Remove(staffAccount);
+            await _context.SaveChangesAsync();
+            _notyf.Custom("Delete this account successfully ",10, "Orange", "fa fa-exclamation");
             return RedirectToAction("Index");
         }
-
-        // POST: Admin/StaffAccounts/Delete/5
        
-
         private bool StaffAccountExists(string id)
         {
             return _context.StaffAccounts.Any(e => e.AccountId == id);
+        }
+        private bool StaffRegisterCourse(string id)
+        {
+            return _context.Enrollments.Any(e => e.AccountId == id);
+        }
+        private bool StaffRentEquipment(string id)
+        {
+            return _context.AdminOrders.Any(e => e.AccountId == id);
         }
     }
 }

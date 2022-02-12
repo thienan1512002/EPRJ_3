@@ -68,8 +68,11 @@
                 <table class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
-                            <td>Course Name</td>
-                            <td>Lecture</td>
+                            <th>Course Name</th>
+                            <th>Lecture</th>
+                            <th>Location</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,6 +81,9 @@
                             <tr>
                                 <td>@item.Course.CourseName</td>
                                 <td>@item.Course.Lectures</td>
+                                <td>@item.Course.Location</td>
+                                <td>@item.Course.StartDate</td>
+                                <td>@item.Course.EndDate</td>
                             </tr>
                         }
                     </tbody>

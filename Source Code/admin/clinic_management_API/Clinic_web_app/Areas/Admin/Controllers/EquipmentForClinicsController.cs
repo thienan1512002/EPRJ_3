@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -15,10 +16,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     public class EquipmentForClinicsController : Controller
     {
         private readonly ClinicDBContext _context;
-
-        public EquipmentForClinicsController(ClinicDBContext context)
+        private readonly INotyfService _notyf;
+        public EquipmentForClinicsController(ClinicDBContext context , INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Admin/EquipmentForClinics
@@ -88,6 +90,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 equipmentForClinic.DateCreate = DateTime.Now;
                 _context.Add(equipmentForClinic);
                 await _context.SaveChangesAsync();
+                _notyf.Custom("Add " + equipmentForClinic.EquipmentName + " successfully",10,"green","fa fa-check-circle");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", equipmentForClinic.BrandId);
@@ -144,6 +147,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                     }
                     _context.Update(equipmentForClinic);
                     await _context.SaveChangesAsync();
+                    _notyf.Custom("Update " + equipmentForClinic.EquipmentName + " successfully", 10, "green", "fa fa-check-circle");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -158,7 +162,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId", equipmentForClinic.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", equipmentForClinic.BrandId);
             return View(equipmentForClinic);
         }
 
@@ -177,8 +181,13 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            if (EquipmentHasOrderClinic(equipmentForClinic.EquipmentId))
+            {
+                _notyf.Custom(" Cannot delete " + equipmentForClinic.EquipmentName + " because someone has rented this equipment", 10, "orange", "fa fa-exclamation");
+                return RedirectToAction("Index");
+            }
             _context.EquipmentForClinics.Remove(equipmentForClinic);
+            _notyf.Custom("Delete " + equipmentForClinic.EquipmentName + " successfully", 10, "green", "fa fa-check-circle");
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -189,6 +198,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         private bool EquipmentForClinicExists(string id)
         {
             return _context.EquipmentForClinics.Any(e => e.EquipmentId == id);
+        }
+        private bool EquipmentHasOrderClinic(string id)
+        {
+            return _context.AdminOrderDetails.Any(e => e.EquipmentId == id);
         }
     }
 }

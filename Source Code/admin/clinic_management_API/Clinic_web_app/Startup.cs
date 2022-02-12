@@ -1,4 +1,5 @@
-﻿using Clinic_web_app.Models;
+﻿using AspNetCoreHero.ToastNotification;
+using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,6 +40,15 @@ namespace Clinic_web_app
             //{
             //    options.ConstraintMap.Add("string", typeof(string));
             //});
+
+
+            //Show Notification
+            services.AddNotyf(config =>
+            {
+                config.DurationInSeconds = 10;
+                config.IsDismissable = true;
+                config.Position = NotyfPosition.BottomRight;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

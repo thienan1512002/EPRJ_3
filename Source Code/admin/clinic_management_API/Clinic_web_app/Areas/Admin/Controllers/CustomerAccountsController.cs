@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Http;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -14,10 +15,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     public class CustomerAccountsController : Controller
     {
         private readonly ClinicDBContext _context;
-
-        public CustomerAccountsController(ClinicDBContext context)
+        private readonly INotyfService _notyf;
+        public CustomerAccountsController(ClinicDBContext context , INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Admin/CustomerAccounts
@@ -75,9 +77,12 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             if (customerAccount.Status.Equals("Available"))
             {
                 customerAccount.Status = "Block";
-            }else
+                _notyf.Custom("Unlock " + customerAccount.CustomerName + " successfully", 10, "green", "fa fa-check-circle");
+            }
+            else
             {
                 customerAccount.Status = "Available";
+                _notyf.Custom("Block " + customerAccount.CustomerName + " successfully", 10, "green", "fa fa-check-circle");
             }
             _context.Update(customerAccount);
             await _context.SaveChangesAsync();
