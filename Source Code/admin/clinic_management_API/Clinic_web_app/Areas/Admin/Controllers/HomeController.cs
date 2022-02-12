@@ -76,5 +76,13 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             HttpContext.Session.SetString("userRole", staffAccount.Role);
             return RedirectToAction("Index");
         }
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Remove("accountId");
+            HttpContext.Session.Remove("accountName");
+            HttpContext.Session.Remove("avatar");
+            HttpContext.Session.Remove("userRole");
+            return RedirectToAction("Login");
+        }
     }
 }

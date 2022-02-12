@@ -363,11 +363,6 @@ C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_managem
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Courses\Index.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\CustomerAccounts\Details.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\CustomerAccounts\Index.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Create.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Delete.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Details.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Edit.cshtml.g.cs
-C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Enrollments\Index.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Create.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Details.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\EquipmentForClinics\Edit.cshtml.g.cs

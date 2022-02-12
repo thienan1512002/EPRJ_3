@@ -13,10 +13,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Equipment For Ecomerce</h1>
-                    <a asp-action="Create" type="button" class="btn btn-primary m-0">
-                        Add new Equipment
-                    </a>
+                    <h1 class="m-0">Customer Lists</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -73,7 +70,18 @@
                                     @Html.DisplayFor(modelItem => item.Status)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a>
+                                    @if (item.Status.Equals("Block"))
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-success">
+                                            Unlock Account
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-danger">
+                                            Block Account
+                                        </a>
+                                    }
                                 </td>
                             </tr>
                         }

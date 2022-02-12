@@ -28,6 +28,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            if (!HttpContext.Session.GetString("userRole").Equals("Manager"))
+            {
+                return RedirectToAction("Details", new { id = HttpContext.Session.GetString("accountId") });
+            }
             return View(await _context.StaffAccounts.ToListAsync());
         }
 
