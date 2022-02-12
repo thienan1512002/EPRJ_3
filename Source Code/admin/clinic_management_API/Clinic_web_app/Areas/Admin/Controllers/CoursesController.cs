@@ -33,6 +33,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Courses/Details/5
         public async Task<IActionResult> Details(string id)
         {
+
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
@@ -43,6 +44,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
 
             var course = await _context.Courses
+                .Include(m=>m.Enrollments)
+                .ThenInclude(m=>m.Account)
                 .FirstOrDefaultAsync(m => m.CourseId == id);
             if (course == null)
             {
@@ -61,7 +64,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
             return View();
         }
-
+      
         // POST: Admin/Courses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -69,6 +72,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( Course course)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(course);
@@ -77,7 +84,15 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
             return View(course);
         }
-
+        public async Task<IActionResult> Register(string id)
+        {
+            Enrollment newEnrollment = new Enrollment();
+            newEnrollment.AccountId = HttpContext.Session.GetString("accountId");
+            newEnrollment.CourseId = id;
+            _context.Enrollments.Add(newEnrollment);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+        }
         // GET: Admin/Courses/Edit/5
         public async Task<IActionResult> Edit(string id)
         {

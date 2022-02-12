@@ -44,6 +44,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
 
             var staffAccount = await _context.StaffAccounts
+                .Include(m=>m.Enrollments)
+                .ThenInclude(m=>m.Course)
                 .FirstOrDefaultAsync(m => m.AccountId == id);
             if (staffAccount == null)
             {

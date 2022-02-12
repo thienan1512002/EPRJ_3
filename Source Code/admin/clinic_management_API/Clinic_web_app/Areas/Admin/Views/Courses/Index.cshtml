@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">Course Lists</h1>
                     <a asp-action="Create" type="button" class="btn btn-primary m-0">
-                        Add new Account
+                        Add new Course
                     </a>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
@@ -73,7 +73,8 @@
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.CourseId">Edit</a> |
                                     <a asp-action="Details" asp-route-id="@item.CourseId">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
+                                    <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a> |
+                                    <a asp-action="Register" asp-route-id="@item.CourseId">Register</a>
                                 </td>
                             </tr>
                         }
