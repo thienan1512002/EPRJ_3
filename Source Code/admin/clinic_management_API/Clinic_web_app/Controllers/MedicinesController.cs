@@ -116,10 +116,10 @@ namespace Clinic_web_app.Controllers
             session.SetString(CARTKEY, jsoncart);
         }
         //add cart
-        [Route("addcart/{medid}", Name = "addcart")]
-        public IActionResult AddToCart([FromRoute] string medid)
+        [Route("addcart/{id}")]
+        public IActionResult AddToCart(string id)
         {
-            var medicine = _context.Medicines.Where(m=>m.MedId ==medid)
+            var medicine = _context.Medicines.Where(m=>m.MedId ==id)
                 .FirstOrDefault();
             if(medicine == null)
             {
@@ -127,7 +127,7 @@ namespace Clinic_web_app.Controllers
             }
             //xu li
             var cart = GetCartItems();
-            var cartitem = cart.Find(m => m.medicine.MedId == medid);
+            var cartitem = cart.Find(m => m.medicine.MedId == id);
             if (cartitem != null)
             {
                 //if exist +1
