@@ -1,7 +1,9 @@
 ﻿﻿@using Microsoft.AspNetCore.Http
 
+
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
 
 *@
 <!-- Main Sidebar Container -->
@@ -20,7 +22,7 @@
                 <img src="~/@Context.Session.GetString("avatar")" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">@Context.Session.GetString("accountName")</a>
+                <a href="#" class="d-block">Hello @Context.Session.GetString("accountName")</a>
             </div>
         </div>
 
@@ -40,11 +42,11 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+                with font-awesome or any other icon font library -->
                 <li class="nav-header">Home</li>
                 <li class="nav-item">
                     <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="nav-link">
-                         <i class="nav-icon fas fa-dashboard"></i>
+                        <i class="nav-icon fas fa-dashboard"></i>
                         <p>
                             Dashboard
                         </p>
@@ -83,6 +85,7 @@
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a asp-controller="EquipmentForClinics" asp-action="Index" asp-area="Admin" class="nav-link">
                         <i class="nav-icon fas fa-briefcase-medical"></i>
