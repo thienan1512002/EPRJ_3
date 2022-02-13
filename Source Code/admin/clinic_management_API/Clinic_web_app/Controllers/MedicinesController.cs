@@ -142,13 +142,61 @@ namespace Clinic_web_app.Controllers
 
             return RedirectToAction("Cart");
         }
+        //add qty item
+        public IActionResult AddQtyCart(string id, int qty)
+        {
+            var medicine = _context.Medicines.Where(m=>m.MedId ==id)
+                .FirstOrDefault();
+            if(medicine == null)
+            {
+                return NotFound();
+            }
+            //xu li
+            var cart = GetCartItems();
+            var cartitem = cart.Find(m => m.medicine.MedId == id);
+            if (cartitem != null)
+            {
+                cartitem.quantity++;
+            }
+            //save cart to session
+            SaveCartSession(cart);
+
+            return RedirectToAction("Cart");
+        }
+        //minus qty item
+        public IActionResult MinusQtyCart(string id, int qty)
+        {
+            var medicine = _context.Medicines.Where(m=>m.MedId ==id)
+                .FirstOrDefault();
+            if(medicine == null)
+            {
+                return NotFound();
+            }
+            //xu li
+            var cart = GetCartItems();
+            var cartitem = cart.Find(m => m.medicine.MedId == id);
+            if(cartitem.quantity == 1)
+            {
+                cart.Remove(cartitem);
+            }
+            if (cartitem != null)
+            {
+                cartitem.quantity--;
+            }
+            //save cart to session
+            SaveCartSession(cart);
+
+            return RedirectToAction("Cart");
+        }
+
+
         //remove item in cart
-        [Route("/removecart/{medid}", Name = "removecart")]
-        public IActionResult RemoveCart([FromRoute]string medid)
+        [Route("/removecart/{id}", Name = "removecart")]
+        public IActionResult RemoveCart([FromRoute]string id)
         {
             //xu li
             var cart = GetCartItems();
-            var cartitem = cart.Find(m => m.medicine.MedId == medid);
+            var cartitem = cart.Find(m => m.medicine.MedId == id);
             if (cartitem != null)
             {
                 //exist, remove
@@ -158,6 +206,7 @@ namespace Clinic_web_app.Controllers
 
             return RedirectToAction("Cart");
         }
+
         //update cart
         [Route("/updatecart", Name = "updatecart")]
         [HttpPost]
@@ -184,10 +233,17 @@ namespace Clinic_web_app.Controllers
 
         //check out
         [Route("/checkout")]
-        public IActionResult CheckOut(string id, int quantity)
+        public IActionResult CheckOut()
         {
-
-            return View();
+            var session = HttpContext.Session;
+            var checkCus = session.GetString("CustomerId");
+            if (checkCus != null)
+            {
+                var customerAccount =  _context.CustomerAccounts
+                .FirstOrDefaultAsync(m => m.CustomerId == checkCus);
+                ViewBag.Customer = customerAccount;
+            }
+            return View(GetCartItems());
         }
 
         private bool MedicineExists(string id)
