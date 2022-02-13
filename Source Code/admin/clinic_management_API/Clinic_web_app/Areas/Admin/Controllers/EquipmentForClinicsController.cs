@@ -145,6 +145,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                         }
                         equipmentForClinic.Image = "images/" + fileName;
                     }
+                    equipmentForClinic.DateCreate = DateTime.Now;
                     _context.Update(equipmentForClinic);
                     await _context.SaveChangesAsync();
                     _notyf.Custom("Update " + equipmentForClinic.EquipmentName + " successfully", 10, "green", "fa fa-check-circle");

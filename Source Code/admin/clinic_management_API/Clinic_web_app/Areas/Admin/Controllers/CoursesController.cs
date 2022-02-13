@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Http;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -14,10 +15,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     public class CoursesController : Controller
     {
         private readonly ClinicDBContext _context;
-
-        public CoursesController(ClinicDBContext context)
+        private readonly INotyfService _notyf;
+        public CoursesController(ClinicDBContext context , INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Admin/Courses
@@ -80,6 +82,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 _context.Add(course);
                 await _context.SaveChangesAsync();
+                _notyf.Custom("Add new course successfully", 10, "green", "fa fa-check");
                 return RedirectToAction(nameof(Index));
             }
             return View(course);
@@ -91,6 +94,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             newEnrollment.CourseId = id;
             _context.Enrollments.Add(newEnrollment);
             await _context.SaveChangesAsync();
+            _notyf.Custom("Register successfully", 10, "green", "fa fa-check");
             return RedirectToAction("Index", "Home");
         }
         // GET: Admin/Courses/Edit/5

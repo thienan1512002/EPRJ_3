@@ -46,7 +46,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
                 <li class="nav-header">Home</li>
                 <li class="nav-item">
                     <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="nav-link">
@@ -65,31 +65,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Home" asp-action="LogOut" asp-area="Admin" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
+                    <a asp-controller="AdminOrderDetails" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-money-bill"></i>
                         <p>
-                            Sign Out
+                            Equipment Rent Lists
                         </p>
                     </a>
                 </li>
                 <li class="nav-header">Main Menu</li>
                 <li class="nav-item">
-                    <a asp-controller="CustomerAccounts" asp-action="Index" asp-area="Admin" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
+                    <a asp-controller="Brands" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-b"></i>
                         <p>
-                            Customer Account
+                            Brands
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a asp-controller="StaffAccounts" asp-action="Index" asp-area="Admin" class="nav-link">
-                        <i class="nav-icon fas fa-male"></i>
-                        <p>
-                            Staff Account
-                        </p>
-                    </a>
-                </li>
-
                 <li class="nav-item">
                     <a asp-controller="EquipmentForClinics" asp-action="Index" asp-area="Admin" class="nav-link">
                         <i class="nav-icon fas fa-briefcase-medical"></i>
@@ -115,6 +106,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a asp-controller="CustomerAccounts" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Customer Account
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="StaffAccounts" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-male"></i>
+                        <p>
+                            Staff Account
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
                     <a asp-controller="Courses" asp-action="Index" asp-area="Admin" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
@@ -122,14 +131,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a asp-controller="AdminOrderDetails" asp-action="Index" asp-area="Admin" class="nav-link">
-                        <i class="nav-icon fas fa-money-bill"></i>
-                        <p>
-                            Equipment Rent Lists
-                        </p>
-                    </a>
-                </li>
+
                 <li class="nav-header">Support</li>
                 <li class="nav-item">
                     <a asp-controller="Home" asp-action="Feedback" asp-area="Admin" class="nav-link">
@@ -139,8 +141,15 @@
                         </p>
                     </a>
                 </li>
-
-
+                <li class="nav-header">Options</li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="LogOut" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Sign Out
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

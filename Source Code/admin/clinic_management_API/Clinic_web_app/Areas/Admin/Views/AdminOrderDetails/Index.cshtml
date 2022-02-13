@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Clinic_web_app.Models.AdminOrderDetail>
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<Clinic_web_app.Models.AdminOrderDetail>
 
 @{
     ViewData["Title"] = "Index";
@@ -61,33 +62,37 @@
                     <tbody id="myTable">
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Quantity)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Purpose)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OrderDetail.Account.Username)
-                            </td>
-                            @if (item.OrderDetail.Status.Equals("Not Yet"))
-                            {
-                                <td><span class="badge badge-warning">Not Return</span></td>
-                            }
-                            else
-                            {
-                                <td><span class="badge badge-success">Returned <i class="fa fa-check"></i></span></td>
-                            }
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Purpose)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderDetail.Account.Username)
+                                </td>
+                                @if (item.OrderDetail.Status.Equals("Not Yet"))
+                                {
+                                    <td><span class="badge badge-warning">Not Return</span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="badge badge-success">Returned <i class="fa fa-check"></i></span></td>
+                                }
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-primary">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-info">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger">Delete</a>
+                                    @if (Context.Session.GetString("userRole").Equals("Manager"))
+                                    {
+                                        <a asp-action="Finish" asp-route-id="@item.OrderDetailId" class="btn btn-success">Finish</a>
+                                    }
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

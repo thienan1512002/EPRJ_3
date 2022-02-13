@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Http;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -14,10 +15,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     public class BrandsController : Controller
     {
         private readonly ClinicDBContext _context;
-
-        public BrandsController(ClinicDBContext context)
+        private readonly INotyfService _notyf;
+        public BrandsController(ClinicDBContext context , INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Admin/Brands
@@ -77,6 +79,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 _context.Add(brand);
                 await _context.SaveChangesAsync();
+                _notyf.Custom("Add " + brand.BrandName + " successfully", 10, "green","fa fa-check-circle");
                 return RedirectToAction(nameof(Index));
             }
             return View(brand);
@@ -119,6 +122,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 try
                 {
                     _context.Update(brand);
+                    _notyf.Custom("Update " + brand.BrandName + " successfully", 10, "green", "fa fa-check-circle");
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -151,24 +155,42 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            return View(brand);
-        }
-
-        // POST: Admin/Brands/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            var brand = await _context.Brands.FindAsync(id);
+            if (BrandUsedByMed(brand.BrandId))
+            {
+                _notyf.Custom("Cannot delete " + brand.BrandName + " because some medicines still use this brand", 10, "orange", "fa fa-exclamation");
+                return RedirectToAction("Index");
+            }
+            if (BrandUsedByEquipClinic(brand.BrandId))
+            {
+                _notyf.Custom("Cannot delete " + brand.BrandName + " because some euipment in Clinic still use this brand", 10, "orange", "fa fa-exclamation");
+                return RedirectToAction("Index");
+            }
+            if (BrandUsedByEquipEcomerce(brand.BrandId))
+            {
+                _notyf.Custom("Cannot delete " + brand.BrandName + " because some euipment in ecomerce page still use this brand", 10, "orange", "fa fa-exclamation");
+                return RedirectToAction("Index");
+            }
             _context.Brands.Remove(brand);
             await _context.SaveChangesAsync();
+            _notyf.Custom("Delete " + brand.BrandName + " successfully", 10, "green", "fa fa-check-circle");
             return RedirectToAction(nameof(Index));
         }
-
+       
         private bool BrandExists(string id)
         {
             return _context.Brands.Any(e => e.BrandId == id);
+        }
+        private bool BrandUsedByMed(string id)
+        {
+            return _context.Medicines.Any(e => e.BrandId == id);
+        }
+        private bool BrandUsedByEquipClinic(string id)
+        {
+            return _context.EquipmentForClinics.Any(e => e.BrandId == id);
+        }
+        private bool BrandUsedByEquipEcomerce(string id)
+        {
+            return _context.EquipmentForEcomerces.Any(e => e.BrandId == id);
         }
     }
 }

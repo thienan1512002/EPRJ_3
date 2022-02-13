@@ -16,7 +16,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     {
         private readonly ClinicDBContext _context;
         private readonly INotyfService _notyf;
-        public AdminOrderDetailsController(ClinicDBContext context , INotyfService notyf)
+        public AdminOrderDetailsController(ClinicDBContext context, INotyfService notyf)
         {
             _context = context;
             _notyf = notyf;
@@ -33,12 +33,13 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 var clinicDBContext = _context.AdminOrderDetails.Include(a => a.Equipment).Include(a => a.OrderDetail).ThenInclude(a => a.Account);
                 return View(await clinicDBContext.ToListAsync());
-            }else
+            }
+            else
             {
-                var clinicDBContext = _context.AdminOrderDetails.Include(a => a.Equipment).Include(a => a.OrderDetail).ThenInclude(a => a.Account).Where(a=>a.OrderDetail.AccountId.Equals(HttpContext.Session.GetString("accountId")));
+                var clinicDBContext = _context.AdminOrderDetails.Include(a => a.Equipment).Include(a => a.OrderDetail).ThenInclude(a => a.Account).Where(a => a.OrderDetail.AccountId.Equals(HttpContext.Session.GetString("accountId")));
                 return View(await clinicDBContext.ToListAsync());
             }
-            
+
         }
 
         // GET: Admin/AdminOrderDetails/Details/5
@@ -65,7 +66,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/AdminOrderDetails/Create
         public IActionResult Create()
         {
-            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentName");           
+            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentName");
             return View();
         }
 
@@ -74,12 +75,12 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AdminOrderDetail adminOrderDetail , string equimentId , int quantity , string purpose)
+        public async Task<IActionResult> Create(AdminOrderDetail adminOrderDetail, string equimentId, int quantity, string purpose)
         {
-            if (ModelState.IsValid)
-            {
+            
+            
                 AdminOrder order = GetOrderInfomation();
-               
+
                 _context.AdminOrders.Add(order);
                 await _context.SaveChangesAsync();
                 adminOrderDetail.OrderDetailId = order.OrderId;
@@ -89,9 +90,9 @@ namespace Clinic_web_app.Areas.Admin.Controllers
 
                 //Reduce quantity of Equipment
                 var equipmentForClinic = await EquipmentForClinicExists(adminOrderDetail.EquipmentId);
-                if (equipmentForClinic.Quantity< quantity)
+                if (equipmentForClinic.Quantity < adminOrderDetail.Quantity)
                 {
-                    _notyf.Custom("We don't have enough quantity you require",10,"Orange","fa fa-exclamation");
+                    _notyf.Warning("We don't have enough quantity you required");
                     return RedirectToAction("Index");
                 }
                 equipmentForClinic.Quantity = equipmentForClinic.Quantity - quantity;
@@ -100,18 +101,22 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 _context.Add(adminOrderDetail);
                 await _context.SaveChangesAsync();
                 _notyf.Custom("Rent " + adminOrderDetail.Equipment.EquipmentName + " successfully", 10, "green", "fa fa-check-circle");
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentName", adminOrderDetail.EquipmentId);
-            
-            return View(adminOrderDetail);
+                return RedirectToAction(nameof(Index));           
         }
 
         private async Task<EquipmentForClinic> EquipmentForClinicExists(string equipmentId)
         {
             return await _context.EquipmentForClinics.FirstOrDefaultAsync(m => m.EquipmentId == equipmentId);
         }
-
+        public async Task <IActionResult> Finish(int id)
+        {
+            var order = await _context.AdminOrders.SingleOrDefaultAsync(m => m.OrderId == id);
+            order.Status = "Finished";
+            _context.AdminOrders.Update(order);
+            await _context.SaveChangesAsync();
+            _notyf.Custom("Rent Finished ", 10, "green", "fa fa-check-circle");
+            return RedirectToAction("Index");
+        }
         private AdminOrder GetOrderInfomation()
         {
             AdminOrder order = new AdminOrder();
@@ -120,10 +125,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             order.Status = "Not Yet";
             return order;
         }
-       
 
-        
-       
+
+
+
 
         private bool AdminOrderDetailExists(int id)
         {
