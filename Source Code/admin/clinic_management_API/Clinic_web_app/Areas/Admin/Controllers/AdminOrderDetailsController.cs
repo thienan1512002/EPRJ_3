@@ -93,7 +93,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 if (equipmentForClinic.Quantity < adminOrderDetail.Quantity)
                 {
                     _notyf.Warning("We don't have enough quantity you required");
-                    return RedirectToAction(nameof(Index));
+                    return View();
                 }
                 equipmentForClinic.Quantity = equipmentForClinic.Quantity - quantity;
                 _context.EquipmentForClinics.Update(equipmentForClinic);
