@@ -15,6 +15,7 @@ namespace Clinic_web_app.Models
         public int OrderId { get; set; }
         public string AccountId { get; set; }
         public DateTime? OrderDate { get; set; }
+        public string Status { get; set; }
 
         public virtual StaffAccount Account { get; set; }
         public virtual ICollection<AdminOrderDetail> AdminOrderDetails { get; set; }

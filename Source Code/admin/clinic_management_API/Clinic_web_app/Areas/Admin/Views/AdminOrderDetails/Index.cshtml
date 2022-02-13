@@ -16,7 +16,7 @@
                     <a asp-action="Create" type="button" class="btn btn-primary col-4">
                         Rent Equipment
                     </a>
-                    <div class="row">                        
+                    <div class="row">
                         <div class="form-outline col-6 right">
                             <input type="search" id="myInput" class="form-control" placeholder="Enter name to search" aria-label="Search" />
                         </div>
@@ -47,10 +47,13 @@
                                 @Html.DisplayNameFor(model => model.Purpose)
                             </th>
                             <th>
-                               Equipment
+                                Equipment
                             </th>
                             <th>
                                 Staff who rents
+                            </th>
+                            <th>
+                                Status
                             </th>
                             <th></th>
                         </tr>
@@ -58,25 +61,33 @@
                     <tbody id="myTable">
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Quantity)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Purpose)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OrderDetail.Account.Username)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Purpose)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDetail.Account.Username)
+                            </td>
+                            @if (item.OrderDetail.Status.Equals("Not Yet"))
+                            {
+                                <td><span class="badge badge-warning">Not Return</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="badge badge-success">Returned <i class="fa fa-check"></i></span></td>
+                            }
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

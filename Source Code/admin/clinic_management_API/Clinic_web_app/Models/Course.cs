@@ -18,6 +18,7 @@ namespace Clinic_web_app.Models
         public DateTime? StartDate { get; set; }
         public string Location { get; set; }
         public DateTime? EndDate { get; set; }
+        public int Slot { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }

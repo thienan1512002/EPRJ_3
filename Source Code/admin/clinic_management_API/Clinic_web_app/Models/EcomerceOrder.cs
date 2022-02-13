@@ -17,6 +17,7 @@ namespace Clinic_web_app.Models
         public string CustomerId { get; set; }
         public DateTime? OrderDate { get; set; }
         public string Address { get; set; }
+        public string Status { get; set; }
 
         public virtual CustomerAccount Customer { get; set; }
         public virtual ICollection<EcomerceEquipDetail> EcomerceEquipDetails { get; set; }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Http;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -14,10 +15,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     public class AdminOrderDetailsController : Controller
     {
         private readonly ClinicDBContext _context;
-
-        public AdminOrderDetailsController(ClinicDBContext context)
+        private readonly INotyfService _notyf;
+        public AdminOrderDetailsController(ClinicDBContext context , INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Admin/AdminOrderDetails
@@ -84,8 +86,20 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 adminOrderDetail.EquipmentId = equimentId;
                 adminOrderDetail.Quantity = quantity;
                 adminOrderDetail.Purpose = purpose;
+
+                //Reduce quantity of Equipment
+                var equipmentForClinic = await EquipmentForClinicExists(adminOrderDetail.EquipmentId);
+                if (equipmentForClinic.Quantity< quantity)
+                {
+                    _notyf.Custom("We don't have enough quantity you require",10,"Orange","fa fa-exclamation");
+                    return RedirectToAction("Index");
+                }
+                equipmentForClinic.Quantity = equipmentForClinic.Quantity - quantity;
+                _context.EquipmentForClinics.Update(equipmentForClinic);
+                await _context.SaveChangesAsync();
                 _context.Add(adminOrderDetail);
                 await _context.SaveChangesAsync();
+                _notyf.Custom("Rent " + adminOrderDetail.Equipment.EquipmentName + " successfully", 10, "green", "fa fa-check-circle");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentName", adminOrderDetail.EquipmentId);
@@ -93,68 +107,20 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             return View(adminOrderDetail);
         }
 
+        private async Task<EquipmentForClinic> EquipmentForClinicExists(string equipmentId)
+        {
+            return await _context.EquipmentForClinics.FirstOrDefaultAsync(m => m.EquipmentId == equipmentId);
+        }
+
         private AdminOrder GetOrderInfomation()
         {
             AdminOrder order = new AdminOrder();
             order.AccountId = HttpContext.Session.GetString("accountId");
             order.OrderDate = DateTime.Now;
+            order.Status = "Not Yet";
             return order;
         }
-
-        // GET: Admin/AdminOrderDetails/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var adminOrderDetail = await _context.AdminOrderDetails.FindAsync(id);
-            if (adminOrderDetail == null)
-            {
-                return NotFound();
-            }
-            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentId", adminOrderDetail.EquipmentId);
-            ViewData["OrderDetailId"] = new SelectList(_context.AdminOrders, "OrderId", "OrderId", adminOrderDetail.OrderDetailId);
-            return View(adminOrderDetail);
-        }
-
-        // POST: Admin/AdminOrderDetails/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,OrderDetailId,EquipmentId,Quantity,Purpose")] AdminOrderDetail adminOrderDetail)
-        {
-            if (id != adminOrderDetail.OrderId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(adminOrderDetail);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AdminOrderDetailExists(adminOrderDetail.OrderId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentId", adminOrderDetail.EquipmentId);
-            ViewData["OrderDetailId"] = new SelectList(_context.AdminOrders, "OrderId", "OrderId", adminOrderDetail.OrderDetailId);
-            return View(adminOrderDetail);
-        }
+       
 
         
        

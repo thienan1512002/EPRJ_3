@@ -57,6 +57,11 @@ namespace Clinic_web_app.Models
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("AccountID");
+                entity.Property(e => e.Status)
+                .HasColumnName("Status")
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(true);
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
@@ -132,6 +137,8 @@ namespace Clinic_web_app.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Slot)
+                .HasColumnName("Slot");
                 entity.Property(e => e.StartDate)
                     .HasColumnType("datetime")
                     .HasColumnName("Start_date");
@@ -248,7 +255,11 @@ namespace Clinic_web_app.Models
                     .HasColumnName("CustomerID");
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
-
+                entity.Property(e => e.Status)
+                .HasColumnName("Status")
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.EcomerceOrders)
                     .HasForeignKey(d => d.CustomerId)
