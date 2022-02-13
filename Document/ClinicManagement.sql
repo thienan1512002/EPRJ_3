@@ -14,10 +14,11 @@ Create table Medicine
 	MedName varchar(50),
 	Type varchar(50),
 	BrandID varchar(10) foreign key references Brands,
-	Price int,
+	Price decimal(18,2),
 	Quantity int,
 	Description text,
 	DateCreate datetime,
+	Featured bit,
 	Image varchar(200)
 )
 go
