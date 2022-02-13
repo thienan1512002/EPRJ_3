@@ -91,6 +91,10 @@
                     </dd>
                 </dl>
             </div>
+            <div class="row">
+                <a asp-action="CompletedOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-success col-3">Deal has completed</a>
+                <a asp-action="CloseOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-success col-3">Deal has completed</a>
+            </div>
         </div>
         <div>
             <a asp-action="Index">Back to List</a>
