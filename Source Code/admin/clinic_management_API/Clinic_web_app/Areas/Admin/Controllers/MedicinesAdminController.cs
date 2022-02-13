@@ -71,7 +71,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Medicine medicine , IFormFile file , string checkbox , string price)
+        public async Task<IActionResult> Create( Medicine medicine , IFormFile file , string checkbox )
         {
 
             if (ModelState.IsValid)
@@ -85,9 +85,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                         await file.CopyToAsync(stream);
                     }
                     medicine.Image = "images/" + fileName;
-                }
-                decimal medPrice = decimal.Parse(price);
-                medicine.Price = medPrice;
+                }              
                 medicine.DateCreate = DateTime.Now;
                 if(checkbox != null)
                 {
