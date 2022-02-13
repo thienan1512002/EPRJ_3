@@ -62,7 +62,8 @@ Create table Course
 	Lectures varchar(50),
 	Start_date datetime , 
 	Location varchar(50),
-	End_date datetime
+	End_date datetime ,
+	Slot int
 )
 go
 Create table Enrollment
@@ -76,7 +77,8 @@ Create table AdminOrder
 (
 	OrderID int identity primary key , 
 	AccountID varchar(10) foreign key references StaffAccount,
-	OrderDate datetime
+	OrderDate datetime ,
+	Status nvarchar(20) not null check (Status in('Finished','Not Yet'))
 )
 go
 Create table AdminOrderDetails
@@ -104,7 +106,8 @@ Create table EcomerceOrder
 	OrderID int identity primary key , 
 	CustomerID varchar(50) foreign key references CustomerAccount,
 	OrderDate datetime,
-	Address varchar(50)
+	Address varchar(50),
+	Status varchar(20) not null check (Status in('Pending','Completed','Decline'))
 )
 go
 Create table EcomerceMedOrderDetail
@@ -133,3 +136,6 @@ Create table Feedback
 	DateCreate datetime,
 	Reply varchar(300)
 )
+go
+--Seeding first account for debug
+Insert into StaffAccount(AccountID,Username,Password,Email,Role) values ('Account001','Manager','1','manager@gmail.com','Manager')
