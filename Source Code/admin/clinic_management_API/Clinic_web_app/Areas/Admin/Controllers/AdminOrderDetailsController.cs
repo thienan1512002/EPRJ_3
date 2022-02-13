@@ -93,7 +93,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 if (equipmentForClinic.Quantity < adminOrderDetail.Quantity)
                 {
                     _notyf.Warning("We don't have enough quantity you required");
-                    return RedirectToAction("Index");
+                    return RedirectToAction(nameof(Index));
                 }
                 equipmentForClinic.Quantity = equipmentForClinic.Quantity - quantity;
                 _context.EquipmentForClinics.Update(equipmentForClinic);
@@ -111,6 +111,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         public async Task <IActionResult> Finish(int id)
         {
             var order = await _context.AdminOrders.SingleOrDefaultAsync(m => m.OrderId == id);
+            var orderDetail = await _context.AdminOrderDetails.FirstOrDefaultAsync(m => m.OrderDetailId==id);
+            var equipmentForClinic = await EquipmentForClinicExists(orderDetail.EquipmentId);
+            equipmentForClinic.Quantity += orderDetail.Quantity;
+            _context.EquipmentForClinics.Update(equipmentForClinic);
+            await _context.SaveChangesAsync();
             order.Status = "Finished";
             _context.AdminOrders.Update(order);
             await _context.SaveChangesAsync();
