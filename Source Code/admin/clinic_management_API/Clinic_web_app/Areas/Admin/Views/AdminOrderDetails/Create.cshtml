@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
 }
 
 <div class="content-wrapper">
@@ -10,7 +11,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Add New Medicine</h1>
+                    <h1 class="m-0">Rent Equipment</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -25,6 +26,10 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            @if (ViewBag.Message != null)
+            {
+                <span class="alert alert-danger">@ViewBag.Message</span>
+            }
             <div class="row">
                 <div class="col-md-4">
                     <form asp-action="Create" method="post" enctype="multipart/form-data">
