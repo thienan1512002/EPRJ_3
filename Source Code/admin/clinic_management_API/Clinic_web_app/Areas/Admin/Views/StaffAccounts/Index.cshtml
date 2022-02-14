@@ -1,0 +1,108 @@
+﻿@using Microsoft.AspNetCore.Http
+@model PaginatedList<Clinic_web_app.Models.StaffAccount>
+
+@{
+    ViewData["Title"] = "StaffAccount";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Content Wrapper. Contains page content -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+
+                    <h1 class="m-0">Staff Account</h1>
+                    <div class="row">
+                        <a asp-action="Create" type="button" class="btn btn-primary col-4">
+                            Create Account
+                        </a>
+                        <div class="form-outline col-6 right">
+                            <input type="search" id="myInput" class="form-control" placeholder="Enter name to search" aria-label="Search" />
+                        </div>
+                    </div>
+
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Staff Account</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th align="center">Account Id</th>
+                            <th align="center">Username</th>
+                            <th align="center">Email</th>
+                            <th align="center">Role</th>
+                            <th align="center">Avatar</th>
+                            <th align="center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AccountId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Username)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Role)
+                                </td>
+                                <td>
+                                    <img src="~/@item.Image" width="60" height="60" class="rounded-circle" />
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.AccountId">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.AccountId">Details</a>
+                                    @if (!Context.Session.GetString("accountId").Equals(item.AccountId))
+                                    {
+                                        <a asp-action="Delete" asp-route-id="@item.AccountId">Delete</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (Model.PreviousPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-default">Previous</a>
+                }
+                @if (Model.NextPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-default">Next</a>
+                }
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

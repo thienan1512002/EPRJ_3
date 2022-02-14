@@ -108,15 +108,13 @@ Create table EcomerceOrder
 	CustomerID varchar(50) foreign key references CustomerAccount,
 	OrderDate datetime,
 	Address varchar(50),
-	Phone varchar(15),
-	CustomerName varchar(50),
 	Status varchar(20) not null check (Status in('Pending','Completed','Decline'))
 )
 go
 Create table EcomerceMedOrderDetail
 (
-	OrderDetailID int identity primary key,
-	OrderID int foreign key references EcomerceOrder  , 
+	OrderID int identity primary key , 
+	OrderDetailID int foreign key references EcomerceOrder ,
 	MedID varchar(10) foreign key references Medicine ,
 	Quantity int,
 	Total int

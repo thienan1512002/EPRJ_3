@@ -1,0 +1,175 @@
+﻿﻿@using Microsoft.AspNetCore.Http
+
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
+
+*@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="brand-link">
+        <img src="~/dist/img/logo3.png" alt="KiviCare Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">KiviCare</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/@Context.Session.GetString("avatar")" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Hello @Context.Session.GetString("accountName")</a>
+            </div>
+        </div>
+
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <style>
+            p{
+                color : white;
+            }
+        </style>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+                <li class="nav-header">Home</li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-dashboard"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="StaffAccounts" asp-action="Details" asp-area="Admin" class="nav-link" asp-route-id=@Context.Session.GetString("accountId")>
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            User
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="AdminOrderDetails" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-money-bill"></i>
+                        <p>
+                            Equipment Rent Lists
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Main Menu</li>
+                <li class="nav-item">
+                    <a asp-controller="Brands" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-b"></i>
+                        <p>
+                            Brands
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="EquipmentForClinics" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-briefcase-medical"></i>
+                        <p>
+                            Equipment For Clinic
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="EquipmentForEcomerces" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-tools"></i>
+                        <p>
+                            Equipment For Ecomerce
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="MedicinesAdmin" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-clinic-medical"></i>
+                        <p>
+                            Medicine
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="EcomerceEquipDetails" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-money-bill"></i>
+                        <p>
+                            Equipment Orders
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="EcomerceMedOrderDetails" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-money-bill"></i>
+                        <p>
+                            Medicine Orders
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="CustomerAccounts" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Customer Account
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="StaffAccounts" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-male"></i>
+                        <p>
+                            Staff Account
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a asp-controller="Courses" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Course
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-header">Support</li>
+                <li class="nav-item">
+                    <a asp-controller="Feedbacks" asp-action="Index" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-comment"></i>
+                        <p>
+                            Feedback
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Options</li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="LogOut" asp-area="Admin" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Sign Out
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+

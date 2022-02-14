@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@if (Context.Session.GetString("CustomerName") == null)
+{
+    <li>
+        <a asp-action="Login" asp-controller="CustomerAccounts">Sign in</a>
+    </li>
+    <li>
+        <a asp-action="Create" asp-controller="CustomerAccounts"> Register</a>
+    </li>
+}
+else
+{
+    <li style="color:white">@Context.Session.GetString("CustomerName")</li>
+    <li>
+        <a asp-action="Logout" asp-controller="CustomerAccounts"> Logout</a>
+    </li>
+}
