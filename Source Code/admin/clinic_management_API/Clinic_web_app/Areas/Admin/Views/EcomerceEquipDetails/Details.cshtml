@@ -34,7 +34,7 @@
                         @Model.OrderDetail.OrderDate
                     </dd>
                     <dt class="col-sm-2">
-                       Customer Name
+                        Customer Name
                     </dt>
                     <dd class="col-sm-10">
                         @Model.OrderDetail.Customer.CustomerName
@@ -87,13 +87,18 @@
                                         break;
                                     }
                             }
+
+
                         }
                     </dd>
                 </dl>
             </div>
             <div class="row">
-                <a asp-action="CompletedOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-success col-3">Deal has completed</a>
-                <a asp-action="CloseOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-success col-3">Deal has completed</a>
+                @if (Model.OrderDetail.Status.Equals("Pending"))
+                {
+                    <a asp-action="CompletedOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-success col-3" style="margin:10px;">Deal has completed</a>
+                    <a asp-action="CloseOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-danger col-3" style="margin:10px;">Cancle this Deal</a>
+                }
             </div>
         </div>
         <div>

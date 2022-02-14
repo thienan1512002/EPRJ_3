@@ -31,7 +31,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
             const int pageSize = 10;
             var data = await PaginatedList<CustomerAccount>.CreateAsync(_context.CustomerAccounts, pageNumber, pageSize);
-            return View(await _context.CustomerAccounts.ToListAsync());
+            return View(data);
         }
 
         // GET: Admin/CustomerAccounts/Details/5

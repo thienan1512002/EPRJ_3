@@ -93,11 +93,11 @@
                 </dl>
             </div>
             <div class="row">
-                <a asp-action="CompletedOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-success col-3">Deal has completed</a>
-                &nbsp;&nbsp;
-                @if (Model.OrderDetail.Status != "Completed")
+                @if (Model.OrderDetail.Status == "Pending")
                 {
-                    <a asp-action="CloseOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-danger col-3">Cancle Deal</a>
+                    <a asp-action="CompletedOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-success col-3" style="margin:10px;">Deal has completed</a>
+                     
+                    <a asp-action="CloseOrder" asp-route-id="@Model.OrderDetailId" class="btn btn-danger col-3"style="margin:10px;">Cancle Deal</a>
                 }
             </div>
         </div>

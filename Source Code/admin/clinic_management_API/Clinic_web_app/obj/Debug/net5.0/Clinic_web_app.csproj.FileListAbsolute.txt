@@ -721,3 +721,6 @@ D:\Workspace\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_ap
 D:\Workspace\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\ref\Clinic_web_app.dll
 D:\Workspace\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Clinic_web_app.pdb
 D:\Workspace\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Clinic_web_app.genruntimeconfig.cache
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Feedbacks\Details.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Feedbacks\Index.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Feedbacks\Edit.cshtml.g.cs
