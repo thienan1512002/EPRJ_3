@@ -16,7 +16,9 @@ namespace Clinic_web_app.Models
         public int OrderId { get; set; }
         public string CustomerId { get; set; }
         public DateTime? OrderDate { get; set; }
+        public string CustomerName { set; get; }
         public string Address { get; set; }
+        public string Phone { set; get; }
         public string Status { get; set; }
 
         public virtual CustomerAccount Customer { get; set; }
