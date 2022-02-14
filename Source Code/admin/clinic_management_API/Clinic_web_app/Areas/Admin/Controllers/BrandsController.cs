@@ -23,13 +23,16 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/Brands
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
-            return View(await _context.Brands.ToListAsync());
+             
+            const int pageSize = 5;
+            var data = await PaginatedList<Brand>.CreateAsync(_context.Brands,pageNumber, pageSize);
+            return View(data);
         }
 
         // GET: Admin/Brands/Details/5

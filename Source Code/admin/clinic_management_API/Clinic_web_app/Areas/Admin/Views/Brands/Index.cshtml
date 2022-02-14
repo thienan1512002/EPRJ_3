@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Clinic_web_app.Models.Brand>
+﻿@model PaginatedList<Clinic_web_app.Models.Brand>
 
 @{
     ViewData["Title"] = "Index";
@@ -41,7 +41,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.BrandName)
+                                Brand Name
                             </th>
                             <th></th>
                         </tr>
@@ -62,6 +62,15 @@
                         }
                     </tbody>
                 </table>
+
+                @if (Model.PreviousPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-default">Previous</a>
+                }
+                @if (Model.NextPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-default">Next</a>
+                }
             </div>
         </div>
     </section>
