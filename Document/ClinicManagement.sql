@@ -1,4 +1,4 @@
-Create Database ClinicDB
+Create  Database ClinicDB
 go
 use ClinicDB
 go
