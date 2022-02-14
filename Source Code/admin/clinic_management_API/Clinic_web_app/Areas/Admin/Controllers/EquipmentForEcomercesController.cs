@@ -24,14 +24,16 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/EquipmentForEcomerces
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber=1)
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
             var clinicDBContext = _context.EquipmentForEcomerces.Include(e => e.Brand);
-            return View(await clinicDBContext.ToListAsync());
+            int pageSize = 10;
+            var data = await PaginatedList<EquipmentForEcomerce>.CreateAsync(clinicDBContext, pageNumber,pageSize);
+            return View(data);
         }
 
         // GET: Admin/EquipmentForEcomerces/Details/5

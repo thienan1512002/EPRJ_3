@@ -23,13 +23,15 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/Courses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
-            return View(await _context.Courses.ToListAsync());
+            const int pageSize =6;
+            var data = await PaginatedList<Course>.CreateAsync(_context.Courses, pageNumber, pageSize);
+            return View(data);
         }
 
         // GET: Admin/Courses/Details/5

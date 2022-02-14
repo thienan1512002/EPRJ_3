@@ -22,10 +22,12 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/EcomerceEquipDetails
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber =1)
         {
+            const int pageSize = 10;
             var clinicDBContext = _context.EcomerceEquipDetails.Include(e => e.Equipment).Include(e => e.OrderDetail).ThenInclude(e=>e.Customer);
-            return View(await clinicDBContext.ToListAsync());
+            var data = await PaginatedList<EcomerceEquipDetail>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            return View(data);
         }
 
         // GET: Admin/EcomerceEquipDetails/Details/5

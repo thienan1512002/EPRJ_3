@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
-@model IEnumerable<Clinic_web_app.Models.AdminOrderDetail>
+@model PaginatedList<Clinic_web_app.Models.AdminOrderDetail>
 
 @{
     ViewData["Title"] = "Index";
@@ -41,17 +41,18 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Quantity)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Purpose)
-                            </th>
+
                             <th>
                                 Equipment
                             </th>
                             <th>
                                 Staff who rents
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Purpose
                             </th>
                             <th>
                                 Status
@@ -63,17 +64,18 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Quantity)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Purpose)
-                                </td>
+
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.OrderDetail.Account.Username)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Purpose)
                                 </td>
                                 @if (item.OrderDetail.Status.Equals("Not Yet"))
                                 {
@@ -96,6 +98,14 @@
                         }
                     </tbody>
                 </table>
+                @if (Model.PreviousPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-default">Previous</a>
+                }
+                @if (Model.NextPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-default">Next</a>
+                }
             </div>
         </div>
     </section>

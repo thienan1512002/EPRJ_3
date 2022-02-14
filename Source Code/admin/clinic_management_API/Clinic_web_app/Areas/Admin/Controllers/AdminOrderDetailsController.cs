@@ -23,8 +23,9 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminOrderDetails
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber =1)
         {
+            const int pageSize = 10;
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
@@ -32,12 +33,14 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             if (HttpContext.Session.GetString("userRole").Equals("Manager"))
             {
                 var clinicDBContext = _context.AdminOrderDetails.Include(a => a.Equipment).Include(a => a.OrderDetail).ThenInclude(a => a.Account);
-                return View(await clinicDBContext.ToListAsync());
+                var data = await PaginatedList<AdminOrderDetail>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+                return View(data);
             }
             else
             {
                 var clinicDBContext = _context.AdminOrderDetails.Include(a => a.Equipment).Include(a => a.OrderDetail).ThenInclude(a => a.Account).Where(a => a.OrderDetail.AccountId.Equals(HttpContext.Session.GetString("accountId")));
-                return View(await clinicDBContext.ToListAsync());
+                var data = await PaginatedList<AdminOrderDetail>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+                return View(data);
             }
 
         }

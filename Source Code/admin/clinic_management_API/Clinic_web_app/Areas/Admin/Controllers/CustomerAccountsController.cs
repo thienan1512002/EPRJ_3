@@ -23,12 +23,14 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/CustomerAccounts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber=1)
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
+            const int pageSize = 10;
+            var data = await PaginatedList<CustomerAccount>.CreateAsync(_context.CustomerAccounts, pageNumber, pageSize);
             return View(await _context.CustomerAccounts.ToListAsync());
         }
 

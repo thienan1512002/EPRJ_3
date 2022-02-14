@@ -24,8 +24,9 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/StaffAccounts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber =1)
         {
+            const int pageSize = 10;
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
@@ -34,7 +35,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Details", new { id = HttpContext.Session.GetString("accountId") });
             }
-            return View(await _context.StaffAccounts.ToListAsync());
+            return View(await PaginatedList<StaffAccount>.CreateAsync(_context.StaffAccounts,pageNumber,pageSize));
         }
 
         // GET: Admin/StaffAccounts/Details/5

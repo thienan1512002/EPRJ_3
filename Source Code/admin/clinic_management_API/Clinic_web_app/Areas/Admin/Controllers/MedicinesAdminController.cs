@@ -22,14 +22,16 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/MedicinesAdmin
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
             var clinicDBContext = _context.Medicines.Include(m => m.Brand);
-            return View(await clinicDBContext.ToListAsync());
+            const int pageSize = 8;
+            var data = await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber , pageSize);
+            return View(data);
         }
 
         // GET: Admin/MedicinesAdmin/Details/5
@@ -71,7 +73,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Medicine medicine , IFormFile file , string checkbox )
+        public async Task<IActionResult> Create(Medicine medicine, IFormFile file, string checkbox)
         {
 
             if (ModelState.IsValid)
@@ -85,12 +87,13 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                         await file.CopyToAsync(stream);
                     }
                     medicine.Image = "images/" + fileName;
-                }              
+                }
                 medicine.DateCreate = DateTime.Now;
-                if(checkbox != null)
+                if (checkbox != null)
                 {
                     medicine.Featured = true;
-                }else
+                }
+                else
                 {
                     medicine.Featured = false;
                 }
@@ -128,7 +131,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id,  Medicine medicine , IFormFile file ,string checkbox)
+        public async Task<IActionResult> Edit(string id, Medicine medicine, IFormFile file, string checkbox)
         {
             if (id != medicine.MedId)
             {
@@ -157,7 +160,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                     {
                         medicine.Featured = false;
                     }
-                   
+
                     _context.Update(medicine);
                     await _context.SaveChangesAsync();
                 }

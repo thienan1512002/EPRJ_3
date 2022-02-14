@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
-@model IEnumerable<Clinic_web_app.Models.StaffAccount>
+@model PaginatedList<Clinic_web_app.Models.StaffAccount>
 
 @{
     ViewData["Title"] = "StaffAccount";
@@ -71,8 +71,8 @@
                                     <img src="~/@item.Image" width="60" height="60" class="rounded-circle" />
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.AccountId">Edit</a> 
-                                    <a asp-action="Details" asp-route-id="@item.AccountId">Details</a> 
+                                    <a asp-action="Edit" asp-route-id="@item.AccountId">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.AccountId">Details</a>
                                     @if (!Context.Session.GetString("accountId").Equals(item.AccountId))
                                     {
                                         <a asp-action="Delete" asp-route-id="@item.AccountId">Delete</a>
@@ -82,7 +82,14 @@
                         }
                     </tbody>
                 </table>
-
+                @if (Model.PreviousPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-default">Previous</a>
+                }
+                @if (Model.NextPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-default">Next</a>
+                }
             </div>
         </div>
     </section>

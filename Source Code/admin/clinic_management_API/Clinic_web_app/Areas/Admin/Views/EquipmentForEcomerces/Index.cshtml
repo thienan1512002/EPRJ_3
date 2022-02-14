@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Clinic_web_app.Models.EquipmentForEcomerce>
+﻿@model PaginatedList<Clinic_web_app.Models.EquipmentForEcomerce>
 
 @{
     ViewData["Title"] = "Index";
@@ -43,19 +43,19 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.EquipmentName)
+                                Equipment Name
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Price)
+                                Equipment Price
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Quantity)
+                                Quantity
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Image)
+                                Image
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Brand)
+                                Equipment Brand
                             </th>
                             <th></th>
                         </tr>
@@ -88,6 +88,14 @@
                         }
                     </tbody>
                 </table>
+                @if (Model.PreviousPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-default">Previous</a>
+                }
+                @if (Model.NextPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-default">Next</a>
+                }
             </div>
         </div>
     </section>

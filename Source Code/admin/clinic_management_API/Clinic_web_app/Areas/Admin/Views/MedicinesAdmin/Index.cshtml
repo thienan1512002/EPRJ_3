@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Clinic_web_app.Models.Medicine>
+﻿@model PaginatedList<Clinic_web_app.Models.Medicine>
 
 @{
     ViewData["Title"] = "Index";
@@ -43,22 +43,22 @@
                     <thead class="thead-dark">
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.MedName)
+                                Medicine Name
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Type)
+                                Medicine Type
                             </th>
                             <th>
                                 Price
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Quantity)
+                                Quantity
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Image)
+                                Image
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Brand)
+                                Medicine Brand
                             </th>
                             <th></th>
                         </tr>
@@ -86,14 +86,22 @@
                                     @Html.DisplayFor(modelItem => item.Brand.BrandName)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.MedId">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.MedId">Details</a> |
+                                    <a asp-action="Edit" asp-route-id="@item.MedId">Edit</a> 
+                                    <a asp-action="Details" asp-route-id="@item.MedId">Details</a> 
                                     <a asp-action="Delete" asp-route-id="@item.MedId">Delete</a>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
+                @if (Model.PreviousPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-default">Previous</a>
+                }
+                @if (Model.NextPage)
+                {
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-default">Next</a>
+                }
             </div>
         </div>
     </section>
