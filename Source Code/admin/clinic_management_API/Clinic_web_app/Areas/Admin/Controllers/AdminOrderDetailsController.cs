@@ -95,7 +95,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 var equipmentForClinic = await EquipmentForClinicExists(adminOrderDetail.EquipmentId);
                 if (equipmentForClinic.Quantity < adminOrderDetail.Quantity)
                 {
-                    _notyf.Warning("We don't have enough quantity you required");
+                    ViewBag.Message=" We don't have enough quantity you required";
                     return View();
                 }
                 equipmentForClinic.Quantity = equipmentForClinic.Quantity - quantity;
