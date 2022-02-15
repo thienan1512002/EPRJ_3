@@ -10,7 +10,7 @@ namespace Clinic_web_app.Models
         public Brand()
         {
             EquipmentForClinics = new HashSet<EquipmentForClinic>();
-            EquipmentForEcomerces = new HashSet<EquipmentForEcomerce>();
+            
             Medicines = new HashSet<Medicine>();
         }
 
@@ -18,7 +18,7 @@ namespace Clinic_web_app.Models
         public string BrandName { get; set; }
 
         public virtual ICollection<EquipmentForClinic> EquipmentForClinics { get; set; }
-        public virtual ICollection<EquipmentForEcomerce> EquipmentForEcomerces { get; set; }
+       
         public virtual ICollection<Medicine> Medicines { get; set; }
     }
 }

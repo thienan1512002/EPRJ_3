@@ -168,11 +168,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 _notyf.Custom("Cannot delete " + brand.BrandName + " because some euipment in Clinic still use this brand", 10, "orange", "fa fa-exclamation");
                 return RedirectToAction("Index");
             }
-            if (BrandUsedByEquipEcomerce(brand.BrandId))
-            {
-                _notyf.Custom("Cannot delete " + brand.BrandName + " because some euipment in ecomerce page still use this brand", 10, "orange", "fa fa-exclamation");
-                return RedirectToAction("Index");
-            }
+           
             _context.Brands.Remove(brand);
             await _context.SaveChangesAsync();
             _notyf.Custom("Delete " + brand.BrandName + " successfully", 10, "green", "fa fa-check-circle");
@@ -191,9 +187,6 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         {
             return _context.EquipmentForClinics.Any(e => e.BrandId == id);
         }
-        private bool BrandUsedByEquipEcomerce(string id)
-        {
-            return _context.EquipmentForEcomerces.Any(e => e.BrandId == id);
-        }
+        
     }
 }

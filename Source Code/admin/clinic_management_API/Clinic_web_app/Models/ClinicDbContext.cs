@@ -22,12 +22,12 @@ namespace Clinic_web_app.Models
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<CustomerAccount> CustomerAccounts { get; set; }
-        public virtual DbSet<EcomerceEquipDetail> EcomerceEquipDetails { get; set; }
+      
         public virtual DbSet<EcomerceMedOrderDetail> EcomerceMedOrderDetails { get; set; }
         public virtual DbSet<EcomerceOrder> EcomerceOrders { get; set; }
         public virtual DbSet<Enrollment> Enrollments { get; set; }
         public virtual DbSet<EquipmentForClinic> EquipmentForClinics { get; set; }
-        public virtual DbSet<EquipmentForEcomerce> EquipmentForEcomerces { get; set; }
+       
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
         public virtual DbSet<StaffAccount> StaffAccounts { get; set; }
@@ -182,32 +182,7 @@ namespace Clinic_web_app.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<EcomerceEquipDetail>(entity =>
-            {
-                entity.HasKey(e => e.OrderId)
-                    .HasName("PK__Ecomerce__C3905BAFAA6010BD");
-
-                entity.ToTable("EcomerceEquipDetail");
-
-                entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
-                entity.Property(e => e.EquipmentId)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("EquipmentID");
-
-                entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
-
-                entity.HasOne(d => d.Equipment)
-                    .WithMany(p => p.EcomerceEquipDetails)
-                    .HasForeignKey(d => d.EquipmentId)
-                    .HasConstraintName("FK__EcomerceE__Equip__59FA5E80");
-
-                entity.HasOne(d => d.OrderDetail)
-                    .WithMany(p => p.EcomerceEquipDetails)
-                    .HasForeignKey(d => d.OrderDetailId)
-                    .HasConstraintName("FK__EcomerceE__Order__59063A47");
-            });
+           
 
             modelBuilder.Entity<EcomerceMedOrderDetail>(entity =>
             {
@@ -325,37 +300,7 @@ namespace Clinic_web_app.Models
                     .HasConstraintName("FK__Equipment__Brand__29572725");
             });
 
-            modelBuilder.Entity<EquipmentForEcomerce>(entity =>
-            {
-                entity.HasKey(e => e.EquipmentId)
-                    .HasName("PK__Equipmen__3447459938EC3CEC");
-
-                entity.ToTable("EquipmentForEcomerce");
-
-                entity.Property(e => e.EquipmentId)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("EquipmentID");
-
-                entity.Property(e => e.BrandId)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("BrandID");
-
-                entity.Property(e => e.EquipmentName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Image)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-                entity.Property(e => e.DateCreate).HasColumnType("datetime").HasColumnName("DateCreate");
-                entity.Property(e => e.Description).HasMaxLength(65535).IsUnicode(false);
-                entity.HasOne(d => d.Brand)
-                    .WithMany(p => p.EquipmentForEcomerces)
-                    .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__Equipment__Brand__2C3393D0");
-            });
+            
 
             modelBuilder.Entity<Feedback>(entity =>
             {

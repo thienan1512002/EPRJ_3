@@ -9,7 +9,7 @@ namespace Clinic_web_app.Models
     {
         public EcomerceOrder()
         {
-            EcomerceEquipDetails = new HashSet<EcomerceEquipDetail>();
+            
             EcomerceMedOrderDetails = new HashSet<EcomerceMedOrderDetail>();
         }
 
@@ -22,7 +22,7 @@ namespace Clinic_web_app.Models
         public string Status { get; set; }
 
         public virtual CustomerAccount Customer { get; set; }
-        public virtual ICollection<EcomerceEquipDetail> EcomerceEquipDetails { get; set; }
+       
         public virtual ICollection<EcomerceMedOrderDetail> EcomerceMedOrderDetails { get; set; }
     }
 }
