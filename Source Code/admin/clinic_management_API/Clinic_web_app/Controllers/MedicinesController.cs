@@ -233,17 +233,71 @@ namespace Clinic_web_app.Controllers
 
         //check out
         [Route("/checkout")]
-        public IActionResult CheckOut()
+        public async Task<IActionResult> CheckOut()
         {
             var session = HttpContext.Session;
             var checkCus = session.GetString("CustomerId");
             if (checkCus != null)
             {
-                var customerAccount =  _context.CustomerAccounts
+                var customerAccount =await  _context.CustomerAccounts
                 .FirstOrDefaultAsync(m => m.CustomerId == checkCus);
                 ViewBag.Customer = customerAccount;
             }
             return View(GetCartItems());
+        }
+        [HttpPost]
+        public async Task<IActionResult> doCheckout(EcomerceOrder order, string Name, string Phone, string Email, string Address)
+        {
+            if (ModelState.IsValid)
+            {
+                var cart = GetCartItems();
+                var session = HttpContext.Session;
+                if (session.GetString("CustomerId") == null)
+                {
+                    //order.CustomerId = "";
+                    order.CustomerName = Name;
+                    order.Address = Address;
+                    order.Phone = Phone;
+                }
+                else
+                {
+                    var customer = await _context.CustomerAccounts
+                    .FirstOrDefaultAsync(m => m.CustomerId == session.GetString("CustomerId"));
+                    order.CustomerId = customer.CustomerId;
+                    order.CustomerName = customer.CustomerName;
+                    order.Address = customer.Address;
+                    order.Phone = customer.Phone;
+                }
+                order.OrderDate = DateTime.Now;
+                order.Status = "Pending";
+                _context.Add(order);
+                await _context.SaveChangesAsync();
+                foreach (var item in cart)
+                {
+                    EcomerceMedOrderDetail detail = new EcomerceMedOrderDetail();
+                    detail.OrderDetailId = order.OrderId;
+                    detail.MedId = item.medicine.MedId;
+                    detail.Quantity = item.quantity;
+                    detail.Total = item.medicine.Price * item.quantity;
+                    _context.Add(detail);
+                    await _context.SaveChangesAsync();
+                    await QuantityReduce(item.medicine.MedId, item.quantity);
+                }
+                
+                ClearCart();
+            }
+            return RedirectToAction("Success");
+        }
+        public IActionResult Success()
+        {
+            return View();
+        }
+        public async Task<IActionResult> QuantityReduce(string medId, int quantity)
+        {
+            var medicine =_context.Medicines.FirstOrDefault(m => m.MedId == medId);
+            medicine.Quantity -= quantity;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         private bool MedicineExists(string id)

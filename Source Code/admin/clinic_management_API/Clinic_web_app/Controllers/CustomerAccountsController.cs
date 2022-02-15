@@ -153,13 +153,15 @@ namespace Clinic_web_app.Controllers
                 .FirstOrDefaultAsync(m => m.Email == txtEmail && m.Password == txtPass);
             if (customerAccount == null)
             {
-                return View();
                 ViewBag.mess = "Invalid email or password!";
+                return View();
+                
             }
             if(customerAccount.Status == "BLOCK")
             {
-                return View();
                 ViewBag.mess = "Your account is suspended and is not permitted to perform this action";
+                return View();
+                
             }
             HttpContext.Session.SetString("CustomerName", customerAccount.CustomerName);
             HttpContext.Session.SetString("CustomerId", customerAccount.CustomerId);

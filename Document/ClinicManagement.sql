@@ -108,6 +108,8 @@ Create table EcomerceOrder
 	CustomerID varchar(50) foreign key references CustomerAccount,
 	OrderDate datetime,
 	Address varchar(50),
+	Phone varchar(50),
+	Email varchar(50),
 	Status varchar(20) not null check (Status in('Pending','Completed','Decline'))
 )
 go
