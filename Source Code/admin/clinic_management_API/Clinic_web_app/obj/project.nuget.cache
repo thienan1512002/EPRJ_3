@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TdGx9XOf348D3tFNNbOEUcYU5RBWNA56+LFMjXT93cJNtUbd/ipTUza96nHbIyhv9KZcNpQVcvxeaSXgxhxq3g==",
+  "dgSpecHash": "RwYQzeumxHuP9C6ncBPlyoMaQLZhbMTKYpG9sZ3xu2oXG/JjvGhl4yt32YNs1Gg7d7XqZI7OEm1CKRXQjJ47Cw==",
   "success": true,
   "projectFilePath": "C:\\Users\\nhta1\\OneDrive\\Documents\\GitHub\\EPRJ_3\\Source Code\\admin\\clinic_management_API\\Clinic_web_app\\Clinic_web_app.csproj",
   "expectedPackageFiles": [
@@ -71,6 +71,7 @@
     "C:\\Users\\nhta1\\.nuget\\packages\\pagedlist.mvc\\4.5.0\\pagedlist.mvc.4.5.0.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
+    "C:\\Users\\nhta1\\.nuget\\packages\\select.htmltopdf.netcore\\21.2.0\\select.htmltopdf.netcore.21.2.0.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
@@ -105,6 +106,7 @@
     "C:\\Users\\nhta1\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\system.net.nameresolution\\4.3.0\\system.net.nameresolution.4.3.0.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\system.net.primitives\\4.3.0\\system.net.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\nhta1\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\system.objectmodel\\4.3.0\\system.objectmodel.4.3.0.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\system.private.datacontractserialization\\4.3.0\\system.private.datacontractserialization.4.3.0.nupkg.sha512",
     "C:\\Users\\nhta1\\.nuget\\packages\\system.private.uri\\4.3.2\\system.private.uri.4.3.2.nupkg.sha512",

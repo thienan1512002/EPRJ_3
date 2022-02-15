@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using System.IO;
+using SelectPdf;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -49,6 +51,30 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
 
             return View(ecomerceEquipDetail);
+        }
+        public async Task<IActionResult> MakeReport(int id)
+        {
+            var ecomerceEquipDetail = await _context.EcomerceEquipDetails
+               .Include(e => e.Equipment)
+               .Include(e => e.OrderDetail)
+               .ThenInclude(e => e.Customer)
+               .FirstOrDefaultAsync(m => m.OrderId == id);
+            string html;
+            using (StreamReader HtmlReader = System.IO.File.OpenText(@"wwwroot/reportTemplate/report.html"))
+            {
+                html = HtmlReader.ReadToEnd();
+                html = html.Replace("cusId", ecomerceEquipDetail.OrderDetail.Customer.CustomerId);
+                html = html.Replace("cusName", ecomerceEquipDetail.OrderDetail.Customer.CustomerName);
+                html = html.Replace("cusAddress", ecomerceEquipDetail.OrderDetail.Address);
+                html = html.Replace("cusProduct", ecomerceEquipDetail.Equipment.EquipmentName);
+                html = html.Replace("cusQuantity", ecomerceEquipDetail.Quantity.ToString());
+                html = html.Replace("cusTotal", ecomerceEquipDetail.Total.ToString());
+            }
+            HtmlToPdf htmlToPdf = new HtmlToPdf();
+            PdfDocument pdfDocument = htmlToPdf.ConvertHtmlString(html);
+            byte[] pdf = pdfDocument.Save();
+            pdfDocument.Close();
+            return File(pdf, "application/pdf", "OrderReportNo"+ecomerceEquipDetail.OrderId+".pdf");
         }
         public async Task<IActionResult> CompletedOrder(int id)
         {
