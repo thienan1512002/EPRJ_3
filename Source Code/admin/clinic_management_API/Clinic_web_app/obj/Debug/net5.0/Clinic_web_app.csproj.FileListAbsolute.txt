@@ -724,3 +724,6 @@ D:\Workspace\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_ap
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Feedbacks\Details.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Feedbacks\Index.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Areas\Admin\Views\Feedbacks\Edit.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\bin\Debug\net5.0\MimeKit.dll
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\bin\Debug\net5.0\MailKit.dll

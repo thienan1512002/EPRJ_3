@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification;
 using Clinic_web_app.Models;
+using Clinic_web_app.Setting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,7 @@ namespace Clinic_web_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddDbContext<ClinicDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("appCon")));
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();           // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
@@ -40,7 +42,10 @@ namespace Clinic_web_app
             //{
             //    options.ConstraintMap.Add("string", typeof(string));
             //});
-
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
 
             //Show Notification
             services.AddNotyf(config =>
@@ -68,6 +73,7 @@ namespace Clinic_web_app
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("AllowOrigin");
             app.UseSession();
 
             app.UseAuthorization();
