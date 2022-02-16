@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,13 +17,18 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
-            return View();
+           
+            var data = await _context.EcomerceOrders
+                .Include(e => e.EcomerceMedOrderDetails)
+                .ThenInclude(e => e.Med)
+                .ThenInclude(e => e.Brand).Where(p=>EF.Functions.DateDiffDay(p.OrderDate,DateTime.Today)>7).ToListAsync();
+            return View(data);
         }
         public IActionResult StaffAccount()
         {
