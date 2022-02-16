@@ -224,8 +224,11 @@ namespace Clinic_web_app.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Email)
+                   .HasMaxLength(50)
+                   .IsUnicode(false);
                 entity.Property(e => e.CustomerId)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("CustomerID");
 

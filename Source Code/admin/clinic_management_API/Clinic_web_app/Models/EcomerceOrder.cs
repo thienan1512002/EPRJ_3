@@ -19,6 +19,7 @@ namespace Clinic_web_app.Models
         public string Address { get; set; }
         public string CustomerName { get; set; }
         public string Phone { get; set; }
+        public string Email { get; set; }
         public string Status { get; set; }
 
         public virtual CustomerAccount Customer { get; set; }
