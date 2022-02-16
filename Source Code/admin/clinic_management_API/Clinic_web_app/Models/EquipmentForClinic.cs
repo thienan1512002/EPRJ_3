@@ -15,7 +15,7 @@ namespace Clinic_web_app.Models
         public string EquipmentId { get; set; }
         public string EquipmentName { get; set; }
         public string BrandId { get; set; }
-        public int? Price { get; set; }
+        public decimal Price { get; set; }
         public string Description { get; set; }
         public DateTime DateCreate { get; set; }
         public int? Quantity { get; set; }

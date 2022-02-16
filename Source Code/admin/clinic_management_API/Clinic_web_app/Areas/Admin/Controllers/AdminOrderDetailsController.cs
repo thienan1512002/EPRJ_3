@@ -25,7 +25,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/AdminOrderDetails
         public async Task<IActionResult> Index(int pageNumber =1)
         {
-            const int pageSize = 10;
+            const int pageSize = 5;
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");

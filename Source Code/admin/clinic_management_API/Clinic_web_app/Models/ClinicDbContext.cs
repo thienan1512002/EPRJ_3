@@ -152,7 +152,7 @@ namespace Clinic_web_app.Models
                 entity.ToTable("CustomerAccount");
 
                 entity.Property(e => e.CustomerId)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("CustomerID");
 
@@ -249,11 +249,17 @@ namespace Clinic_web_app.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Email)
+                   .HasMaxLength(50)
+                   .IsUnicode(false);
                 entity.Property(e => e.CustomerId)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("CustomerID");
-
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CustomerName");
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
                 entity.Property(e => e.Status)
                 .HasColumnName("Status")

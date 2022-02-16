@@ -1,4 +1,4 @@
-Create  Database ClinicDB
+Create Database ClinicDB
 go
 use ClinicDB
 go
@@ -27,24 +27,14 @@ Create table EquipmentForClinic
 	EquipmentID varchar(10) primary key , 
 	EquipmentName varchar(50) , 
 	BrandID varchar(10) foreign key references Brands,
-	Price int , 
+	Price decimal(18,2) , 
 	Quantity int ,
 	Description text,
 	DateCreate datetime,
 	Image varchar(200)
 )
 go
-Create table EquipmentForEcomerce
-(
-	EquipmentID varchar(10) primary key , 
-	EquipmentName varchar(50) , 
-	BrandID varchar(10) foreign key references Brands,
-	Price int , 
-	Quantity int ,
-	Description text,
-	DateCreate datetime,
-	Image varchar(200)
-)
+
 go
 Create table StaffAccount
 (
@@ -108,6 +98,8 @@ Create table EcomerceOrder
 	CustomerID varchar(50) foreign key references CustomerAccount,
 	OrderDate datetime,
 	Address varchar(50),
+	Phone varchar(50),
+	Email varchar(50),
 	Status varchar(20) not null check (Status in('Pending','Completed','Decline'))
 )
 go
@@ -117,18 +109,11 @@ Create table EcomerceMedOrderDetail
 	OrderDetailID int foreign key references EcomerceOrder ,
 	MedID varchar(10) foreign key references Medicine ,
 	Quantity int,
-	Total int
+	Total decimal(18,2)
 )
 go
-Create table EcomerceEquipDetail
-(
-	OrderID int identity primary key , 
-	OrderDetailID int foreign key references EcomerceOrder ,
-	EquipmentID varchar(10) foreign key references EquipmentForEcomerce ,
-	Quantity int,
-	Total int
-)
-go
+
+
 Create table Feedback
 (
 	FeedbackID int primary key identity , 

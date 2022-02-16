@@ -32,7 +32,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/Feedbacks
         public async Task<IActionResult> Index(int pageNumber =1)
         {
-            const int pageSize = 6;
+            const int pageSize = 5;
             var clinicDBContext = _context.Feedbacks.Include(f => f.Customer);
             var data = await PaginatedList<Feedback>.CreateAsync(clinicDBContext,pageNumber,pageSize);
 
