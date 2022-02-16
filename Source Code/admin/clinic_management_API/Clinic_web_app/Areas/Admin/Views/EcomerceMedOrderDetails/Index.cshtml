@@ -1,4 +1,4 @@
-﻿@model PaginatedList<Clinic_web_app.Models.EcomerceMedOrderDetail>
+﻿@model PaginatedList<Clinic_web_app.Models.EcomerceOrder>
 
 @{
     ViewData["Title"] = "Index";
@@ -42,9 +42,7 @@
                             <th>
                                 Customer who buys
                             </th>
-                            <th>
-                                Product
-                            </th>
+                           
                             <th>
                                 Date Create Order
                             </th>
@@ -61,32 +59,27 @@
                                 <td>
                                     @item.OrderId
                                 </td>
+                                <td>@item.CustomerName</td>
                                 <td>
-                                    @item.OrderDetail.CustomerName
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Med.MedName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OrderDetail.OrderDate)
+                                    @Html.DisplayFor(modelItem => item.OrderDate)
                                 </td>
                                 <td>
                                     @{
-                                        switch (item.OrderDetail.Status)
+                                        switch (item.Status)
                                         {
                                             case "Pending":
                                                 {
-                                                    <span class="badge badge-primary">@item.OrderDetail.Status</span>
+                                                    <span class="badge badge-primary">@item.Status</span>
                                                     break;
                                                 }
                                             case "Decline":
                                                 {
-                                                    <span class="badge badge-danger">@item.OrderDetail.Status</span>
+                                                    <span class="badge badge-danger">@item.Status</span>
                                                     break;
                                                 }
                                             case "Completed":
                                                 {
-                                                    <span class="badge badge-success">@item.OrderDetail.Status</span>
+                                                    <span class="badge badge-success">@item.Status</span>
                                                     break;
                                                 }
                                         }
