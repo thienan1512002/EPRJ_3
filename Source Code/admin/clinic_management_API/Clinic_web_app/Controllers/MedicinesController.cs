@@ -23,10 +23,12 @@ namespace Clinic_web_app.Controllers
         }
 
         // GET: Medicines
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pageNumber =1)
         {
+            const int pageSize = 5;
             var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Featured==true).OrderByDescending(x=>x.DateCreate);
-            return View(clinicDBContext.ToList());
+            var data =await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            return View(data);
         }
         //public async Task<IActionResult> SortType(string medType, int page=1)
         //{

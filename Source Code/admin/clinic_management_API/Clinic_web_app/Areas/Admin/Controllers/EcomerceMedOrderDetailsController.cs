@@ -24,12 +24,12 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/EcomerceMedOrderDetails
-        public async Task<IActionResult> Index()//int pageNumber=1)
+        public async Task<IActionResult> Index(int pageNumber=1)
         {
-            //const int pageSize = 10;
-            var clinicDBContext = _context.EcomerceMedOrderDetails.Include(e => e.Med).Include(e => e.OrderDetail);//.ThenInclude(e => e.Customer);
-            /*var data = await PaginatedList<EcomerceMedOrderDetail>.CreateAsync(clinicDBContext, pageNumber, pageSize);*/
-            return View(await clinicDBContext.ToListAsync());
+            const int pageSize = 10;
+            var clinicDBContext = _context.EcomerceMedOrderDetails.Include(e => e.Med).Include(e => e.OrderDetail).ThenInclude(e => e.Customer);
+            var data = await PaginatedList<EcomerceMedOrderDetail>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            return View (data);
         }
 
         // GET: Admin/EcomerceMedOrderDetails/Details/5
@@ -63,8 +63,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             using (StreamReader HtmlReader = System.IO.File.OpenText(@"wwwroot/reportTemplate/report.html"))
             {
                 html = HtmlReader.ReadToEnd();
-                html = html.Replace("cusId", ecomerceMedDetail.OrderDetail.Customer.CustomerId);
-                html = html.Replace("cusName", ecomerceMedDetail.OrderDetail.Customer.CustomerName);
+                //html = html.Replace("cusId", ecomerceMedDetail.OrderDetail.Customer.CustomerId);
+                html = html.Replace("cusName", ecomerceMedDetail.OrderDetail.CustomerName);
                 html = html.Replace("cusAddress", ecomerceMedDetail.OrderDetail.Address);
                 html = html.Replace("cusProduct",ecomerceMedDetail.Med.MedName);
                 html = html.Replace("cusQuantity", ecomerceMedDetail.Quantity.ToString());

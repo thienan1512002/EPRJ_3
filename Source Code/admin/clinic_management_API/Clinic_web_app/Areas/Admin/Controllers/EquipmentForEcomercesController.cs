@@ -31,7 +31,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Home");
             }
             var clinicDBContext = _context.EquipmentForEcomerces.Include(e => e.Brand);
-            int pageSize = 10;
+            int pageSize = 5;
             var data = await PaginatedList<EquipmentForEcomerce>.CreateAsync(clinicDBContext, pageNumber,pageSize);
             return View(data);
         }

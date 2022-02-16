@@ -256,7 +256,10 @@ namespace Clinic_web_app.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("CustomerID");
-
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CustomerName");
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
                 entity.Property(e => e.Status)
                 .HasColumnName("Status")

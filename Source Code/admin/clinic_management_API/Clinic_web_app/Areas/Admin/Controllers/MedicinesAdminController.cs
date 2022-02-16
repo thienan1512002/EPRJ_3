@@ -29,7 +29,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Home");
             }
             var clinicDBContext = _context.Medicines.Include(m => m.Brand);
-            const int pageSize = 8;
+            const int pageSize = 5;
             var data = await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber , pageSize);
             return View(data);
         }
