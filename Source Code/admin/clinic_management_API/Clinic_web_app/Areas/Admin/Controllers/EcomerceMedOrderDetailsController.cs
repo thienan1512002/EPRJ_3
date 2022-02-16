@@ -9,6 +9,7 @@ using Clinic_web_app.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using System.IO;
 using SelectPdf;
+using System.Text;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -27,8 +28,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         public async Task<IActionResult> Index(int pageNumber=1)
         {
             const int pageSize = 10;
-            var clinicDBContext = _context.EcomerceMedOrderDetails.Include(e => e.Med).Include(e => e.OrderDetail).ThenInclude(e => e.Customer);
-            var data = await PaginatedList<EcomerceMedOrderDetail>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            var clinicDBContext = _context.EcomerceOrders.OrderByDescending(o=>o.OrderDate);
+            var data = await PaginatedList<EcomerceOrder>.CreateAsync(clinicDBContext, pageNumber, pageSize);
             return View (data);
         }
 
@@ -40,10 +41,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var ecomerceEquipDetail = await _context.EcomerceMedOrderDetails
-                .Include(e => e.Med)
-                .Include(e => e.OrderDetail)
-                .ThenInclude(e => e.Customer)
+            var ecomerceEquipDetail = await _context.EcomerceOrders
+                .Include(e => e.EcomerceMedOrderDetails)
+                .ThenInclude(e => e.Med)
+                .ThenInclude(e=>e.Brand)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (ecomerceEquipDetail == null)
             {
@@ -54,21 +55,39 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
         public async Task<IActionResult> MakeReport(int id)
         {
-            var ecomerceMedDetail = await _context.EcomerceMedOrderDetails
-               .Include(e => e.Med)
-               .Include(e => e.OrderDetail)
-               .ThenInclude(e => e.Customer)
+            var ecomerceMedDetail = await _context.EcomerceOrders
+               .Include(e => e.EcomerceMedOrderDetails)
+               .ThenInclude(e => e.Med)
+               .ThenInclude(e => e.Brand)
                .FirstOrDefaultAsync(m => m.OrderId == id);
             string html;
-            using (StreamReader HtmlReader = System.IO.File.OpenText(@"wwwroot/reportTemplate/report.html"))
+            using (StreamReader HtmlReader = System.IO.File.OpenText(@"wwwroot/reportTemplate/reporttemplate/report.html"))
             {
                 html = HtmlReader.ReadToEnd();
                 //html = html.Replace("cusId", ecomerceMedDetail.OrderDetail.Customer.CustomerId);
-                html = html.Replace("cusName", ecomerceMedDetail.OrderDetail.CustomerName);
-                html = html.Replace("cusAddress", ecomerceMedDetail.OrderDetail.Address);
-                html = html.Replace("cusProduct",ecomerceMedDetail.Med.MedName);
-                html = html.Replace("cusQuantity", ecomerceMedDetail.Quantity.ToString());
-                html = html.Replace("cusTotal", ecomerceMedDetail.Total.ToString());
+                html=html.Replace("@cusName",ecomerceMedDetail.CustomerName);
+                html =html.Replace("@cusAddress",ecomerceMedDetail.Address);
+                html = html.Replace("@cusMail", ecomerceMedDetail.Email);
+                html=html.Replace("@orderDate", ecomerceMedDetail.OrderDate.ToString());
+
+                decimal grandTotal = 0;
+                decimal productTotal = 0;
+                StringBuilder sb = new StringBuilder();
+                foreach (var item in ecomerceMedDetail.EcomerceMedOrderDetails)
+                {
+                    productTotal = item.Med.Price * Convert.ToDecimal(item.Quantity);
+                    grandTotal += productTotal;
+                    sb.AppendFormat("<tr>"+
+                        "<td>{0}</td>"+
+                        "<td>{1}</td>"+
+                        "<td>{2}</td>"+
+                        "<td>{3}</td>"+
+                        "<td>{4}</td>"+
+                        "</tr>",item.Med.MedId,item.Med.MedName,item.Med.Price,item.Quantity,productTotal);
+                }
+                html=html.Replace("@data", sb.ToString());
+                html = html.Replace("@grandTotal", grandTotal.ToString());
+                
             }
             HtmlToPdf htmlToPdf = new HtmlToPdf();
             PdfDocument pdfDocument = htmlToPdf.ConvertHtmlString(html);
