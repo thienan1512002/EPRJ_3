@@ -27,7 +27,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         public async Task<IActionResult> Index()//int pageNumber=1)
         {
             //const int pageSize = 10;
-            var clinicDBContext =  _context.EcomerceMedOrderDetails.Include(e => e.Med).Include(e => e.OrderDetail).ThenInclude(e => e.Customer);
+            var clinicDBContext = _context.EcomerceMedOrderDetails.Include(e => e.Med).Include(e => e.OrderDetail);//.ThenInclude(e => e.Customer);
             /*var data = await PaginatedList<EcomerceMedOrderDetail>.CreateAsync(clinicDBContext, pageNumber, pageSize);*/
             return View(await clinicDBContext.ToListAsync());
         }
