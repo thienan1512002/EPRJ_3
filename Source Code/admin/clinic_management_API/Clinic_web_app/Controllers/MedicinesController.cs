@@ -23,50 +23,40 @@ namespace Clinic_web_app.Controllers
         }
 
         // GET: Medicines
-        public async Task<IActionResult> Index(int pageNumber =1)
+        public async Task<IActionResult> Index(string? sort,int pageNumber =1)
         {
             const int pageSize = 5;
             var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Featured==true).OrderByDescending(x=>x.DateCreate);
+            if (sort == "l2h")
+            {
+                clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Featured == true).OrderBy(x => x.Price);
+            }
+            else if (sort == "h2l")
+            {
+                clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Featured == true).OrderByDescending(x => x.Price);
+            }
+
             var data =await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber, pageSize);
             return View(data);
         }
-        //public async Task<IActionResult> SortType(string medType, int page=1)
-        //{
-        //    try
-        //    {
-        //        var pageSize = 12;
-        //        var lsMed = _context.Medicines
-        //            .AsNoTracking()
-        //            .Where(x => x.Type == medType)
-        //            .OrderByDescending(x => x.CreatedAt);
-        //        PagedList<Medicine> models = new PagedList<Medicine>(lsMed, page, pageSize);
-        //        ViewBag.CurrentPage = page;
-        //        return View(models);
-        //    }
-        //    catch (Exception)
-        //    {
+        public async Task<IActionResult> Filter(string? sort, string? type,int pageNumber =1)
+        {
+            ViewBag.Type = type;
+            const int pageSize = 5;
+            var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Type==type).OrderByDescending(x=>x.DateCreate);
+            if (sort == "l2h")
+            {
+                clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Type == type).OrderBy(x => x.Price);
+            }
+            else if (sort == "h2l")
+            {
+                clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Type == type).OrderByDescending(x => x.Price);
+            }
 
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
-        //public async Task<IActionResult> SortPrice(int page = 1)
-        //{
-        //    try
-        //    {
-        //        var pageSize = 12;
-        //        var lsMed = _context.Medicines
-        //            .AsNoTracking()
-        //            .OrderByDescending(x => x.Price);
-        //        PagedList<Medicine> models = new PagedList<Medicine>(lsMed, page, pageSize);
-        //        ViewBag.CurrentPage = page;
-        //        return View(models);
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
+            var data =await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            return View(data);
+        }
+        
 
         // GET: Medicines/Details/5
         public async Task<IActionResult> Details(string id)

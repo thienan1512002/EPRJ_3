@@ -1,7 +1,7 @@
 ﻿@model PaginatedList<Clinic_web_app.Models.Medicine>
-
 @{
-    ViewData["Title"] = "Medicine";
+    ViewData["Title"] = ViewBag.Type;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- breadcrumb-section -->
@@ -10,8 +10,7 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
-                    <p>We Deliver The Lowest Medicine For You</p>
-                    <h1>Medicine</h1>
+                    <h1>@ViewBag.Type</h1>
                 </div>
             </div>
         </div>
@@ -21,34 +20,20 @@
 <!-- products -->
 <div class="product-section mt-150 mb-150">
     <div class="container">
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-filters">
-                    <ul>
-                        <li class="active" data-filter="*">All</li>
-                        <li ><a asp-action="Filter" asp-route-type="Drug">Medicines</a></li>
-                        <li ><a asp-action="Filter" asp-route-type="Shampo">Beauty</a></li>
-                        <li >Personal Care</li>
-                        <li >Baby and Kids</li>
-                        <li >HealthCare Equipment</li>
-                        <li >Fitness & Nutrition</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
         <div class="d-flex flex-row">
             <div class="text-muted m-2" id="res">Showing 44 results</div>
             <div class="ml-auto mr-lg-4">
-                <div id="sorting" class="border rounded p-1 m-1">
-                    <span class="text-muted">Sort by</span>
-                    <select name="sort" id="sort" class="price-sorting">
-                        <option value="new">Popularity</option>
-                        <option value="l2h">Price: Low to High</option>
-                        <option value="h2l">Price: High to Low</option>
-                    </select>
-
-                </div>
+                <form asp-action="Filter" method="post" name="sort">
+                    <div id="sorting" class="border rounded p-1 m-1">
+                        <span class="text-muted">Sort by</span>
+                        <select name="sort" id="sort" class="price-sorting" onchange="this.form.submit()">
+                            <option value="new">Popularity</option>
+                            <option value="l2h">Price: Low to High</option>
+                            <option value="h2l">Price: High to Low</option>
+                        </select>
+                        <input type="hidden" name="type" value="@ViewBag.Type" />
+                    </div>
+                </form>
             </div>
         </div>
         <br>
@@ -85,25 +70,4 @@
     </div>
 </div>
 <!-- end products -->
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $(document).on("change", ".price-sorting", function () {
-                event.preventDefault();
-                var sortingMethod = $(this).val();
-                $.ajax({
-                    type: "POST",
-                    url: '/Medicines/Index',
-                    data: {
-                        sort: sortingMethod,
-                    },
-                    success: function (result) {
-                        /**/
-                        window.location.href = '/Medicines/Index/?sort=' + sortingMethod;
-        /**/
-    }
-});
-            });
-});
-    </script>
-}
+
