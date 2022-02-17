@@ -89,13 +89,15 @@ Create table CustomerAccount
 	Password varchar(50),
 	Phone varchar(20),
 	Address varchar(50),
-	Status varchar(20) not null check (Status in('Block','Available'))
+	Status varchar(20) not null check (Status in('Block','Available')),
+	OTP varchar(20)
 )
 go
 Create table EcomerceOrder
 (
 	OrderID int identity primary key , 
 	CustomerID varchar(50) foreign key references CustomerAccount,
+	CustomerName varchar(50),
 	OrderDate datetime,
 	Address varchar(50),
 	Phone varchar(50),
