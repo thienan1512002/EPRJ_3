@@ -23,11 +23,38 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-           
-            var data = await _context.EcomerceOrders
-                .Include(e => e.EcomerceMedOrderDetails)
-                .ThenInclude(e => e.Med)
-                .ThenInclude(e => e.Brand).Where(p=>EF.Functions.DateDiffDay(p.OrderDate,DateTime.Today)>7).ToListAsync();
+
+            var data = await _context.EcomerceOrders.ToListAsync();
+            var orderToday = await _context.EcomerceMedOrderDetails
+                .Include(e => e.OrderDetail)
+                .Where(p => EF.Functions.DateDiffDay(p.OrderDetail.OrderDate, DateTime.Today) == 0 && p.OrderDetail.Status.Equals("Completed")).ToListAsync();
+            var orderDay2 = await _context.EcomerceMedOrderDetails
+                .Include(e => e.OrderDetail)
+                .Where(p => EF.Functions.DateDiffDay(p.OrderDetail.OrderDate, DateTime.Today) == 1 && p.OrderDetail.Status.Equals("Completed")).ToListAsync();
+            var orderDay3 = await _context.EcomerceMedOrderDetails
+                .Include(e => e.OrderDetail)
+                .Where(p => EF.Functions.DateDiffDay(p.OrderDetail.OrderDate, DateTime.Today) == 2 && p.OrderDetail.Status.Equals("Completed")).ToListAsync();
+            var orderDay4 = await _context.EcomerceMedOrderDetails
+               .Include(e => e.OrderDetail)
+               .Where(p => EF.Functions.DateDiffDay(p.OrderDetail.OrderDate, DateTime.Today) == 3 && p.OrderDetail.Status.Equals("Completed")).ToListAsync();
+            var orderDay5 = await _context.EcomerceMedOrderDetails
+               .Include(e => e.OrderDetail)
+               .Where(p => EF.Functions.DateDiffDay(p.OrderDetail.OrderDate, DateTime.Today) == 4 && p.OrderDetail.Status.Equals("Completed")).ToListAsync();
+            var orderDay6 = await _context.EcomerceMedOrderDetails
+               .Include(e => e.OrderDetail)
+               .Where(p => EF.Functions.DateDiffDay(p.OrderDetail.OrderDate, DateTime.Today) == 5 && p.OrderDetail.Status.Equals("Completed")).ToListAsync();
+            var orderDay7 = await _context.EcomerceMedOrderDetails.Include(e => e.OrderDetail).Where(p => EF.Functions.DateDiffDay(p.OrderDetail.OrderDate, DateTime.Today) == 6 && p.OrderDetail.Status.Equals("Completed")).ToListAsync();
+            var customerRegisted = await _context.CustomerAccounts.ToListAsync();
+            var staffAccount = await _context.StaffAccounts.ToListAsync();
+            ViewBag.OrderToday = orderToday;
+            ViewBag.OrderDay2 = orderDay2;
+            ViewBag.OrderDay3 = orderDay3;
+            ViewBag.OrderDay4 = orderDay4;
+            ViewBag.OrderDay5 = orderDay5;
+            ViewBag.OrderDay6 = orderDay6;
+            ViewBag.OrderDay7 = orderDay7;
+            ViewBag.Customer = customerRegisted;
+            ViewBag.Staff = staffAccount;
             return View(data);
         }
         public IActionResult StaffAccount()
