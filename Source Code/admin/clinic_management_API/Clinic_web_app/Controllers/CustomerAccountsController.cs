@@ -80,6 +80,7 @@ namespace Clinic_web_app.Controllers
             {
                 var account = await _context.CustomerAccounts.FirstOrDefaultAsync(m => m.CustomerId == HttpContext.Session.GetString("accountTemp"));
                 account.OTP = otp;
+                account.Status = "Available";
                 _context.CustomerAccounts.Update(account);
                 await _context.SaveChangesAsync();
                 HttpContext.Session.Remove("state");
