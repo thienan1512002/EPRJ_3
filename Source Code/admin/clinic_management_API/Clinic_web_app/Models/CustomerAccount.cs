@@ -23,6 +23,7 @@ namespace Clinic_web_app.Models
         public string Phone { get; set; }
         public string Address { get; set; }
         public string Status { get; set; }
+        public string OTP { get; set; }
 
         public virtual ICollection<EcomerceOrder> EcomerceOrders { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }

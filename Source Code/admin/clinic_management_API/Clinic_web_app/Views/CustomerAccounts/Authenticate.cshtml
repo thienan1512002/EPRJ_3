@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Authenticate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <h1>Register</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+<div class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-title">
+                    <h2>Register</h2>
+                </div>
+                <div id="form_status"></div>
+                @if (@ViewBag.mess != null)
+                {
+                    <div style="border: 1px solid red">
+                        @ViewBag.mess
+                    </div>
+                }
+                <div class="contact-form">
+                    <form asp-action="OTPProcess" method="post">
+                        <div class="form-group">
+                            <label class="control-label">Your OTP has been sent to your mail . Please Enter your OTP to continue</label>
+                            <input type="text" name="otp" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Send" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

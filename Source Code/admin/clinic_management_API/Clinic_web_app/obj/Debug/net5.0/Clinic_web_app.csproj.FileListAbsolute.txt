@@ -763,3 +763,4 @@ C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_managem
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Views\Medicines\OrderSuccess.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Views\Shared\_HeaderPartialView.cshtml.g.cs
 C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Views\Customers\Login.cshtml.g.cs
+C:\Users\nhta1\OneDrive\Documents\GitHub\EPRJ_3\Source Code\admin\clinic_management_API\Clinic_web_app\obj\Debug\net5.0\Razor\Views\CustomerAccounts\Authenticate.cshtml.g.cs

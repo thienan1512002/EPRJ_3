@@ -175,7 +175,9 @@ namespace Clinic_web_app.Models
                 entity.Property(e => e.Phone)
                     .HasMaxLength(20)
                     .IsUnicode(false);
-
+                entity.Property(e => e.OTP)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasMaxLength(20)
