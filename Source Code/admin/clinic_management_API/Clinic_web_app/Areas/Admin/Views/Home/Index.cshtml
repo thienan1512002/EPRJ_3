@@ -233,9 +233,9 @@
                                     indexLabelFontSize: 16,
                                     indexLabel: "{label} - {y}%",
                                     dataPoints: [
-                                        { y: @pendingRate, label: "Pending" },
-                                        { y: @declineRate, label: "Decline" },
-                                        { y: @completedRated, label: "Completed" }
+                                        { y: @Math.Round(pendingRate,2), label: "Pending" },
+                                        { y: @Math.Round(declineRate,2), label: "Decline" },
+                                        { y: @Math.Round(completedRated,2), label: "Completed" }
 
                                     ]
                                 }]

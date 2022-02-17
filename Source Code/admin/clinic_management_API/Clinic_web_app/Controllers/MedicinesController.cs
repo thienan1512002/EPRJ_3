@@ -25,7 +25,7 @@ namespace Clinic_web_app.Controllers
         // GET: Medicines
         public async Task<IActionResult> Index(string? sort,int pageNumber =1)
         {
-            const int pageSize = 5;
+            const int pageSize = 8;
             var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Featured==true).OrderByDescending(x=>x.DateCreate);
             if (sort == "l2h")
             {
@@ -42,7 +42,7 @@ namespace Clinic_web_app.Controllers
         public async Task<IActionResult> Filter(string? sort, string? type,int pageNumber =1)
         {
             ViewBag.Type = type;
-            const int pageSize = 5;
+            const int pageSize = 8;
             var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Type==type).OrderByDescending(x=>x.DateCreate);
             if (sort == "l2h")
             {

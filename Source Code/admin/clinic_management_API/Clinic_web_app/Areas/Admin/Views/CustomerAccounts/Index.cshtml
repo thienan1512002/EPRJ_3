@@ -76,9 +76,14 @@
                                 <td>
                                     @if (item.Status.Equals("Block"))
                                     {
-                                        <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-success">
-                                            Unlock Account
-                                        </a>
+
+
+                                        @if (item.OTP != null)
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-success">
+                                                Unlock Account
+                                            </a>
+                                        }
                                     }
                                     else
                                     {

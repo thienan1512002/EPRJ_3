@@ -27,12 +27,12 @@
                 <div class="product-filters">
                     <ul>
                         <li class="active" data-filter="*">All</li>
-                        <li ><a asp-action="Filter" asp-route-type="Drug">Medicines</a></li>
-                        <li ><a asp-action="Filter" asp-route-type="Shampo">Beauty</a></li>
-                        <li >Personal Care</li>
-                        <li >Baby and Kids</li>
-                        <li >HealthCare Equipment</li>
-                        <li >Fitness & Nutrition</li>
+                        <li><a asp-action="Filter" asp-route-type="Drug">Medicines</a></li>
+                        <li><a asp-action="Filter" asp-route-type="Shampo">Beauty</a></li>
+                        <li>Personal Care</li>
+                        <li>Baby and Kids</li>
+                        <li>HealthCare Equipment</li>
+                        <li>Fitness & Nutrition</li>
                     </ul>
                 </div>
             </div>
@@ -77,7 +77,12 @@
                         {
                             <li><a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)">Prev</a></li>
                         }
-                        <li><a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)">Next</a></li>
+
+
+                        @if (Model.NextPage)
+                        {
+                            <li><a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)">Next</a></li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -100,10 +105,10 @@
                     success: function (result) {
                         /**/
                         window.location.href = '/Medicines/Index/?sort=' + sortingMethod;
-        /**/
-    }
-});
+                        /**/
+                    }
+                });
             });
-});
+        });
     </script>
 }
