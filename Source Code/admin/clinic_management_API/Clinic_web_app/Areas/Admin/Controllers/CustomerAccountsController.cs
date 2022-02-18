@@ -30,7 +30,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Home");
             }
             const int pageSize = 5;
-            var data = await PaginatedList<CustomerAccount>.CreateAsync(_context.CustomerAccounts, pageNumber, pageSize);
+            var data = await PaginatedList<CustomerAccount>.CreateAsync(_context.CustomerAccounts.Where(c=>c.OTP!=null), pageNumber, pageSize);
             return View(data);
         }
 
