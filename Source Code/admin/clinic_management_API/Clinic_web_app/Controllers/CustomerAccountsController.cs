@@ -98,10 +98,10 @@ namespace Clinic_web_app.Controllers
             email.To.Add(MailboxAddress.Parse(mailSent));
             email.Subject = "OTP Code";
             var builder = new BodyBuilder();
-            using (StreamReader SourceReader = System.IO.File.OpenText(@"wwwroot/mailTemplate/reply.html"))
+            using (StreamReader SourceReader = System.IO.File.OpenText(@"wwwroot/mailTemplate/reply1.html"))
             {
                 builder.HtmlBody = SourceReader.ReadToEnd();
-                builder.HtmlBody = builder.HtmlBody.Replace("Lorem", "Your OTP is " + OTP);
+                builder.HtmlBody = builder.HtmlBody.Replace("Lorem", "Thank you for your registration! \nYour OTP is: " + OTP);
             }
             email.Body = builder.ToMessageBody();
             using var stmp = new SmtpClient();

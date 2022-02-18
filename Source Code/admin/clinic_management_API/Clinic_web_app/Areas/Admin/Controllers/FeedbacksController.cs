@@ -107,7 +107,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             email.To.Add(MailboxAddress.Parse(to));
             email.Subject = "Reply Feedback";
             var builder = new BodyBuilder();
-            using (StreamReader SourceReader = System.IO.File.OpenText(@"wwwroot/mailTemplate/reply.html"))
+            using (StreamReader SourceReader = System.IO.File.OpenText(@"wwwroot/mailTemplate/reply1.html"))
             {
                 builder.HtmlBody = SourceReader.ReadToEnd();
                 builder.HtmlBody = builder.HtmlBody.Replace("Lorem", reply);
