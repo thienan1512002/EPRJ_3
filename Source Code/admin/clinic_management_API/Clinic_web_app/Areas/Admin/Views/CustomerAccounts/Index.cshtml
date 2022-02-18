@@ -80,22 +80,26 @@
 
                                         @if (item.OTP != null)
                                         {
-                                            <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-success">
-                                                Unlock Account
-                                            </a>
+                                            <form asp-action="Edit" method="get" id="frmStatus">
+                                                <input type="hidden" name="id" value="@item.CustomerId" />
+                                                <input type="submit" class="btn btn-success" value="Unlock Account" id="btn_Submit" />
+                                            </form>
                                         }
                                     }
                                     else
                                     {
-                                        <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-danger">
-                                            Block Account
-                                        </a>
+                                        <form asp-action="Edit" method="get" id="frmStatus">
+                                            <input type="hidden" name="id" value="@item.CustomerId" />
+                                            <input type="submit" class="btn btn-danger" value="Block Account" id="btn_Submit" />
+                                        </form>
                                     }
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
+                
+
                 @if (Model.PreviousPage)
                 {
                     <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-default">Previous</a>
@@ -118,5 +122,6 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+        
     });
 </script>

@@ -5,6 +5,8 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -92,11 +94,54 @@
             <div class="row">
                 @if (Model.Status == "Pending")
                 {
-                    <a asp-action="CompletedOrder" asp-route-id="@Model.OrderId" class="btn btn-success col-3" style="margin:10px;">Deal has completed</a>
+                    <form asp-action="CompletedOrder" method="get" id="frmComplete">
+                        <input type="hidden" name="id" value="@Model.OrderId" />
+                        <input type="submit" class="btn btn-success" id="btn_Complete" value="Complete this deal"  style="margin:10px;"/>
+                    </form>
+                     
+                    <form asp-action="CloseOrder" method="get" id="frmClose">
+                        <input type="hidden" name="id" value="@Model.OrderId" />
+                        <input type="submit" class="btn btn-danger" id="btn_Close" value="Close this deal" style="margin:10px;"/>
+                    </form>
 
-                    <a asp-action="CloseOrder" asp-route-id="@Model.OrderId" class="btn btn-danger col-3" style="margin:10px;">Cancle Deal</a>
                 }
             </div>
+            <script>
+                $(document).ready(function () {
+                    $("#btn_Close").click(function (e) {
+                        e.preventDefault();
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You can't revert changes when close this deal!",
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $("#frmClose").submit();
+                            }
+                        })
+                    })
+                    $("#btn_Complete").click(function (e) {
+                        e.preventDefault();
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You can't revert changes when complete this deal!",
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $("#frmComplete").submit();
+                            }
+                        })
+                    })
+                });
+            </script>
             <div class="row">
                 <h3 align="center">Product Infomation</h3>
                 <table class="table table-hover">
