@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Clinic_web_app.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Clinic_web_app.Areas.Admin.Controllers
 {
@@ -15,10 +16,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
     public class MedicinesAdminController : Controller
     {
         private readonly ClinicDBContext _context;
-
-        public MedicinesAdminController(ClinicDBContext context)
+        private readonly INotyfService _notyf;
+        public MedicinesAdminController(ClinicDBContext context ,INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         // GET: Admin/MedicinesAdmin
@@ -99,6 +101,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 }
                 _context.Add(medicine);
                 await _context.SaveChangesAsync();
+                _notyf.Custom("Add new medicine completed ",10,"green","fa fa-check");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", medicine.BrandId);
@@ -163,6 +166,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
 
                     _context.Update(medicine);
                     await _context.SaveChangesAsync();
+                    _notyf.Custom("Update new medicine completed ", 10, "green", "fa fa-check");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
