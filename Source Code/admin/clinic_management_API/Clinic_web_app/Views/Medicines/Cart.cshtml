@@ -45,7 +45,7 @@
                                     total += ptotal;
                                     <tr class="table-body-row">
                                         <td class="product-remove"><a asp-action="RemoveCart" asp-route-id="@cartitem.medicine.MedId"><i class="far fa-window-close"></i></a></td>
-                                        <td class="product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
+                                        <td class="product-image"><img src="~/@cartitem.medicine.Image" alt=""></td>
                                         <td class="product-name">@cartitem.medicine.MedName</td>
                                         <td class="product-price">$@(cartitem.medicine.Price)</td>
                                         <td class="product-quantity">
