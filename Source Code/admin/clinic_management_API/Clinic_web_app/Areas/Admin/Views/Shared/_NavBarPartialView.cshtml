@@ -115,9 +115,21 @@
                 @foreach (var item in notyf)
                 {
                     <div class="dropdown-divider"></div>
-                    <a asp-action="Details" asp-controller="EcomerceMedOrderDetails" asp-route-id="@item.OrderId" class="dropdown-item" style="overflow:hidden;">
+                    <a asp-action="Details" asp-controller="EcomerceMedOrderDetails" asp-route-id="@item.OrderId" class="dropdown-item" style="overflow:auto;">
                         <i class="fas fa-envelope mr-2"></i> @item.NotyfName
-                        <span class="float-right text-muted text-sm">@DateTime.Now.Subtract(item.DateCreate).Minutes mins ago</span>
+                        @if (DateTime.Now.Subtract(item.DateCreate).Minutes < 60)
+                        {
+                            <span class="float-right text-muted text-sm">@DateTime.Now.Subtract(item.DateCreate).Minutes mins ago</span>
+                        }
+                        else if (DateTime.Now.Subtract(item.DateCreate).Minutes >= 60 && DateTime.Now.Subtract(item.DateCreate).Hours < 24)
+                        {
+                            <span class="float-right text-muted text-sm">@DateTime.Now.Subtract(item.DateCreate).Hours hours ago</span>
+                        }
+                        else
+                        {
+                    <span class="float-right text-muted text-sm">@DateTime.Now.Subtract(item.DateCreate).Days days ago</span>
+                        }
+
                     </a>
                 }
             </div>
