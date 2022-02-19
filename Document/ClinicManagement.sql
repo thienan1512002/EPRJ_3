@@ -125,5 +125,13 @@ Create table Feedback
 	Reply varchar(300)
 )
 go
+Create table Notification
+(
+	NotyfId int primary key identity ,
+	NotyfName text ,
+	DateCreate datetime,
+	OrderId int,
+	IsRead bit
+)
 --Seeding first account for debug
 Insert into StaffAccount(AccountID,Username,Password,Email,Role) values ('Account001','Manager','1','manager@gmail.com','Manager')

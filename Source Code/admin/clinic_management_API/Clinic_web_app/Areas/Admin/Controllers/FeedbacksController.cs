@@ -35,7 +35,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             const int pageSize = 5;
             var clinicDBContext = _context.Feedbacks.Include(f => f.Customer);
             var data = await PaginatedList<Feedback>.CreateAsync(clinicDBContext,pageNumber,pageSize);
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View(data);
         }
 
@@ -64,6 +65,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             var feedback = await _context.Feedbacks
                 .Include(f => f.Customer)
                 .FirstOrDefaultAsync(m => m.FeedbackId == id);
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             if (feedback == null)
             {
                 return NotFound();
@@ -81,7 +84,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             if (ModelState.IsValid)
             {
                 try

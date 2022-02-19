@@ -31,6 +31,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
             const int pageSize = 5;
             var data = await PaginatedList<CustomerAccount>.CreateAsync(_context.CustomerAccounts.Where(c=>c.OTP!=null), pageNumber, pageSize);
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View(data);
         }
 
@@ -45,7 +47,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var customerAccount = await _context.CustomerAccounts
                 .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customerAccount == null)

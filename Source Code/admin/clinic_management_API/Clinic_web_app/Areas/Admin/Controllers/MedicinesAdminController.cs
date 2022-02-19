@@ -30,6 +30,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var clinicDBContext = _context.Medicines.Include(m => m.Brand);
             const int pageSize = 5;
             var data = await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber , pageSize);
@@ -47,7 +49,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var medicine = await _context.Medicines
                 .Include(m => m.Brand)
                 .FirstOrDefaultAsync(m => m.MedId == id);
@@ -60,12 +63,14 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/MedicinesAdmin/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View();
         }

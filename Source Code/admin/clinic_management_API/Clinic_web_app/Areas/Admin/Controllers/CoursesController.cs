@@ -29,6 +29,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             const int pageSize =6;
             var data = await PaginatedList<Course>.CreateAsync(_context.Courses, pageNumber, pageSize);
             return View(data);
@@ -46,7 +48,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var course = await _context.Courses
                 .Include(m=>m.Enrollments)
                 .ThenInclude(m=>m.Account)
@@ -60,12 +63,14 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/Courses/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View();
         }
       
@@ -112,6 +117,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View(course);
         }
 

@@ -29,7 +29,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-             
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             const int pageSize = 5;
             var data = await PaginatedList<Brand>.CreateAsync(_context.Brands,pageNumber, pageSize);
             return View(data);
@@ -46,7 +47,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var brand = await _context.Brands
                 .FirstOrDefaultAsync(m => m.BrandId == id);
             if (brand == null)
@@ -58,12 +60,14 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/Brands/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View();
         }
 
@@ -99,7 +103,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var brand = await _context.Brands.FindAsync(id);
             if (brand == null)
             {

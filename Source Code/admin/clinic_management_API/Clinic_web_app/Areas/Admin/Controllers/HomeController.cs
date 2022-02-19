@@ -46,6 +46,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             var orderDay7 = await _context.EcomerceMedOrderDetails.Include(e => e.OrderDetail).Where(p => EF.Functions.DateDiffDay(p.OrderDetail.OrderDate, DateTime.Today) == 6 && p.OrderDetail.Status.Equals("Completed")).ToListAsync();
             var customerRegisted = await _context.CustomerAccounts.ToListAsync();
             var staffAccount = await _context.StaffAccounts.ToListAsync();
+            var notyf = await _context.Notifications.Where(m=>m.IsRead==false).ToListAsync();
+            ViewBag.Notyf = notyf;
             ViewBag.OrderToday = orderToday;
             ViewBag.OrderDay2 = orderDay2;
             ViewBag.OrderDay3 = orderDay3;

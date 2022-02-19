@@ -30,6 +30,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var clinicDBContext = _context.EquipmentForClinics.Include(e => e.Brand);
             const int pageSize = 5;
             var data = await PaginatedList<EquipmentForClinic>.CreateAsync(clinicDBContext, pageNumber, pageSize);
@@ -43,6 +45,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             if (id == null)
             {
                 return NotFound();
@@ -60,12 +64,14 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/EquipmentForClinics/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
             return View();
         }
@@ -106,6 +112,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             if (id == null)
             {
                 return NotFound();

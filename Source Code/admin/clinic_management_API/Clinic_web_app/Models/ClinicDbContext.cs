@@ -31,7 +31,7 @@ namespace Clinic_web_app.Models
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
         public virtual DbSet<StaffAccount> StaffAccounts { get; set; }
-
+        public virtual DbSet<Notification> Notifications { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -462,6 +462,16 @@ namespace Clinic_web_app.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.ToTable("Notification");
+                entity.HasKey(e => e.NotyfId).HasName("PK_Notification");
+                entity.Property(e => e.NotyfName).HasMaxLength(65535).IsUnicode(false);
+                entity.Property(e => e.DateCreate).HasColumnType("datetime").HasColumnName("DateCreate");
+                entity.Property(e => e.OrderId).HasColumnName("OrderId");
+                entity.Property(e => e.IsRead).HasColumnType("bit").HasColumnName("IsRead");
+
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 

@@ -30,6 +30,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             const int pageSize = 10;
             var clinicDBContext = _context.EcomerceOrders.OrderByDescending(o=>o.OrderDate);
             var data = await PaginatedList<EcomerceOrder>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View (data);
         }
 
@@ -40,12 +42,17 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var ecomerceEquipDetail = await _context.EcomerceOrders
                 .Include(e => e.EcomerceMedOrderDetails)
                 .ThenInclude(e => e.Med)
                 .ThenInclude(e=>e.Brand)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
+            var seenNotyf = await _context.Notifications.FirstOrDefaultAsync(e => e.OrderId == ecomerceEquipDetail.OrderId);
+            seenNotyf.IsRead = true;
+            _context.Notifications.Update(seenNotyf);
+            await _context.SaveChangesAsync();
             if (ecomerceEquipDetail == null)
             {
                 return NotFound();

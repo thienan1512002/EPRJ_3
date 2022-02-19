@@ -35,6 +35,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Details", new { id = HttpContext.Session.GetString("accountId") });
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View(await PaginatedList<StaffAccount>.CreateAsync(_context.StaffAccounts,pageNumber,pageSize));
         }
 
@@ -49,7 +51,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var staffAccount = await _context.StaffAccounts
                 .Include(m=>m.Enrollments)
                 .ThenInclude(m=>m.Course)
@@ -63,12 +66,14 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/StaffAccounts/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View();
         }
 
@@ -104,6 +109,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             if (id == null)
             {
                 return NotFound();

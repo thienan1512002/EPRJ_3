@@ -26,6 +26,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         public async Task<IActionResult> Index(int pageNumber =1)
         {
             const int pageSize = 5;
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             if (HttpContext.Session.GetString("accountId") == null)
             {
                 return RedirectToAction("Login", "Home");
@@ -52,7 +54,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             var adminOrderDetail = await _context.AdminOrderDetails
                 .Include(a => a.Equipment)
                 .Include(a => a.OrderDetail)
@@ -67,8 +70,10 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminOrderDetails/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             ViewData["EquipmentId"] = new SelectList(_context.EquipmentForClinics, "EquipmentId", "EquipmentName");
             return View();
         }

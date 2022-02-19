@@ -29,6 +29,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             const int pageSize = 10;
             var clinicDBContext = _context.EcomerceEquipDetails.Include(e => e.Equipment).Include(e => e.OrderDetail).ThenInclude(e=>e.Customer);
             var data = await PaginatedList<EcomerceEquipDetail>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             return View(data);
         }
 
@@ -45,6 +47,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 .Include(e => e.OrderDetail)
                 .ThenInclude(e=>e.Customer)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             if (ecomerceEquipDetail == null)
             {
                 return NotFound();

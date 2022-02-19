@@ -275,7 +275,13 @@ namespace Clinic_web_app.Controllers
                     await _context.SaveChangesAsync();
                     await QuantityReduce(item.medicine.MedId, item.quantity);
                 }
-                
+                Notification notification = new Notification();
+                notification.NotyfName = Name + " has created an order";
+                notification.DateCreate = DateTime.Now;
+                notification.OrderId = order.OrderId;
+                notification.IsRead = false;
+                _context.Notifications.Add(notification);
+                await _context.SaveChangesAsync();
                 ClearCart();
             }
             return RedirectToAction("Success");
