@@ -99,6 +99,7 @@
             </div>
         </li>
         <!-- Notifications Dropdown Menu -->
+        
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
@@ -114,20 +115,21 @@
                 <span class="dropdown-item dropdown-header">@notyf.Count Notifications</span>
                 @foreach (var item in notyf)
                 {
+                    TimeSpan datediff = DateTime.Now - item.DateCreate;
                     <div class="dropdown-divider"></div>
                     <a asp-action="Details" asp-controller="EcomerceMedOrderDetails" asp-route-id="@item.OrderId" class="dropdown-item" style="overflow:auto;">
                         <i class="fas fa-envelope mr-2"></i> @item.NotyfName
-                        @if (DateTime.Now.Subtract(item.DateCreate).Minutes < 60)
+                        @if (datediff.TotalMinutes<60)
                         {
-                            <span class="float-right text-muted text-sm">@DateTime.Now.Subtract(item.DateCreate).Minutes mins ago</span>
+                            <span class="float-right text-muted text-sm">@Math.Round(datediff.TotalMinutes,0) mins ago</span>
                         }
-                        else if (DateTime.Now.Subtract(item.DateCreate).Minutes >= 60 && DateTime.Now.Subtract(item.DateCreate).Hours < 24)
+                        else if (datediff.TotalHours<24)
                         {
-                            <span class="float-right text-muted text-sm">@DateTime.Now.Subtract(item.DateCreate).Hours hours ago</span>
+                            <span class="float-right text-muted text-sm">@Math.Round(datediff.TotalHours,0) hours ago</span>
                         }
                         else
                         {
-                    <span class="float-right text-muted text-sm">@DateTime.Now.Subtract(item.DateCreate).Days days ago</span>
+                    <span class="float-right text-muted text-sm">@Math.Round(datediff.TotalDays,0) days ago</span>
                         }
 
                     </a>
