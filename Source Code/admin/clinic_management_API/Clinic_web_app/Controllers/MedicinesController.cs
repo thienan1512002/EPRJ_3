@@ -10,6 +10,12 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using PagedList;
 using Newtonsoft.Json;
+using Clinic_web_app.Setting;
+using Microsoft.Extensions.Options;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using System.Text;
 
 namespace Clinic_web_app.Controllers
 {
@@ -17,16 +23,18 @@ namespace Clinic_web_app.Controllers
     {
         private readonly ClinicDBContext _context;
         public const string CARTKEY = "cart";
-        public MedicinesController(ClinicDBContext context)
+        private readonly MailSettings _setting;
+        public MedicinesController(ClinicDBContext context, IOptions<MailSettings> options)
         {
             _context = context;
+            _setting = options.Value;
         }
 
         // GET: Medicines
-        public async Task<IActionResult> Index(string? sort,int pageNumber =1)
+        public async Task<IActionResult> Index(string? sort, int pageNumber = 1)
         {
             const int pageSize = 8;
-            var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Featured==true).OrderByDescending(x=>x.DateCreate);
+            var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Featured == true).OrderByDescending(x => x.DateCreate);
             if (sort == "l2h")
             {
                 clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Featured == true).OrderBy(x => x.Price);
@@ -36,14 +44,14 @@ namespace Clinic_web_app.Controllers
                 clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Featured == true).OrderByDescending(x => x.Price);
             }
 
-            var data =await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            var data = await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber, pageSize);
             return View(data);
         }
-        public async Task<IActionResult> Filter(string? sort, string? type,int pageNumber =1)
+        public async Task<IActionResult> Filter(string? sort, string? type, int pageNumber = 1)
         {
             ViewBag.Type = type;
             const int pageSize = 8;
-            var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x=>x.Type==type).OrderByDescending(x=>x.DateCreate);
+            var clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Type == type).OrderByDescending(x => x.DateCreate);
             if (sort == "l2h")
             {
                 clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Type == type).OrderBy(x => x.Price);
@@ -53,10 +61,10 @@ namespace Clinic_web_app.Controllers
                 clinicDBContext = _context.Medicines.Include(m => m.Brand).Where(x => x.Type == type).OrderByDescending(x => x.Price);
             }
 
-            var data =await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber, pageSize);
+            var data = await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber, pageSize);
             return View(data);
         }
-        
+
 
         // GET: Medicines/Details/5
         public async Task<IActionResult> Details(string id)
@@ -111,9 +119,9 @@ namespace Clinic_web_app.Controllers
         [Route("addcart/{id}")]
         public IActionResult AddToCart(string id)
         {
-            var medicine = _context.Medicines.Where(m=>m.MedId ==id)
+            var medicine = _context.Medicines.Where(m => m.MedId == id)
                 .FirstOrDefault();
-            if(medicine == null)
+            if (medicine == null)
             {
                 return NotFound();
             }
@@ -127,7 +135,7 @@ namespace Clinic_web_app.Controllers
             }
             else
             {
-                cart.Add(new CartItem(){ quantity = 1, medicine = medicine });
+                cart.Add(new CartItem() { quantity = 1, medicine = medicine });
             }
             //save cart to session
             SaveCartSession(cart);
@@ -137,9 +145,9 @@ namespace Clinic_web_app.Controllers
         //add qty item
         public IActionResult AddQtyCart(string id, int qty)
         {
-            var medicine = _context.Medicines.Where(m=>m.MedId ==id)
+            var medicine = _context.Medicines.Where(m => m.MedId == id)
                 .FirstOrDefault();
-            if(medicine == null)
+            if (medicine == null)
             {
                 return NotFound();
             }
@@ -158,16 +166,16 @@ namespace Clinic_web_app.Controllers
         //minus qty item
         public IActionResult MinusQtyCart(string id, int qty)
         {
-            var medicine = _context.Medicines.Where(m=>m.MedId ==id)
+            var medicine = _context.Medicines.Where(m => m.MedId == id)
                 .FirstOrDefault();
-            if(medicine == null)
+            if (medicine == null)
             {
                 return NotFound();
             }
             //xu li
             var cart = GetCartItems();
             var cartitem = cart.Find(m => m.medicine.MedId == id);
-            if(cartitem.quantity == 1)
+            if (cartitem.quantity == 1)
             {
                 cart.Remove(cartitem);
             }
@@ -184,7 +192,7 @@ namespace Clinic_web_app.Controllers
 
         //remove item in cart
         [Route("/removecart/{id}", Name = "removecart")]
-        public IActionResult RemoveCart([FromRoute]string id)
+        public IActionResult RemoveCart([FromRoute] string id)
         {
             //xu li
             var cart = GetCartItems();
@@ -231,17 +239,62 @@ namespace Clinic_web_app.Controllers
             var checkCus = session.GetString("CustomerId");
             if (checkCus != null)
             {
-                var customerAccount =await  _context.CustomerAccounts
+                var customerAccount = await _context.CustomerAccounts
                 .FirstOrDefaultAsync(m => m.CustomerId == checkCus);
                 ViewBag.Customer = customerAccount;
             }
             return View(GetCartItems());
+        }
+
+        public async Task SendMail(string mailSent, int id)
+        {
+            var ecomerceMedDetail = await _context.EcomerceOrders
+              .Include(e => e.EcomerceMedOrderDetails)
+              .ThenInclude(e => e.Med)
+              .ThenInclude(e => e.Brand)
+              .FirstOrDefaultAsync(m => m.OrderId == id);
+            var email = new MimeMessage();
+            email.Sender = MailboxAddress.Parse(_setting.Mail);
+            email.To.Add(MailboxAddress.Parse(mailSent));
+            email.Subject = "Order Infomation";
+            var builder = new BodyBuilder();
+            StringBuilder sb = new StringBuilder();
+            decimal total = 0;
+            decimal grandTotal = 0;
+            using (StreamReader SourceReader = System.IO.File.OpenText(@"wwwroot/mailTemplate/order.html"))
+            {
+                builder.HtmlBody = SourceReader.ReadToEnd();
+                builder.HtmlBody = builder.HtmlBody.Replace("@orderAdress", ecomerceMedDetail.Address);
+                builder.HtmlBody = builder.HtmlBody.Replace("@orderDate", ecomerceMedDetail.OrderDate.ToString());
+                builder.HtmlBody = builder.HtmlBody.Replace("@orderId", ecomerceMedDetail.OrderId.ToString());
+                foreach (var item in ecomerceMedDetail.EcomerceMedOrderDetails)
+                {
+                    total = item.Med.Price * Convert.ToDecimal(item.Quantity);
+                    grandTotal += total;
+                    sb.AppendFormat("<tr>" +
+                        
+                        "<td class='service'>{0}</td>" +
+                        "<td class='desc'>{1}</td>" +
+                        "<td>{2}</td>" +
+                        "<td>{3}</td>" +
+                        "</tr>",item.Med.MedName, item.Med.Price, item.Quantity, total);
+                }
+                builder.HtmlBody = builder.HtmlBody.Replace("@data", sb.ToString());
+                builder.HtmlBody = builder.HtmlBody.Replace("@grandTotal", grandTotal.ToString());
+            }
+            email.Body = builder.ToMessageBody();
+            using var stmp = new SmtpClient();
+            stmp.Connect(_setting.Host, _setting.Port, SecureSocketOptions.StartTls);
+            stmp.Authenticate(_setting.Mail, _setting.Password);
+            await stmp.SendAsync(email);
+            stmp.Disconnect(true);
         }
         [HttpPost]
         public async Task<IActionResult> doCheckout(EcomerceOrder order, string Name, string Phone, string Email, string Address)
         {
             if (ModelState.IsValid)
             {
+
                 var cart = GetCartItems();
                 var session = HttpContext.Session;
                 if (session.GetString("CustomerId") == null)
@@ -259,6 +312,7 @@ namespace Clinic_web_app.Controllers
                     order.CustomerName = customer.CustomerName;
                     order.Address = customer.Address;
                     order.Phone = customer.Phone;
+
                 }
                 order.OrderDate = DateTime.Now;
                 order.Status = "Pending";
@@ -283,6 +337,12 @@ namespace Clinic_web_app.Controllers
                 _context.Notifications.Add(notification);
                 await _context.SaveChangesAsync();
                 ClearCart();
+                if (session.GetString("CustomerId") != null)
+                {
+                    var customer = await _context.CustomerAccounts
+                   .FirstOrDefaultAsync(m => m.CustomerId == session.GetString("CustomerId"));
+                    await SendMail(customer.Email, order.OrderId);
+                }
             }
             return RedirectToAction("Success");
         }
@@ -292,7 +352,7 @@ namespace Clinic_web_app.Controllers
         }
         public async Task<IActionResult> QuantityReduce(string medId, int quantity)
         {
-            var medicine =_context.Medicines.FirstOrDefault(m => m.MedId == medId);
+            var medicine = _context.Medicines.FirstOrDefault(m => m.MedId == medId);
             medicine.Quantity -= quantity;
             await _context.SaveChangesAsync();
             return Ok();
