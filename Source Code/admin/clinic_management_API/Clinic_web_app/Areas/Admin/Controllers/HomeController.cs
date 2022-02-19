@@ -47,7 +47,9 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             var customerRegisted = await _context.CustomerAccounts.ToListAsync();
             var staffAccount = await _context.StaffAccounts.ToListAsync();
             var notyf = await _context.Notifications.Where(m=>m.IsRead==false).ToListAsync();
+            var course = await _context.Courses.Where(c => EF.Functions.DateDiffMonth(c.StartDate, DateTime.Today) == 0).ToListAsync();
             ViewBag.Notyf = notyf;
+            ViewBag.CourseInMonth = course;
             ViewBag.OrderToday = orderToday;
             ViewBag.OrderDay2 = orderDay2;
             ViewBag.OrderDay3 = orderDay3;

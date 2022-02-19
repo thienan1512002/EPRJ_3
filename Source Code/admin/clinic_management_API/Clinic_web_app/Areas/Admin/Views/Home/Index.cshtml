@@ -75,6 +75,7 @@
     List<CustomerAccount> Register = ViewBag.Customer;
     List<StaffAccount> Staff = ViewBag.Staff;
     List<Notification> notyf = ViewBag.Notyf;
+    List<Course> course = ViewBag.CourseInMonth;
 }
 <!-- Preloader -->
 <div class="preloader flex-column justify-content-center align-items-center">
@@ -108,7 +109,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>@grandTotal</h3>
+                            <h3>@(grandTotal)$</h3>
 
                             <p>Total income in 7 days</p>
                         </div>
@@ -123,7 +124,7 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>@Math.Round(pendingRate,2)<sup style="font-size: 20px">%</sup></h3>
+                            <h3>@Math.Round(pendingRate, 2)<sup style="font-size: 20px">%</sup></h3>
 
                             <p>Pending Order Rate</p>
                         </div>
@@ -249,17 +250,37 @@
                     <!-- DIRECT CHAT -->
                     <div class="card direct-chat direct-chat-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Direct Chat</h3>
-
-
+                            <h3 class="card-title"><i class='fas fa-chalkboard'></i>&nbsp; Course In Month</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Course Name</th>
+                                        <th>Lecture</th>
+                                        <th>Slot</th>
+                                        <th>Start Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in course)
+                                    {                    
+                                        <tr>
+                                            <td>@item.CourseName</td>
+                                            <td>@item.Lectures</td>
+                                            <td>@item.Slot</td>
+                                            <td>@item.StartDate</td>
+                                            <td><a asp-action="Register" asp-route-id="@item.CourseId" asp-controller="Courses" class="btn btn-success">Register</a></td>
+                                        </tr>                                      
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-
+                            <a asp-action="Index" asp-controller="Courses" class="btn btn-link text-center">See full Courses</a>
                         </div>
                         <!-- /.card-footer-->
                     </div>
