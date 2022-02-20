@@ -48,6 +48,11 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             var staffAccount = await _context.StaffAccounts.ToListAsync();
             var notyf = await _context.Notifications.Where(m=>m.IsRead==false).ToListAsync();
             var course = await _context.Courses.Where(c => EF.Functions.DateDiffMonth(c.StartDate, DateTime.Today) == 0).ToListAsync();
+            
+            var bestSellerMedicine = await _context.Medicines.Include(e=>e.Brand).Where(e=>e.Featured==true).Take(7).ToListAsync();
+            var equipmentIsRent = await _context.AdminOrderDetails.Include(m => m.Equipment).Include(m => m.OrderDetail).ThenInclude(m => m.Account).Where(m => m.OrderDetail.Status.Equals("Not Yet")&& m.OrderDetail.AccountId == HttpContext.Session.GetString("accountId")).ToListAsync();
+            ViewBag.EquipmentIsRent = equipmentIsRent;
+            ViewBag.BestSeller = bestSellerMedicine;
             ViewBag.Notyf = notyf;
             ViewBag.CourseInMonth = course;
             ViewBag.OrderToday = orderToday;

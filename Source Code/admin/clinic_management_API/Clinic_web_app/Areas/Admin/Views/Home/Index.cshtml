@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Clinic_web_app.Models.EcomerceOrder>
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<Clinic_web_app.Models.EcomerceOrder>
 @{
     ViewData["Title"] = "Admin Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -76,6 +77,8 @@
     List<StaffAccount> Staff = ViewBag.Staff;
     List<Notification> notyf = ViewBag.Notyf;
     List<Course> course = ViewBag.CourseInMonth;
+    List<Medicine> bestSeller = ViewBag.BestSeller;
+    List<AdminOrderDetail> equipmentIsRented = ViewBag.EquipmentIsRent;
 }
 <!-- Preloader -->
 <div class="preloader flex-column justify-content-center align-items-center">
@@ -139,7 +142,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>@Register.Count</h3>
+                            <h3 style="color:white;">@Register.Count</h3>
 
                             <p>User Registrations</p>
                         </div>
@@ -266,14 +269,15 @@
                                 </thead>
                                 <tbody>
                                     @foreach (var item in course)
-                                    {                    
+                                    {
                                         <tr>
                                             <td>@item.CourseName</td>
                                             <td>@item.Lectures</td>
                                             <td>@item.Slot</td>
                                             <td>@item.StartDate</td>
                                             <td><a asp-action="Register" asp-route-id="@item.CourseId" asp-controller="Courses" class="btn btn-success">Register</a></td>
-                                        </tr>                                      
+                                        </tr>
+
                                     }
                                 </tbody>
                             </table>
@@ -289,19 +293,46 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <i class="ion ion-clipboard mr-1"></i>
-                                To Do List
+                                <i class="fa-solid fa-money-bill-wave"></i>
+                                Featured Product
                             </h3>
 
 
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Product Name</th>
+                                        <th>Brand Name</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in bestSeller)
+                                    {
+                                        <tr>
+                                            <td><img src="~/@item.Image" width="200" height="150" /></td>
+                                            <td>@item.MedName</td>
+                                            <td>@item.Brand.BrandName</td>
+                                            <td>@item.Type</td>
+                                            <td>@(item.Price)$</td>
+                                            <td>
+                                                <a asp-action="Details" asp-controller="MedicinesAdmin" asp-route-id="@item.MedId" class="btn btn-info">Detail</a>
 
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
-
+                            <a asp-action="Index" asp-controller="MedicinesAdmin" class="btn btn-link">See Full Lists</a>
                         </div>
                     </div>
                     <!-- /.card -->
@@ -328,92 +359,83 @@
 
                     <!-- /.card -->
                     <!-- solid sales graph -->
-                    <div class="card bg-gradient-info">
+                    <div class="card ">
                         <div class="card-header border-0">
                             <h3 class="card-title">
                                 <i class="fas fa-th mr-1"></i>
-                                Sales Graph
+                                Equipment is being rented
                             </h3>
 
-                            <div class="card-tools">
-                                <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
+
                         </div>
                         <div class="card-body">
-                            <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+
+                                        <th>Equipment Name</th>
+                                        <th>Purpose</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in equipmentIsRented)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a asp-action="Details" asp-controller="AdminOrderDetails" asp-route-id="@item.OrderId">
+                                                    <img src="~/@item.Equipment.Image" width="200" height="150" />
+                                                    <br />
+                                                    <span class="text-black text-center">@item.Equipment.EquipmentName</span>
+                                                </a>
+                                            </td>
+                                            <td>@item.Purpose</td>
+
+
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer bg-transparent">
-                            <div class="row">
-                                <div class="col-4 text-center">
-                                    <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                                           data-fgColor="#39CCCC">
-
-                                    <div class="text-white">Mail-Orders</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-4 text-center">
-                                    <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                                           data-fgColor="#39CCCC">
-
-                                    <div class="text-white">Online</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-4 text-center">
-                                    <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                                           data-fgColor="#39CCCC">
-
-                                    <div class="text-white">In-Store</div>
-                                </div>
-                                <!-- ./col -->
-                            </div>
+                        <div class="card-footer">
+                            @if (Context.Session.GetString("userRole").Equals("Manager"))
+                            {
+                                <a asp-action="Index" asp-controller="AdminOrderDetails">See Full Lists</a>
+                            }
                             <!-- /.row -->
                         </div>
                         <!-- /.card-footer -->
                     </div>
                     <!-- /.card -->
                     <!-- Calendar -->
-                    <div class="card bg-gradient-success">
+                    <div class="card bg-gradient-primary">
                         <div class="card-header border-0">
 
                             <h3 class="card-title">
                                 <i class="far fa-calendar-alt"></i>
                                 Calendar
                             </h3>
-                            <!-- tools card -->
-                            <div class="card-tools">
-                                <!-- button with a dropdown -->
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
-                                        <i class="fas fa-bars"></i>
-                                    </button>
-                                    <div class="dropdown-menu" role="menu">
-                                        <a href="#" class="dropdown-item">Add new event</a>
-                                        <a href="#" class="dropdown-item">Clear events</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a href="#" class="dropdown-item">View calendar</a>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <!-- /. tools -->
+
+
+
                         </div>
-                        <!-- /.card-header -->
+
                         <div class="card-body pt-0">
-                            <!--The calendar -->
-                            <div id="calendar" style="width: 100%"></div>
+
+                            <div class="calendar calendar-first" id="calendar_first">
+                                <div class="calendar_header">
+                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
+                                    <h2 style="color:white;"></h2>
+                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
+                                </div>
+                                <div class="calendar_weekdays"></div>
+                                <div class="calendar_content"></div>
+                            </div>
                         </div>
-                        <!-- /.card-body -->
+
                     </div>
                     <!-- /.card -->
                 </section>
@@ -424,4 +446,9 @@
     </section>
     <!-- /.content -->
 </div>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/popper.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script src="~/js/main.js"></script>
+<link rel="stylesheet" href="~/css/style.css">
 

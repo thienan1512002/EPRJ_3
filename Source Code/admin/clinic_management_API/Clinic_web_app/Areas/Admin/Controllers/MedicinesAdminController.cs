@@ -130,6 +130,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", medicine.BrandId);
             return View(medicine);
         }
