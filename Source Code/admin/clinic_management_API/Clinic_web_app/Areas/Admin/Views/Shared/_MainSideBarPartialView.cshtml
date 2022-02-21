@@ -22,21 +22,12 @@
                 <img src="~/@Context.Session.GetString("avatar")" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Hello @Context.Session.GetString("accountName")</a>
+                <a asp-action="Index" asp-controller="Home" class="d-block">Hello @Context.Session.GetString("accountName")</a>
             </div>
         </div>
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+   
         <style>
             p{
                 color : white;

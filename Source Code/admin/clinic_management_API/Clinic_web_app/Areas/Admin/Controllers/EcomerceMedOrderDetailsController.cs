@@ -113,12 +113,23 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         }
         public async Task<IActionResult> CloseOrder(int id)
         {
-            var order = await _context.EcomerceOrders.SingleOrDefaultAsync(m => m.OrderId == id);
+            var order = await _context.EcomerceOrders.Include(o=>o.EcomerceMedOrderDetails).SingleOrDefaultAsync(m => m.OrderId == id);
             order.Status = "Decline";
             _context.EcomerceOrders.Update(order);
             await _context.SaveChangesAsync();
+            foreach(var item in order.EcomerceMedOrderDetails)
+            {
+                await QuantityReduce(item.MedId, item.Quantity.Value);
+            }
             _notyf.Custom("Order has been cancle", 10, "green", "fa fa-check-circle");
             return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> QuantityReduce(string medId, int quantity)
+        {
+            var medicine = _context.Medicines.FirstOrDefault(m => m.MedId == medId);
+            medicine.Quantity += quantity;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
