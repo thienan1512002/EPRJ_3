@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Medicine Rent Lists</h1>
+                    <h1 class="m-0">Equipment Rent Lists</h1>
                     <a asp-action="Create" type="button" class="btn btn-primary col-4" style="margin-bottom:10px;">
                         Rent Equipment
                     </a>
@@ -87,9 +87,9 @@
                                     <td><span class="badge badge-success">Returned <i class="fa fa-check"></i></span></td>
                                 }
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-primary">Edit</a>
+                                    
                                     <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-info">Details</a>
-                                    <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger">Delete</a>
+                                    
                                     @if (Context.Session.GetString("userRole").Equals("Manager"))
                                     {
                                         <a asp-action="Finish" asp-route-id="@item.OrderDetailId" class="btn btn-success">Finish</a>

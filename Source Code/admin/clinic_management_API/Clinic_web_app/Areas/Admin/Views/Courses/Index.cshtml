@@ -7,6 +7,7 @@
 }
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
 
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -14,9 +15,13 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">Course List</h1>
-                    <a asp-action="Create" type="button" class="btn btn-primary m-0">
-                        Add new Course
-                    </a>
+                    @if (Context.Session.GetString("userRole").Equals("Manager"))
+                    {
+                        <a asp-action="Create" type="button" class="btn btn-primary m-0">
+                            Add new Course
+                        </a>
+                    }
+
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -78,7 +83,7 @@
                                     @if (Context.Session.GetString("userRole").Equals("Manager"))
                                     {
                                         <a asp-action="Edit" asp-route-id="@item.CourseId" class="btn btn-primary">Edit</a>
-                                        <a asp-action="Delete" asp-route-id="@item.CourseId" class="btn btn-danger">Delete</a>
+                                        
                                     }
                                     <a asp-action="Details" asp-route-id="@item.CourseId" class="btn btn-info">Details</a>
                                     <a asp-action="Register" asp-route-id="@item.CourseId" class="btn btn-success">Register</a>
