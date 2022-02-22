@@ -204,6 +204,29 @@ namespace Clinic_web_app.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            var medicine = await _context.Medicines.FindAsync(id);
+            if (medicine == null)
+            {
+                return NotFound();
+            }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", medicine.BrandId);
+            return View(medicine);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirm(string id)
+        {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var medicine = await _context.Medicines
                 .Include(m => m.Brand)
                 .FirstOrDefaultAsync(m => m.MedId == id);

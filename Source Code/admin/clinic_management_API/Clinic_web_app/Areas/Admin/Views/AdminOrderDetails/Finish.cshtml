@@ -1,0 +1,70 @@
+﻿@model Clinic_web_app.Models.AdminOrderDetail
+
+@{
+    ViewData["Title"] = "Finish";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Finish</h1>
+                    <h3>Are you sure you want to finish this?</h3>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            @if (ViewBag.Message != null)
+            {
+                <span class="alert alert-danger">@ViewBag.Message</span>
+            }
+            <div class="row">
+                <div class="col-md-4">
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Quantity)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Quantity)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Purpose)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Purpose)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Equipment)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Equipment.EquipmentName)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.OrderDetail)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @*@Html.DisplayFor(model => model.OrderDetail.Status)*@
+                            @if (Model.OrderDetail.Status.Equals("Not Yet"))
+                            {
+                                <span class="badge badge-warning">Not Return</span>
+                            }
+                        </dd>
+                    </dl>
+                    <form asp-action="Finish">
+                        <input type="hidden" asp-for="OrderId" />
+                        <input type="submit" value="Finish" class="btn btn-danger" /> |
+                        <a asp-action="Index">Back to List</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

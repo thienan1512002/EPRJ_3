@@ -58,10 +58,29 @@ namespace Clinic_web_app.Areas.Admin.Controllers
 
             return View(customerAccount);
         }
+        //public async Task<IActionResult> Edit(string id)
+        //{
+        //    if (HttpContext.Session.GetString("accountId") == null)
+        //    {
+        //        return RedirectToAction("Login", "Home");
+        //    }
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+        //    ViewBag.Notyf = notyf;
+        //    var customerAccount = await _context.CustomerAccounts
+        //        .FirstOrDefaultAsync(m => m.CustomerId == id);
+        //    if (customerAccount == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        // GET: Admin/CustomerAccounts/Create
+        //    return View(customerAccount);
+        //}
 
-        // GET: Admin/CustomerAccounts/Edit/5
+        // Post: Admin/CustomerAccounts/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (HttpContext.Session.GetString("accountId") == null)

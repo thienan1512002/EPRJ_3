@@ -148,9 +148,29 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
             return View(brand);
         }
-
-        // GET: Admin/Brands/Delete/5
         public async Task<IActionResult> Delete(string id)
+        {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
+            var brand = await _context.Brands.FindAsync(id);
+            if (brand == null)
+            {
+                return NotFound();
+            }
+            return View(brand);
+        }
+        // post: Admin/Brands/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirm(string id)
         {
             if (id == null)
             {

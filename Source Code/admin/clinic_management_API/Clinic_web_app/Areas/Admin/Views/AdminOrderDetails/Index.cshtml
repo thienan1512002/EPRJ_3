@@ -88,9 +88,9 @@
                                 }
                                 <td>
                                     
-                                    <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-info">Details</a>
+                                    @*<a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-info">Details</a>*@
                                     
-                                    @if (Context.Session.GetString("userRole").Equals("Manager"))
+                                    @if (Context.Session.GetString("userRole").Equals("Manager") && item.OrderDetail.Status.Equals("Not Yet"))
                                     {
                                         <a asp-action="Finish" asp-route-id="@item.OrderDetailId" class="btn btn-success">Finish</a>
                                     }

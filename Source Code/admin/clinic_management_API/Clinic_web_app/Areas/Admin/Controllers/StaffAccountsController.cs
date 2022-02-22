@@ -173,6 +173,31 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/StaffAccounts/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
+            var staffAccount = await _context.StaffAccounts
+                .Include(m => m.Enrollments)
+                .ThenInclude(m => m.Course)
+                .FirstOrDefaultAsync(m => m.AccountId == id);
+            if (staffAccount == null)
+            {
+                return NotFound();
+            }
+
+            return View(staffAccount);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirm(string id)
+        {
             if (id == null)
             {
                 return NotFound();

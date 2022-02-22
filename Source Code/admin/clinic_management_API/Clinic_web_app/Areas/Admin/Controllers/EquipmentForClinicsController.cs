@@ -180,6 +180,29 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/EquipmentForClinics/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
+            if (HttpContext.Session.GetString("accountId") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var equipmentForClinic = await _context.EquipmentForClinics.FindAsync(id);
+            if (equipmentForClinic == null)
+            {
+                return NotFound();
+            }
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", equipmentForClinic.BrandId);
+            return View(equipmentForClinic);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirm(string id)
+        {
             if (id == null)
             {
                 return NotFound();

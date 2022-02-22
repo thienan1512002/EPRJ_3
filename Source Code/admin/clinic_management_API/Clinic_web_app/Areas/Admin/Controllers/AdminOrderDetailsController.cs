@@ -116,7 +116,29 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         {
             return await _context.EquipmentForClinics.FirstOrDefaultAsync(m => m.EquipmentId == equipmentId);
         }
-        public async Task <IActionResult> Finish(int id)
+        public async Task<ActionResult> Finish(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
+            var adminOrderDetail = await _context.AdminOrderDetails
+                .Include(a => a.Equipment)
+                .Include(a => a.OrderDetail)
+                .ThenInclude(a => a.Account)
+                .FirstOrDefaultAsync(m => m.OrderId == id);
+            if (adminOrderDetail == null)
+            {
+                return NotFound();
+            }
+
+            return View(adminOrderDetail);
+        }
+        [HttpPost, ActionName("Finish")]
+        [ValidateAntiForgeryToken]
+        public async Task <IActionResult> FinishConfirm(int id)
         {
             var order = await _context.AdminOrders.SingleOrDefaultAsync(m => m.OrderId == id);
             var orderDetail = await _context.AdminOrderDetails.FirstOrDefaultAsync(m => m.OrderDetailId==id);
