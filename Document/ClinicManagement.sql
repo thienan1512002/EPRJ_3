@@ -135,3 +135,5 @@ Create table Notification
 )
 --Seeding first account for debug
 Insert into StaffAccount(AccountID,Username,Password,Email,Role) values ('Account001','Manager','1','manager@gmail.com','Manager')
+Insert into StaffAccount(AccountID,Username,Password,Email,Role) values ('Account002','Staff01','1','staff1@gmail.com','Staff')
+Insert into StaffAccount(AccountID,Username,Password,Email,Role) values ('Account003','Staff02','1','staff2@gmail.com','Staff')
