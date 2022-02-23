@@ -73,7 +73,7 @@
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.AccountId" class="btn btn-primary">Edit</a>
                                     <a asp-action="Details" asp-route-id="@item.AccountId" class="btn btn-info">Details</a>
-                                    @if (!Context.Session.GetString("accountId").Equals(item.AccountId))
+                                    @if (!Context.Session.GetString("accountId").Equals(item.AccountId)&& !Context.Session.GetString("userRole").Equals(item.Role))
                                     {
                                         <a asp-action="Delete" asp-route-id="@item.AccountId" class="btn btn-danger">Delete</a>
                                     }

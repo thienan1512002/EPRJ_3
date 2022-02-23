@@ -136,7 +136,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
 
             return View(adminOrderDetail);
         }
-        [HttpPost, ActionName("Finish")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task <IActionResult> FinishConfirm(int id)
         {
