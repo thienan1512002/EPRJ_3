@@ -337,12 +337,12 @@ namespace Clinic_web_app.Controllers
                 _context.Notifications.Add(notification);
                 await _context.SaveChangesAsync();
                 ClearCart();
-                if (session.GetString("CustomerId") != null)
-                {
-                    var customer = await _context.CustomerAccounts
-                   .FirstOrDefaultAsync(m => m.CustomerId == session.GetString("CustomerId"));
-                    await SendMail(customer.Email, order.OrderId);
-                }
+                //if (session.GetString("CustomerId") != null)
+                //{
+                //    var customer = await _context.CustomerAccounts
+                //   .FirstOrDefaultAsync(m => m.CustomerId == session.GetString("CustomerId"));
+                //    await SendMail(customer.Email, order.OrderId);
+                //}
             }
             return RedirectToAction("Success");
         }
