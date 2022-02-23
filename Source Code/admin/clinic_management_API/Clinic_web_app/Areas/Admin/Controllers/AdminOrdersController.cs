@@ -22,7 +22,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         // GET: Admin/AdminOrders
         public async Task<IActionResult> Index()
         {
-            var clinicDBContext = _context.AdminOrders.Include(a => a.Account);
+            var clinicDBContext = _context.AdminOrders.Include(a => a.Account).OrderByDescending(m=>m.OrderDate);
             return View(await clinicDBContext.ToListAsync());
         }
 

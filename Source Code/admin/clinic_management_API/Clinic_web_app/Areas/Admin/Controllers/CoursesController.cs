@@ -32,7 +32,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
             ViewBag.Notyf = notyf;
             const int pageSize =6;
-            var data = await PaginatedList<Course>.CreateAsync(_context.Courses, pageNumber, pageSize);
+            var data = await PaginatedList<Course>.CreateAsync(_context.Courses.OrderByDescending(m=>m.StartDate), pageNumber, pageSize);
             return View(data);
         }
 

@@ -32,7 +32,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
             var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
             ViewBag.Notyf = notyf;
-            var clinicDBContext = _context.Medicines.Include(m => m.Brand);
+            var clinicDBContext = _context.Medicines.Include(m => m.Brand).OrderByDescending(m=>m.DateCreate);
             const int pageSize = 5;
             var data = await PaginatedList<Medicine>.CreateAsync(clinicDBContext, pageNumber , pageSize);
             return View(data);

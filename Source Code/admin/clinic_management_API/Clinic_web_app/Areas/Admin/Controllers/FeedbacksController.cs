@@ -33,7 +33,7 @@ namespace Clinic_web_app.Areas.Admin.Controllers
         public async Task<IActionResult> Index(int pageNumber =1)
         {
             const int pageSize = 5;
-            var clinicDBContext = _context.Feedbacks.Include(f => f.Customer);
+            var clinicDBContext = _context.Feedbacks.Include(f => f.Customer).OrderByDescending(f=>f.DateCreate);
             var data = await PaginatedList<Feedback>.CreateAsync(clinicDBContext,pageNumber,pageSize);
             var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
             ViewBag.Notyf = notyf;
@@ -48,6 +48,8 @@ namespace Clinic_web_app.Areas.Admin.Controllers
             }
 
             var feedback = await _context.Feedbacks.FindAsync(id);
+            var notyf = await _context.Notifications.Where(m => m.IsRead == false).ToListAsync();
+            ViewBag.Notyf = notyf;
             if (feedback == null)
             {
                 return NotFound();
