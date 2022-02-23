@@ -343,6 +343,10 @@ namespace Clinic_web_app.Controllers
                    .FirstOrDefaultAsync(m => m.CustomerId == session.GetString("CustomerId"));
                     await SendMail(customer.Email, order.OrderId);
                 }
+                else
+                {
+                    await SendMail(Email, order.OrderId);
+                }
             }
             return RedirectToAction("Success");
         }

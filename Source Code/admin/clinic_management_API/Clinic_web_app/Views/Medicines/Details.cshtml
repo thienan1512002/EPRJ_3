@@ -33,7 +33,7 @@
                     <strong style="color: blue">@Model.Brand.BrandName </strong>
                     <h3>@Model.MedName</h3>
                     <p class="single-product-pricing"><span>Unit in table</span> $@Model.Price</p>
-                    <p>Detail in table</p>
+                    <p>@Model.Description</p>
                     <div class="single-product-form">
                         <a asp-action="AddToCart" asp-route-id="@Model.MedId" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                         <p><strong>Categories: </strong>@Model.Type</p>
